@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node ./server/server.js",
     "dev": "SET NODE_ENV=DEVELOPMENT& nodemon ./server/server.js",
-    "prod": "SET NODE_ENV=PRODUCTION& nodemon ./server/server.js"
+    "prod": "SET NODE_ENV=PRODUCTION& nodemon ./server/server.js",
+    "seeder": "node ./server/utils/seeder.js"
   },
   "author": "Sanyam Suthar",
   "license": "ISC",

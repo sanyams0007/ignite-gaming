@@ -1,0 +1,146 @@
+[
+  {
+    "name": "Need For Speed:Heat",
+    "description": "Need for Speed Heat (stylized as NFS Heat) is a racing video game developed by Ghost Games and published by Electronic Arts for Microsoft Windows, PlayStation 4 and Xbox One. It is the twenty-fourth installment in the Need for Speed series and commemorates the series' 25th anniversary. It was released on November 8, 2019. The game received mixed reviews from critics, who mostly found the game to be an improvement over the 2015 Need for Speed reboot and Payback but not enough to be a full return to form for the franchise.",
+    "price": 59.9,
+    "rating": 4.5,
+    "images": [
+      {
+        "public_id": "1234567890",
+        "url": "https://upload.wikimedia.org/wikipedia/en/7/7f/Cover_Art_of_Need_for_Speed_Heat.png"
+      }
+    ],
+    "platform": ["Win", "PS5", "XBOX"],
+    "category": "Racing",
+    "seller": "EA/Criterion Game",
+    "stock": 10,
+    "numOfReviews": 1,
+    "reviews": []
+  },
+  {
+    "name": "PlayerUnknown's Battlegrounds",
+    "description": "PlayerUnknown's Battlegrounds (PUBG) is an online multiplayer battle royale game developed and published by PUBG Corporation, a subsidiary of South Korean video game company Bluehole. The game is based on previous mods that were created by Brendan 'PlayerUnknown' Greene for other games, inspired by the 2000 Japanese film Battle Royale, and expanded into a standalone game under Greene's creative direction. In the game, up to one hundred players parachute onto an island and scavenge for weapons and equipment to kill others while avoiding getting killed themselves. The available safe area of the game's map decreases in size over time, directing surviving players into tighter areas to force encounters. The last player or team standing wins the round.",
+    "price": 99.9,
+    "rating": 4.8,
+    "images": [
+      {
+        "public_id": "1234567891",
+        "url": "https://upload.wikimedia.org/wikipedia/en/3/3d/PlayerUnknown%27s_Battlegrounds_Steam_Logo.jpg"
+      }
+    ],
+    "platform": ["Win", "PS5", "XBOX"],
+    "category": "Battle Royale",
+    "seller": "PUBG Corporation",
+    "stock": 14,
+    "numOfReviews": 55,
+    "reviews": []
+  },
+  {
+    "name": "Call of Duty: Black Ops Cold War",
+    "description": "Call of Duty: Black Ops Cold War is a 2020 first-person shooter video game developed by Treyarch and Raven Software and published by Activision. It was released worldwide on November 13, 2020, for Microsoft Windows, PlayStation 4, PlayStation 5, Xbox One, and Xbox Series X and S. It serves as the sixth installment in the Black Ops series, and the seventeenth installment in the overall Call of Duty series. It is Treyarch's seventh Call of Duty title made as a lead developer and Raven's second.",
+    "price": 119.9,
+    "rating": 4.6,
+    "images": [
+      {
+        "public_id": "1234567892",
+        "url": "https://upload.wikimedia.org/wikipedia/en/4/40/Black_Ops_Cold_War.jpeg"
+      }
+    ],
+    "platform": ["Win", "PS5", "PS4", "XBOX One"],
+    "category": "Shooter/FPS",
+    "seller": "Activison",
+    "stock": 5,
+    "numOfReviews": 70,
+    "reviews": []
+  },
+  {
+    "name": "Far Cry 5",
+    "description": "Far Cry 5 is a 2018 first-person shooter game developed by Ubisoft Montreal and Ubisoft Toronto and published by Ubisoft. It is the fifth main installment in the Far Cry series.The game takes place in Hope County, a fictional region of Montana, United States. The main story revolves around the Project at Eden's Gate, a doomsday cult that has taken over the county at the command of its charismatic and powerful leader, Joseph Seed. Players control an unnamed junior deputy sheriff who becomes trapped in Hope County and must work alongside factions of a resistance to liberate the county from the despotic rule of the Seeds and Eden's Gate. Gameplay focuses on combat and exploration; players battle enemy soldiers and dangerous wildlife using a wide array of weapons. The game features many elements found in role-playing games, such as a branching storyline and side quests. The game also features a map editor, a co-operative multiplayer mode, and a competitive",
+    "price": 69.9,
+    "rating": 4.2,
+    "images": [
+      {
+        "public_id": "1234567893",
+        "url": "https://upload.wikimedia.org/wikipedia/en/0/03/Far_Cry_5_boxshot.jpg"
+      }
+    ],
+    "platform": ["Win", "PS5", "PS4", "XBOX One"],
+    "category": "Survival/Strategy",
+    "seller": "Ubisoft",
+    "stock": 22,
+    "numOfReviews": 47,
+    "reviews": []
+  },
+  {
+    "name": "Grand Theft Auto V",
+    "description": "Grand Theft Auto V is a 2013 action-adventure game developed by Rockstar North and published by Rockstar Games. It is the first main entry in the Grand Theft Auto series since 2008's Grand Theft Auto IV. Set within the fictional state of San Andreas, based on Southern California, the single-player story follows three protagonists—retired bank robber Michael De Santa, street gangster Franklin Clinton, and drug dealer and arms smuggler Trevor Philips—and their efforts to commit heists while under pressure from a corrupt government agency and powerful criminals. The open world design lets players freely roam San Andreas' open countryside and the fictional city of Los Santos, based on Los Angeles.The game is played from either a third-person or first-person perspective, and its world is navigated on foot and by vehicle. Players control the three lead protagonists throughout single-player and switch among them, both during and outside missions. The story is centred on the heist sequences, and many missions involve shooting and driving gameplay. A 'wanted' system governs the aggression of law enforcement response to players who commit crimes. Grand Theft Auto Online, the game's online multiplayer mode, lets up to 30 players engage in a variety of different cooperative and competitive game modes.",
+    "price": 39.9,
+    "rating": 4.7,
+    "images": [
+      {
+        "public_id": "1234567894",
+        "url": "https://upload.wikimedia.org/wikipedia/en/a/a5/Grand_Theft_Auto_V.png"
+      }
+    ],
+    "platform": ["Win", "PS5", "PS4", "Xbox One", "Xbox 360"],
+    "category": "RPG",
+    "seller": "Rockstar Games",
+    "stock": 12,
+    "numOfReviews": 99,
+    "reviews": []
+  },
+  {
+    "name": "Tom Clancy's The Division 2",
+    "description": "Tom Clancy's The Division 2 is an online action role-playing video game developed by Massive Entertainment and published by Ubisoft. The sequel to Tom Clancy's The Division (2016), it is set in a near-future Washington, D.C. in the aftermath of a genetically engineered virus known as 'Green Poison' being released, and follows an agent of the Strategic Homeland Division as they try to rebuild the city. The game was released for Microsoft Windows, PlayStation 4, and Xbox One on March 15, 2019. It received generally favorable reviews from critics, with most noting it as an improvement over the first installment.",
+    "price": 69.9,
+    "rating": 4.1,
+    "images": [
+      {
+        "public_id": "1234567895",
+        "url": "https://upload.wikimedia.org/wikipedia/en/a/af/The_Division_2_art.jpg"
+      }
+    ],
+    "platform": ["Win", "PS5", "Xbox One"],
+    "category": "Shooter/TPS",
+    "seller": "Ubisoft Montreal",
+    "stock": 34,
+    "numOfReviews": 11,
+    "reviews": []
+  },
+  {
+    "name": "Watch Dogs: Legion",
+    "description": "Watch Dogs: Legion (stylized as WATCH DOGS L≡GION) is a 2020 action-adventure game published by Ubisoft and developed by its Toronto studio. It is the third instalment in the Watch Dogs series, and the sequel to 2016's Watch Dogs 2. Set within a fictionalised representation of the near future (late 2020s), dystopian London, the game's story focuses on the hacker group DedSec as they seek to clear their names for a series of bombings they have been framed for, as well as liberate London's citizens from the control of Albion, an oppressive private military company which turned the city into a surveillance state following the bombings.",
+    "price": 79.9,
+    "rating": 4.4,
+    "images": [
+      {
+        "public_id": "1234567896",
+        "url": "https://upload.wikimedia.org/wikipedia/en/d/dc/Watch_Dogs_Legion_cover_art.webp"
+      }
+    ],
+    "platform": ["Win", "PS5", "XBOX"],
+    "category": "Action",
+    "seller": "Ubisoft UK",
+    "stock": 3,
+    "numOfReviews": 30,
+    "reviews": []
+  },
+  {
+    "name": "Battlefield V",
+    "description": "Battlefield V is a first-person shooter video game developed by EA DICE and published by Electronic Arts. Battlefield V is the sixteenth installment in the Battlefield series. It was released worldwide for Microsoft Windows, PlayStation 4, and Xbox One on November 20, 2018. Those who pre-ordered the Deluxe Edition of the game were granted early access to the game on November 15, 2018,[2] and Origin Access Premium subscribers on PC received access to the game on November 9, 2018.[3] The game is based on World War II and is a thematic continuation of its World War I based precursor Battlefield 1.",
+    "price": 29.9,
+    "rating": 4.0,
+    "images": [
+      {
+        "public_id": "1234567897",
+        "url": "https://en.wikipedia.org/wiki/Battlefield_V#/media/File:Battlefield_V_standard_edition_box_art.jpg"
+      }
+    ],
+    "platform": ["Win", "PS5", "XBOX"],
+    "category": "Shooter/FPS",
+    "seller": "EA/Dice Games",
+    "stock": 22,
+    "numOfReviews": 43,
+    "reviews": []
+  }
+]
