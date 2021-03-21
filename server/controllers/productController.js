@@ -4,23 +4,10 @@ const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 const APIFeatures = require("../utils/apiFeatures");
 
-// @route       POST api/admin/products/new
-// @description  creates a new product
-// @access
-exports.newProduct = catchAsyncErrors(async (req, res, next) => {
-  req.body.user = req.user.id;
-
-  const product = await Product.create(req.body);
-
-  res.status(201).json({
-    success: true,
-    product,
-  });
-});
+/* LOGGED IN USER ROUTES */
 
 // @route       GET api/products
 // @description  gets all products
-// @access
 exports.getProducts = catchAsyncErrors(async (req, res, next) => {
   const resultsPerPage = 4;
   //const productCount = await Product.countDocument();
@@ -41,7 +28,6 @@ exports.getProducts = catchAsyncErrors(async (req, res, next) => {
 
 // @route       GET api/product/:id
 // @description  get single product details
-// @access
 exports.getSingleProduct = catchAsyncErrors(async (req, res, next) => {
   const product = await Product.findById(req.params.id);
 
@@ -55,9 +41,23 @@ exports.getSingleProduct = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
+/* ADMIN ONLY ROUTES */
+
+// @route       POST api/admin/products/new
+// @description  creates a new product
+exports.newProduct = catchAsyncErrors(async (req, res, next) => {
+  req.body.user = req.user.id;
+
+  const product = await Product.create(req.body);
+
+  res.status(201).json({
+    success: true,
+    product,
+  });
+});
+
 // @route       PUT api/admin/product/:id
 // @description  updates product details by its id
-// @access
 exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
   let product = await Product.findById(req.params.id);
 
@@ -76,7 +76,6 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
 
 //@route       DELETE api/admin/product/:id
 //description   deletes the product by its id
-//acces
 exports.deleteProduct = catchAsyncErrors(async (req, res, next) => {
   const product = await Product.findById(req.params.id);
 

@@ -4,6 +4,9 @@ const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 const sendToken = require("../utils/jwtToken");
 const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
+const { send } = require("process");
+
+/* LOGGED IN USER ROUTES */
 
 // @route       POST api/register
 // @description  register a user
@@ -50,19 +53,53 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
   sendToken(user, 200, res);
 });
 
-// @route       GET api/logout
-// @description  logs out a user
+// @route       GET api/me
+// @description  get currently logged in user details
 // @access
-exports.logoutUser = catchAsyncErrors(async (req, res, next) => {
-  res.cookie("token", null, {
-    expires: new Date(Date.now()),
-    httpOnly: true,
+exports.getUserProfile = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findById(req.user.id);
+
+  res.status(200).json({
+    success: true,
+    user,
+  });
+});
+
+// @route       PUT api/me/update
+// @description  change / update user detail
+exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
+  const newUserData = {
+    name: req.body.name,
+    email: req.body.email,
+  };
+
+  //Update avatar : TODO
+
+  const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
+    new: true,
+    runValidators: true,
   });
 
   res.status(200).json({
     success: true,
-    message: "Logged Out",
   });
+});
+
+// @route       PUT api/password/update
+// @description  change/update user password
+exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findById(req.user.id).select("+password");
+
+  // Check previous user password
+  const isMatched = await user.comparePassword(req.body.oldPassword);
+  if (!isMatched) {
+    return next(new ErrorHandler("Password is incorrect", 400));
+  }
+
+  user.password = req.body.password;
+  await user.save();
+
+  sendToken(user, 200, res);
 });
 
 // @route       POST api/password/forgor
@@ -146,4 +183,90 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
   await user.save();
 
   sendToken(user, 200, res);
+});
+
+// @route       GET api/logout
+// @description  logs out a user
+// @access
+exports.logoutUser = catchAsyncErrors(async (req, res, next) => {
+  res.cookie("token", null, {
+    expires: new Date(Date.now()),
+    httpOnly: true,
+  });
+
+  res.status(200).json({
+    success: true,
+    message: "Logged Out",
+  });
+});
+
+/* ADMIN ONLY ROUTES */
+
+// @route       GET api/admin/users
+// @description  get list of all users
+exports.getAllUser = catchAsyncErrors(async (req, res, next) => {
+  const users = await User.find();
+
+  res.status(200).json({
+    success: true,
+    count: users.length,
+    users,
+  });
+});
+
+// @route       GET api/admin/user/:id
+// @description  get user detail
+exports.getUserDetails = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findById(req.params.id);
+
+  if (!user) {
+    return next(
+      new ErrorHandler(`User does not exist/found with id ${req.params.id} `)
+    );
+  }
+
+  res.status(200).json({
+    success: true,
+    user,
+  });
+});
+
+// @route       PUT api/admin/user/:id
+// @description  change/update user detail
+exports.updateUser = catchAsyncErrors(async (req, res, next) => {
+  const newUserData = {
+    name: req.body.name,
+    email: req.body.email,
+    role: req.body.role,
+  };
+
+  const user = await User.findByIdAndUpdate(req.params.id, newUserData, {
+    new: true,
+    runValidators: true,
+  });
+
+  res.status(200).json({
+    success: true,
+  });
+});
+
+// @route       DELETE api/admin/user/:id
+// @description  delete user
+exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findById(req.params.id);
+
+  if (!user) {
+    return next(
+      new ErrorHandler(`User does not exist/found with id ${req.params.id} `)
+    );
+  }
+
+  // Remove Avatar from Cloudinary : TODO
+
+  await user.remove();
+
+  res.status(200).json({
+    success: true,
+    user,
+  });
 });
