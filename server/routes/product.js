@@ -6,12 +6,19 @@ const {
   getSingleProduct,
   updateProduct,
   deleteProduct,
+  createProductReview,
+  getProductReview,
+  deleteProductReview,
 } = require("../controllers/productController");
 const { isAuthenticatedUser, authorizeRoles } = require("../middlewares/auth");
 
 // User routes
 router.get("/products", getProducts);
 router.get("/product/:id", getSingleProduct);
+
+router.put("/review", isAuthenticatedUser, createProductReview);
+router.get("/reviews", isAuthenticatedUser, getProductReview);
+router.delete("/reviews", isAuthenticatedUser, deleteProductReview);
 
 // Admin routes
 router.post(
