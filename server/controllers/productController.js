@@ -9,8 +9,8 @@ const APIFeatures = require("../utils/apiFeatures");
 // @route       GET api/products
 // @description  gets all products
 exports.getProducts = catchAsyncErrors(async (req, res, next) => {
-  const resultsPerPage = 4;
-  //const productCount = await Product.countDocument();
+  const resultsPerPage = 6;
+  const productsCount = await Product.countDocuments();
 
   const apiFeatures = new APIFeatures(Product.find(), req.query)
     .search()
@@ -21,7 +21,7 @@ exports.getProducts = catchAsyncErrors(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    count: products.length,
+    productsCount,
     products,
   });
 });
