@@ -18,19 +18,23 @@ html{
     }
 }
 body{
-
     font-family:"Electronic Arts Text", sans-serif;
     width:100%;
     height:100%;
-    //color:white;
     background-color:#141414;
-    display:flex;
-    flex-direction:column;
 }
 button {
+    text-align:center;
     border: none;
     outline: none;
     cursor: pointer;
+    background-color: #9922ee;
+    padding:7px 20px;
+    border-radius:25px;
+    /* color:white!important; */
+}
+h3,h4,h5,h6{
+    margin:0!important;
 }
 h2 {
     font-weight:600;
@@ -48,14 +52,20 @@ a{
 p{
     margin:0;
 }
-#root{
-    min-height:100%;
+input,textarea{
+    color:black!important;
 }
-.App{
+
+#root,.App, body{
+    /* color:white!important; */
+    min-height:100%;
     display:flex;
     flex-direction:column;
-    min-height:100%;
 }
+.active{
+    display:none;
+}
+
 `;
 
 export default GlobalStyles;

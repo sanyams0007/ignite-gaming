@@ -1,36 +1,58 @@
 import { useEffect } from "react";
 import styled from "styled-components";
+import { useParams } from "react-router-dom";
+// Components and Pages
+import Game from "./product/Game";
+import ToastAlert from "./layout/ToastAlert";
 import MetaData from "./layout/MetaData";
-// Componets and Pages
-import Game from "./Game";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../actions/productActions";
+import Loader from "./layout/Loader";
 
 const Home = () => {
   const dispatch = useDispatch();
 
-  const { loading, products, error, productsCount } = useSelector(
-    (state) => state.products
-  );
+  const {
+    loading,
+    products,
+    error,
+    productsCount,
+    resultsPerPage,
+    pages,
+  } = useSelector((state) => state.products);
+
+  const { keyword } = useParams();
+  console.log(useParams());
 
   useEffect(() => {
-    dispatch(getProducts());
-  }, [dispatch]);
+    if (error) {
+      return;
+    }
+    dispatch(getProducts(keyword));
+  }, [dispatch, error, keyword]);
 
   return (
-    <div className="container conatiner-fluid">
-      <MetaData title={"Best Gaming Platform"} />
-      <h2 className="text-center mt-3 mb-5">
-        Latest <span>Product</span>
-      </h2>
-      <GameContainer>
-        {products &&
-          products.map((product) => {
-            return <Game key={product._id} data={product} />;
-          })}
-      </GameContainer>
-    </div>
+    <>
+      {loading ? (
+        <Loader />
+      ) : error ? (
+        <ToastAlert message={error} severity="error" />
+      ) : (
+        <div className="container conatiner-fluid">
+          <MetaData title={"Best Gaming Platform"} />
+          <h2 className="text-center mt-3 mb-5">
+            Latest <span>Product</span>
+          </h2>
+          <GameContainer>
+            {products &&
+              products.map((product) => {
+                return <Game key={product._id} product={product} />;
+              })}
+          </GameContainer>
+        </div>
+      )}
+    </>
   );
 };
 
@@ -41,5 +63,5 @@ const GameContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
   grid-column-gap: 1.5rem;
-  grid-row-gap: 2rem;
+  grid-row-gap: 2.5rem;
 `;

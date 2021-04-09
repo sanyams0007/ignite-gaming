@@ -1,7 +1,9 @@
 //Animation and Icons
 import styled from "styled-components";
 import logo from "../../images/flame.svg";
-import { Search, ShoppingCart } from "@material-ui/icons/";
+import { ShoppingCart } from "@material-ui/icons/";
+import { Route } from "react-router-dom";
+import SearchInput from "./SearchInput";
 
 const Header = () => {
   return (
@@ -11,10 +13,7 @@ const Header = () => {
           <img src={logo} alt="logo" />
           <h1>Ignite Gaming</h1>
         </LogoContainer>
-        <NavSearch>
-          <input type="text" placeholder="Search your game" />
-          <Search />
-        </NavSearch>
+        <Route render={({ history }) => <SearchInput history={history} />} />
         <button>Login</button>
         <button>
           <ShoppingCart />
@@ -62,39 +61,5 @@ const LogoContainer = styled.div`
     font-size: clamp();
     margin-left: 10px;
     font-weight: bold;
-  }
-`;
-
-const NavSearch = styled.div`
-  margin-left: auto;
-  width: 25%;
-  padding: 5px;
-  border-radius: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(145deg, #72f, #c1b);
-  > input {
-    ::placeholder {
-      color: white;
-    }
-    padding: 5px;
-    width: 80%;
-    text-indent: 10px;
-    color: #f1f1f1;
-    background-color: rgba(255, 255, 255, 0.33);
-    border: none;
-    outline: none;
-    border-top-left-radius: 50px;
-    border-bottom-left-radius: 50px;
-    margin-right: 5px;
-  }
-  > .MuiSvgIcon-root {
-    width: 20%;
-    padding: 5px;
-    border-top-right-radius: 50px;
-    border-bottom-right-radius: 50px;
-    font-size: 34px;
-    background-color: rgba(255, 255, 255, 0.33);
   }
 `;

@@ -9,8 +9,10 @@ const APIFeatures = require("../utils/apiFeatures");
 // @route       GET api/products
 // @description  gets all products
 exports.getProducts = catchAsyncErrors(async (req, res, next) => {
+  //return next(new ErrorHandler("Try Again..", 400));
   const resultsPerPage = 6;
   const productsCount = await Product.countDocuments();
+  const pages = Math.ceil(productsCount / resultsPerPage);
 
   const apiFeatures = new APIFeatures(Product.find(), req.query)
     .search()
@@ -22,7 +24,10 @@ exports.getProducts = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({
     success: true,
     productsCount,
+    resultsPerPage,
     products,
+    pages,
+    page: Number(req.query.page),
   });
 });
 

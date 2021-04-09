@@ -1,10 +1,12 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
 // Components and Pages
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import Home from "./components/Home";
+import GameDetail from "./components/product/GameDetail";
+
 //Styles
-import "./App.css";
 import GlobalStyles from "./components/GlobalStyles";
 
 const App = () => {
@@ -12,15 +14,21 @@ const App = () => {
     <>
       <Router>
         <GlobalStyles />
-        <Switch>
-          <Route path="/" exact>
-            <div className="App">
-              <Header />
+        <div className="App">
+          <Header />
+          <Switch>
+            <Route path="/" exact>
               <Home />
-            </div>
-          </Route>
-        </Switch>
-        <Footer />
+            </Route>
+            <Route path="/search/:keyword">
+              <Home />
+            </Route>
+            <Route path="/product/:id" exact>
+              <GameDetail />
+            </Route>
+          </Switch>
+          <Footer />
+        </div>
       </Router>
     </>
   );
