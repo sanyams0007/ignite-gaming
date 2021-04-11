@@ -10,24 +10,36 @@ const APIFeatures = require("../utils/apiFeatures");
 // @description  gets all products
 exports.getProducts = catchAsyncErrors(async (req, res, next) => {
   //return next(new ErrorHandler("Try Again..", 400));
-  const resultsPerPage = 6;
+  const resultsPerPage = 3;
+
   const productsCount = await Product.countDocuments();
+  /* const productsCount = await Product.find({
+    name: new RegExp(req.query.keyword, "i"),
+  }).countDocuments(); */
+
   const pages = Math.ceil(productsCount / resultsPerPage);
 
   const apiFeatures = new APIFeatures(Product.find(), req.query)
     .search()
-    .filter()
-    .pagination(resultsPerPage);
+    .filter();
 
-  const products = await apiFeatures.query;
+  let products = await apiFeatures.query;
 
+  let filteredProductsCount = products.length;
+  apiFeatures.pagination(resultsPerPage);
+
+  products = await apiFeatures.query;
+
+  const page = Number(req.query.page) > pages ? 1 : Number(req.query.page);
+  //: Number(req.query.page),
   res.status(200).json({
     success: true,
     productsCount,
     resultsPerPage,
     products,
     pages,
-    page: Number(req.query.page),
+    page,
+    filteredProductsCount,
   });
 });
 

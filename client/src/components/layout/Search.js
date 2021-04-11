@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import SearchIcon from "@material-ui/icons/Search";
 
-const SearchInput = ({ history }) => {
+const Search = ({ history }) => {
   const [keyword, setKeyword] = useState("");
 
   const searchHandler = (e) => {
@@ -21,14 +21,14 @@ const SearchInput = ({ history }) => {
 
   return (
     <NavSearch>
-      <form>
+      <form onSubmit={searchHandler}>
         <input
           onChange={handleChange}
           value={keyword}
           type="text"
           placeholder="Search your game"
         />
-        <button onClick={searchHandler}>
+        <button>
           <SearchIcon />
         </button>
       </form>
@@ -36,7 +36,7 @@ const SearchInput = ({ history }) => {
   );
 };
 
-export default SearchInput;
+export default Search;
 
 const NavSearch = styled.div`
   margin-left: auto;

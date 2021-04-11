@@ -10,7 +10,7 @@ const Loader = () => {
       height="100%"
     >
       {/* <h3 style={{ paddingBottom: "50px" }}>Loading...</h3> */}
-      <Spinner name="ball-triangle-path" />
+      <Spinner color="white" name="ball-triangle-path" />
     </Box>
   );
 };

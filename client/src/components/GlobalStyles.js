@@ -2,14 +2,14 @@ import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
 *,::before,::after{
-    color:white;
+    /* color:white; */
     margin:0;
     padding:0;
     box-sizing:border-box;
     
 }
 html{
-     height:100%;
+    height:100%;
     &::-webkit-scrollbar{
         width:0.5rem;
     }
@@ -22,6 +22,7 @@ body{
     width:100%;
     height:100%;
     background-color:#141414;
+    color:white!important;
 }
 button {
     text-align:center;
@@ -31,7 +32,7 @@ button {
     background-color: #9922ee;
     padding:7px 20px;
     border-radius:25px;
-    /* color:white!important; */
+    color:white!important;
 }
 h3,h4,h5,h6{
     margin:0!important;
@@ -44,9 +45,15 @@ h2 {
         color:#DD22CC;
     }
 }
+ul,ol{
+    li{
+        list-style:none;
+        cursor: pointer;
+    } 
+}
 a{
     cursor: pointer;
-    text-decoration:none;
+    text-decoration:none!important;
     color:white!important;
 }
 p{
@@ -57,13 +64,20 @@ input,textarea{
 }
 
 #root,.App, body{
-    /* color:white!important; */
     min-height:100%;
     display:flex;
     flex-direction:column;
 }
 .active{
     display:none;
+}
+.center-section{
+    width:85%;
+    margin:auto;
+}
+
+svg.MuiSvgIcon-root {
+    color:white;
 }
 
 `;

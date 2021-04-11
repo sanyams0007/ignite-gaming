@@ -48,6 +48,7 @@ export default Game;
 
 const StyledGame = styled.div`
   text-align: center;
+  border: 1px solid;
   //box-shadow: 0px 0px 2px rgba(255, 255, 255, 0.2);
   > img {
     max-width: 280px;
