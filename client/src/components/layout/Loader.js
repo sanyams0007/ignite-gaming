@@ -1,17 +1,24 @@
 import Spinner from "react-spinkit";
 import Box from "@material-ui/core/Box";
+import { Grid } from "@material-ui/core";
 const Loader = () => {
   return (
-    <Box
-      display="flex"
-      justifyContent="center"
+    <Grid
+      item
+      xs={12}
+      justify="center"
       alignItems="center"
-      flexDirection="column"
-      height="100%"
+      style={{ height: "100%" }}
     >
-      {/* <h3 style={{ paddingBottom: "50px" }}>Loading...</h3> */}
-      <Spinner color="white" name="ball-triangle-path" />
-    </Box>
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100%"
+      >
+        <Spinner color="white" name="ball-triangle-path" />
+      </Box>
+    </Grid>
   );
 };
 

@@ -24,8 +24,24 @@
     "ratings": 4.8,
     "images": [
       {
-        "public_id": "1234567891",
+        "public_id": "12345678911",
         "url": "https://upload.wikimedia.org/wikipedia/en/3/3d/PlayerUnknown%27s_Battlegrounds_Steam_Logo.jpg"
+      },
+      {
+        "public_id": "12345678912",
+        "url": "https://cdn.statically.io/img/wallpapercart.com/wp-content/uploads/2019/04/PUBG-HD-Fighting-Wallpaper.jpg"
+      },
+      {
+        "public_id": "12345678913",
+        "url": "https://wallpapercave.com/wp/wp5153906.jpg"
+      },
+      {
+        "public_id": "12345678914",
+        "url": "https://lh3.googleusercontent.com/proxy/CdDEKUIrn6aOpBLLjQop3DVnbe7DAydEKpJY1PRPe-7P3s2L8lugQ6JxCWZ3_QbZ1KGUxqxJv3AsBsDZ56yl7K3LC5t2HqUhszmiG3h_HTMIR1orQFwKbH5VU6rdVMS0TbhaNlJ2kP8s"
+      },
+      {
+        "public_id": "12345678915",
+        "url": "https://i.pinimg.com/originals/fc/eb/93/fceb938161c1fb46560fcd326a75128d.jpg"
       }
     ],
     "platform": ["Win", "PS5", "XBOX"],
@@ -44,6 +60,18 @@
       {
         "public_id": "1234567892",
         "url": "https://upload.wikimedia.org/wikipedia/en/4/40/Black_Ops_Cold_War.jpeg"
+      },
+      {
+        "public_id": "12345678921",
+        "url": "https://specials-images.forbesimg.com/imageserve/5f6657d65485b24d93f3bd8d/960x0.jpg"
+      },
+      {
+        "public_id": "12345678922",
+        "url": "https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/blog/hero/bocw/AGB-BOCW-Beta-Modes-TOUT.jpg"
+      },
+      {
+        "public_id": "12345678923",
+        "url": "https://wallpaperaccess.com/full/3626973.jpg"
       }
     ],
     "platform": ["Win", "PS5", "PS4", "XBOX One"],

@@ -1,3 +1,62 @@
 @import url(//db.onlinewebfonts.com/c/48656eabd3fef6464367d956315c749a?family=Electronic+Arts+Text);
-.App {
+
+*,
+::before,
+::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  height: 100%;
+}
+
+html::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+html::-webkit-scrollbar-thumb {
+  background: darkgray;
+}
+
+body {
+  font-family: "Electronic Arts Text", sans-serif;
+  height: 100%;
+  background-color: #141414;
+  color: white !important;
+}
+
+#root {
+  height: 100%;
+}
+
+h2 > span {
+  color: #dd22cc;
+}
+
+a {
+  text-decoration: none !important;
+  color: white !important;
+}
+
+ul li,
+ol li {
+  list-style: none;
+  cursor: pointer;
+}
+
+.center-section {
+  width: 85%;
+  margin: auto;
+}
+
+button {
+  text-align: center;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-color: #9922ee;
+  padding: 7px 20px;
+  border-radius: 25px;
+  box-shadow: none;
 }

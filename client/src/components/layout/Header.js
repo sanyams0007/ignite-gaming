@@ -1,11 +1,25 @@
-//Animation and Icons
+import { Link, Route } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+//Components and Pages
 import logo from "../../images/flame.svg";
 import ShoppingCart from "@material-ui/icons/ShoppingCart";
-import { Link, Route } from "react-router-dom";
 import Search from "./Search";
+//import { Button } from "@material-ui/core";
+import { logout } from "../../actions/userActions";
+import UserInfo from "../UserInfo";
+//import ToastAlert from "../layout/ToastAlert";
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const { user, loading } = useSelector((state) => state.auth);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    /* setMsg("Logout Successfull");
+    setTimeout(() => setMsg(""), 5000); */
+  };
+
   return (
     <HeaderContainer>
       <StyledNav className="center-section">
@@ -15,13 +29,27 @@ const Header = () => {
             <h1>Ignite Gaming</h1>
           </Link>
         </LogoContainer>
+
         <Route render={({ history }) => <Search history={history} />} />
-        <button>Login</button>
+
         <button>
-          <ShoppingCart />
-          <span>5</span>
+          <Link to="/cart">
+            <ShoppingCart />
+            <span>5</span>
+          </Link>
         </button>
+
+        {user ? (
+          <UserInfo user={user} logout={handleLogout} />
+        ) : (
+          !loading && (
+            <button>
+              <Link to="/login">Sign In</Link>
+            </button>
+          )
+        )}
       </StyledNav>
+      {/*  {msg && <ToastAlert message={msg} severity="success" />} */}
     </HeaderContainer>
   );
 };
@@ -38,8 +66,8 @@ const StyledNav = styled.nav`
   align-items: center;
   > button {
     font-weight: 700;
-    margin-left: 20px;
-    padding: 10px 30px;
+    margin: 0 10px;
+    padding: 10px 25px;
 
     > span {
       margin-top: 0;

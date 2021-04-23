@@ -109,6 +109,7 @@ const PaginationContainer = styled.div`
     margin-right: 0.5rem;
     padding: 8px 17px;
     font-size: 18px;
+    color: #fff;
   }
 
   > button:hover {
@@ -117,7 +118,7 @@ const PaginationContainer = styled.div`
 
   > button:disabled {
     background-color: rgba(221, 34, 204, 0.8);
-    color: #fff;
+    /* color: #fff; */
     cursor: not-allowed;
   }
 

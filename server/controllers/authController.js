@@ -4,7 +4,7 @@ const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 const sendToken = require("../utils/jwtToken");
 const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
-const { send } = require("process");
+const cloudinary = require("cloudinary");
 
 /* LOGGED IN USER ROUTES */
 
@@ -12,17 +12,24 @@ const { send } = require("process");
 // @description  register a user
 // @access
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
+  /* const result = await cloudinary.v2.uploader.upload(
+    "https://res.cloudinary.com/ignitegaming/image/upload/v1619004773/avatars/default_avatar_oamuj3.png",
+    {
+      folder: "avatars",
+      width: 150,
+      crop: "scale",
+    }
+  ); */
   const { name, email, password } = req.body;
 
   const user = await User.create({
     name,
     email,
     password,
-    avatar: {
-      public_id: "avatar1",
-      url:
-        "https://avataaars.io/?avatarStyle=Circle&topType=LongHairStraightStrand&accessoriesType=Prescription01&hairColor=BrownDark&facialHairType=BeardLight&facialHairColor=Brown&clotheType=CollarSweater&clotheColor=Pink&eyeType=Surprised&eyebrowType=Angry&mouthType=ScreamOpen&skinColor=Tanned",
-    },
+    /* avatar: {
+      public_id: result.public_id,
+      url: result.secure_url,
+    }, */
   });
 
   sendToken(user, 200, res);
@@ -73,7 +80,27 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
     email: req.body.email,
   };
 
-  //Update avatar : TODO
+  //Update avatar
+  if (typeof req.body.avatar !== "undefined") {
+    const user = await User.findById(req.user.id);
+
+    if (user.hasOwnProperty("avatar")) {
+      const image_id = user.avatar.public_id;
+
+      const res = await cloudinary.v2.uploader.destroy(image_id);
+    }
+
+    const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
+      folder: "avatars",
+      width: 150,
+      crop: "scale",
+    });
+
+    newUserData.avatar = {
+      public_id: result.public_id,
+      url: result.secure_url,
+    };
+  }
 
   const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
     new: true,
@@ -96,7 +123,7 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("Password is incorrect", 400));
   }
 
-  user.password = req.body.password;
+  user.password = req.body.newPassword;
   await user.save();
 
   sendToken(user, 200, res);
@@ -106,6 +133,7 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
 // @description  forgot password
 // @access
 exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
+  console.log(req.body.email);
   const user = await User.findOne({ email: req.body.email });
 
   if (!user) {
@@ -118,9 +146,10 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
   await user.save({ validateBeforeSave: false });
 
   // Create reset password url with message
-  const resetUrl = `${req.protocol}://${req.get(
+  /* const resetUrl = `${req.protocol}://${req.get(
     "host"
-  )}/api/password/reset/${resetToken}`;
+  )}/api/password/reset/${resetToken}`; */
+  const resetUrl = `${process.env.FRONTEND_URL}/password/reset/${resetToken}`;
 
   const message = `Your password reset token is as follows:\n\n${resetUrl}\n\nif you have not requested this email then ignore it.`;
 
