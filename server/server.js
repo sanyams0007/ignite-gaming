@@ -1,11 +1,12 @@
 const app = require("./app");
 const connectDatabase = require("./config/database");
+
 const dotenv = require("dotenv");
 const cloudinary = require("cloudinary");
 
 // Handle Uncaught exceptions !!Note (always place on top)
 process.on("uncaughtException", (err) => {
-  console.log(`ERROR: ${err.message}`);
+  console.log(`ERROR: ${err.stack}`);
   console.log("Shutting down the server due to uncaught exception");
   process.exit(1);
 });

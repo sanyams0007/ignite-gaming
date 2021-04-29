@@ -13,6 +13,7 @@ import UserInfo from "../UserInfo";
 const Header = () => {
   const dispatch = useDispatch();
   const { user, loading } = useSelector((state) => state.auth);
+  const { cartItems } = useSelector((state) => state.cart);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -35,7 +36,7 @@ const Header = () => {
         <button>
           <Link to="/cart">
             <ShoppingCart />
-            <span>5</span>
+            <span>{cartItems.length}</span>
           </Link>
         </button>
 

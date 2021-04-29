@@ -3,30 +3,31 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductDetails } from "../../actions/productActions";
 
-// Icons
+import { addItemToCart } from "../../actions/cartActions";
+
+// Components and Pages
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import Divider from "@material-ui/core/Divider";
 import Rating from "@material-ui/lab/Rating";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
+import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 
-// Components and Pages
 import ToastAlert from "../layout/ToastAlert";
 import Loader from "../layout/Loader";
 import MetaData from "../layout/MetaData";
-import {
-  Grid,
-  Typography,
-  Box,
-  Button,
-  TextField,
-  Divider,
-} from "@material-ui/core";
 import ImageCarousel from "../ImageCarousel";
 import ReviewModal from "../ReviewModal";
 
 const GameDetail = () => {
   const [open, setOpen] = useState(false);
+  const [qty, setQty] = useState(1);
 
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -48,13 +49,23 @@ const GameDetail = () => {
 
     if (error) return;
   }, [dispatch, error, id]);
+
+  const addToCart = () => {
+    dispatch(addItemToCart(id, qty));
+  };
+
+  const increaseQty = () => {
+    setQty((current) => (current >= product.stock ? current : current + 1));
+  };
+  const decreaseQty = () => {
+    setQty((current) => (current <= 1 ? current : current - 1));
+  };
+
   return (
     <>
       <MetaData title={product.name} />
       {loading ? (
         <Loader />
-      ) : error ? (
-        <ToastAlert message={error} severity="error" />
       ) : (
         <>
           <Grid item xs={false} sm={1}></Grid>
@@ -93,35 +104,49 @@ const GameDetail = () => {
               </Box>
               <Divider />
               <Typography variant="h6" gutterBottom>
-                ${product.price}
+                $ {product.price}
               </Typography>
-              <Box
-                display="flex"
-                alignItems="center"
-                justifyContent="flex-start"
-              >
-                <span>
-                  <RemoveIcon />
-                </span>
-                <TextField
-                  id="read-only-input"
-                  defaultValue={1}
-                  type="number"
-                  InputProps={{
-                    readOnly: true,
-                  }}
-                  style={{ width: "40px" }}
-                />
-                <span>
-                  <AddIcon />
-                </span>
-                <Button variant="contained" color="primary">
-                  <AddShoppingCartIcon /> Add to cart
-                </Button>
-              </Box>
+              {product.stock > 0 && (
+                <Box display="flex" alignItems="center">
+                  <IconButton
+                    onClick={decreaseQty}
+                    disabled={qty <= 1 ? true : false}
+                  >
+                    <RemoveIcon />
+                  </IconButton>
+                  <TextField
+                    id="read-only-input"
+                    value={qty}
+                    type="number"
+                    InputProps={{
+                      readOnly: true,
+                    }}
+                    style={{ width: "40px" }}
+                  />
+                  <IconButton
+                    onClick={increaseQty}
+                    disabled={qty >= product.stock ? true : false}
+                  >
+                    <AddIcon />
+                  </IconButton>
+                  <Button
+                    onClick={addToCart}
+                    variant="contained"
+                    color="primary"
+                    aria-label="add to shopping cart"
+                  >
+                    <AddShoppingCartIcon /> Add to cart
+                  </Button>
+                </Box>
+              )}
+
               <Typography component="p" paragraph>
                 Status :
-                <span> {product.stock > 0 ? "In Stock" : "Out Of Stock"}</span>
+                <span>
+                  {product.stock > 0
+                    ? `In Stock  (${product.stock})`
+                    : "Out Of Stock"}
+                </span>
               </Typography>
               <Divider />
               <Typography variant="h6">Description</Typography>

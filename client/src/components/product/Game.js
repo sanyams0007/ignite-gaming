@@ -28,9 +28,6 @@ const useStyle = makeStyles({
     margin: "0 auto",
     objectFit: "contain",
   },
-  action: {
-    justifyContent: "space-evenly",
-  },
   content: {
     padding: "10px",
     marginTop: "auto",
@@ -49,7 +46,7 @@ const Game = ({ product }) => {
       />
       <CardContent className={classes.content}>
         <Typography gutterBottom variant="h6" component="h2">
-          {product.name}
+          <Link to={`/product/${product._id}`}> {product.name}</Link>
         </Typography>
 
         <Box
@@ -71,19 +68,19 @@ const Game = ({ product }) => {
             component="span"
           >{` (${product.numOfReviews} Reviews)`}</Typography>
         </Box>
-        <Typography variant="body2" component="p">
+        <Typography variant="h6" component="p">
           <span style={{ color: "#ff4747" }}>$ </span>
           {product.price}
         </Typography>
       </CardContent>
-      <CardActions className={classes.action}>
+      {/* <CardActions className={classes.action}>
         <Button color="primary" variant="contained">
           <Link to={`/product/${product._id}`}>Detail</Link>
         </Button>
         <Button color="primary" variant="contained">
           <AddShoppingCartIcon />
         </Button>
-      </CardActions>
+      </CardActions> */}
     </Card>
   );
 };

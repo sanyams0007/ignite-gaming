@@ -46,9 +46,16 @@ const theme = createMuiTheme({
         padding: "7px 20px",
       },
     },
+    MuiIconButton: {
+      root: {
+        color: "#fff",
+        margin: "0 10px",
+      },
+    },
     MuiSvgIcon: {
       root: {
         /* color: "white", */
+        //it causes icon to have white color
       },
     },
     MuiTypography: {
@@ -94,6 +101,28 @@ const theme = createMuiTheme({
     MuiFormLabel: {
       root: {
         color: "#fff!important",
+      },
+    },
+    MuiList: {
+      root: {
+        color: "#000",
+        maxHeight: "350px",
+      },
+    },
+    MuiListItem: {
+      root: {
+        backgroundColor: "#fff",
+      },
+      button: {
+        "&:hover": {
+          backgroundColor: "#fff",
+          color: "#d2c",
+        },
+      },
+    },
+    MuiFormHelperText: {
+      root: {
+        color: "#fff",
       },
     },
   },

@@ -4,6 +4,7 @@ import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import CloseIcon from "@material-ui/icons/Close";
 import Rating from "@material-ui/lab/Rating";
+import IconButton from "@material-ui/core/IconButton";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import {
   Button,
@@ -65,16 +66,14 @@ const ReviewModal = ({ open, handleModalClose }) => {
               className={classes.modal_header}
             >
               <Typography variant="h5">Submit Review</Typography>
-              <Button
-                variant="contained"
+              <IconButton
                 onClick={handleModalClose}
                 style={{
-                  color: "white",
                   backgroundColor: "#000",
                 }}
               >
                 <CloseIcon />
-              </Button>
+              </IconButton>
             </Grid>
             <Grid item xs={12}>
               <Divider className={classes.divider} />
@@ -99,8 +98,8 @@ const ReviewModal = ({ open, handleModalClose }) => {
                   margin: "10px 0",
                   alignSelf: "center",
                   width: "30%",
-                  color: "white",
                   backgroundColor: "#000",
+                  color: "#fff",
                 }}
               >
                 Submit

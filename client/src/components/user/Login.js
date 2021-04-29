@@ -1,4 +1,4 @@
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -74,17 +74,20 @@ const useStyles = makeStyles((theme) => ({
 const Login = () => {
   const classes = useStyles();
   const history = useHistory();
+  const location = useLocation();
+  const dispatch = useDispatch();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const dispatch = useDispatch();
 
   const { isAuthenticated, error, loading } = useSelector(
     (state) => state.auth
   );
 
+  const redirect = location.search ? location.search.split("=")[1] : "/";
+
   useEffect(() => {
-    if (isAuthenticated) history.push("/");
+    if (isAuthenticated) history.push(redirect);
 
     if (error) {
       return;
