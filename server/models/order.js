@@ -2,6 +2,14 @@ const mongoose = require("mongoose");
 
 const orderSchema = mongoose.Schema({
   shippingInfo: {
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
+      type: String,
+      required: true,
+    },
     address: {
       type: String,
       required: true,

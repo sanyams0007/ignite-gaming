@@ -112,6 +112,18 @@ exports.getProductReview = catchAsyncErrors(async (req, res, next) => {
 
 /* ADMIN ONLY ROUTES */
 
+// @route       GET api/admin/products
+// @description  gets all products for admin
+exports.getAdminProducts = catchAsyncErrors(async (req, res, next) => {
+  const products = await Product.find({});
+
+  //: Number(req.query.page),
+  res.status(200).json({
+    success: true,
+    products,
+  });
+});
+
 // @route       POST api/admin/products/new
 // @description  creates a new product
 exports.newProduct = catchAsyncErrors(async (req, res, next) => {

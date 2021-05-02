@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductDetails } from "../../actions/productActions";
 
 import { addItemToCart } from "../../actions/cartActions";
+import { NEW_REVIEW_RESET } from "../../constants/productConstants";
 
 // Components and Pages
 import Grid from "@material-ui/core/Grid";
@@ -24,6 +25,7 @@ import Loader from "../layout/Loader";
 import MetaData from "../layout/MetaData";
 import ImageCarousel from "../ImageCarousel";
 import ReviewModal from "../ReviewModal";
+import ListReviews from "./ListReviews";
 
 const GameDetail = () => {
   const [open, setOpen] = useState(false);
@@ -43,12 +45,23 @@ const GameDetail = () => {
   const { loading, error, product } = useSelector(
     (state) => state.productDetails
   );
+  const { user } = useSelector((state) => state.auth);
+  const { error: reviewError, success } = useSelector(
+    (state) => state.newReview
+  );
 
   useEffect(() => {
     dispatch(getProductDetails(id));
 
     if (error) return;
-  }, [dispatch, error, id]);
+
+    if (reviewError) return;
+
+    if (success) {
+      dispatch({ type: NEW_REVIEW_RESET });
+      console.log("success review");
+    }
+  }, [dispatch, reviewError, error, id, success]);
 
   const addToCart = () => {
     dispatch(addItemToCart(id, qty));
@@ -68,14 +81,13 @@ const GameDetail = () => {
         <Loader />
       ) : (
         <>
-          <Grid item xs={false} sm={1}></Grid>
           <Grid
             item
             xs={12}
             sm={10}
             container
             spacing={2}
-            style={{ margin: "0", border: "3px solid blue" }}
+            style={{ margin: "0 auto", border: "3px solid blue" }}
           >
             <Grid item xs={12} lg={5} style={{ border: "3px solid green" }}>
               <ImageCarousel images={product.images} alt={product.title} />
@@ -157,17 +169,39 @@ const GameDetail = () => {
                 Sold By : <strong>{product.seller}</strong>
               </Typography>
 
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleModalOpen}
-              >
-                Submit Your Review
-              </Button>
-              <ReviewModal open={open} handleModalClose={handleModalClose} />
+              {user ? (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleModalOpen}
+                >
+                  Submit Your Review
+                </Button>
+              ) : (
+                <Button variant="contained" color="primary">
+                  <Link to="/login">Login to Submit Review</Link>
+                </Button>
+              )}
+
+              <ReviewModal
+                dispatch={dispatch}
+                id={id}
+                open={open}
+                handleModalClose={handleModalClose}
+              />
             </Grid>
+            {product.reviews && product.reviews.length > 0 && (
+              <Grid
+                item
+                xs={12}
+                spacing={3}
+                container
+                style={{ margin: "50px auto 20px" }}
+              >
+                <ListReviews reviews={product.reviews} />
+              </Grid>
+            )}
           </Grid>
-          <Grid item xs={false} sm={1}></Grid>
           {error && <ToastAlert message={error} severity="error" />}
         </>
       )}

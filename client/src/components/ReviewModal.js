@@ -1,3 +1,7 @@
+import { useState } from "react";
+
+import { newReview } from "../actions/productActions";
+
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
@@ -39,8 +43,28 @@ const useStyles = makeStyles({
   },
 });
 
-const ReviewModal = ({ open, handleModalClose }) => {
+const ReviewModal = ({ dispatch, id, open, handleModalClose }) => {
   const classes = useStyles();
+  const [rating, setRating] = useState(0.0);
+  const [comment, setComment] = useState("");
+
+  const handleRating = (event, newValue) => {
+    setRating(newValue);
+  };
+  const handleComment = (e) => {
+    setComment(e.target.value);
+  };
+
+  const handleSubmit = () => {
+    const formData = new FormData();
+
+    formData.set("rating", rating);
+    formData.set("comment", comment);
+    formData.set("productId", id);
+
+    dispatch(newReview(formData));
+    handleModalClose();
+  };
 
   return (
     <Modal
@@ -84,16 +108,20 @@ const ReviewModal = ({ open, handleModalClose }) => {
                 defaultValue={0.0}
                 precision={0.5}
                 name="user-rating"
-                value={0}
+                onChange={handleRating}
+                value={rating}
                 emptyIcon={<StarBorderIcon fontSize="inherit" />}
                 style={{ alignSelf: "flex-start" }}
               />
               <TextareaAutosize
                 rowsMin={5}
+                value={comment}
                 placeholder="Write your feedback here..."
+                onChange={handleComment}
               ></TextareaAutosize>
               <Button
                 variant="contained"
+                onClick={handleSubmit}
                 style={{
                   margin: "10px 0",
                   alignSelf: "center",

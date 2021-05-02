@@ -125,6 +125,16 @@ const theme = createMuiTheme({
         color: "#fff",
       },
     },
+    MuiTableContainer: {
+      root: {
+        overflowX: "unset",
+      },
+    },
+    MuiTableCell: {
+      root: {
+        fontSize: "1rem",
+      },
+    },
   },
 });
 

@@ -49,6 +49,7 @@ export default function Payment({ prev }) {
   const { user } = useSelector((state) => state.auth);
   const { cartItems, shippingInfo } = useSelector((state) => state.cart);
   const { error } = useSelector((state) => state.newOrder);
+  shippingInfo && console.log(shippingInfo);
 
   useEffect(() => {}, []);
 

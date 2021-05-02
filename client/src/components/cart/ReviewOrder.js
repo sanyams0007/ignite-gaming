@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from "react-redux";
 /* import { makeStyles } from "@material-ui/core/styles";
 
 import { useState } from "react"; */
-import { useHistory } from "react-router";
 
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -36,9 +35,6 @@ const ReviewOrder = ({ prev, next }) => {
   const SHIPPING_COST = invoiceSubtotal > 50 ? 0 : 4.9;
   const invoiceTaxes = TAX_RATE * invoiceSubtotal + SHIPPING_COST;
   const invoiceTotal = invoiceTaxes + invoiceSubtotal;
-
-  //const dispatch = useDispatch();
-  const history = useHistory();
 
   const proceedToPayment = (e) => {
     e.preventDefault();

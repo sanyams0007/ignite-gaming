@@ -30,12 +30,11 @@ const useStyles = makeStyles((theme) => ({
 
 const Shipping = ({ next }) => {
   const classes = useStyles();
-  /* const countriesList = Object.values(countries);
-  console.log(countriesList); */
+  const dispatch = useDispatch();
+
   const countriesList = Object.entries(countries).map(
     (country) => `${country[1].name}-${country[0]}`
   );
-  //console.log(countriesList);
 
   const { shippingInfo } = useSelector((state) => state.cart);
 
@@ -46,8 +45,6 @@ const Shipping = ({ next }) => {
   const [postalCode, setPostalCode] = useState(shippingInfo.postalCode);
   const [phoneNo, setPhoneNo] = useState(shippingInfo.phoneNo);
   const [country, setCountry] = useState(shippingInfo.country);
-
-  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();

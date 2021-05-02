@@ -54,6 +54,14 @@ ol li {
   background-color: #fff !important;
 }
 
+.MuiListItem-root.Mui-selected {
+  background-color: #fff !important;
+}
+
+.MuiTableCell-root > .MuiIconButton-root {
+  margin: 0 !important;
+}
+
 button {
   text-align: center;
   border: none;

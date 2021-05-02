@@ -84,6 +84,7 @@ export default function UserInfo({ user, logout }) {
         role={undefined}
         transition
         disablePortal
+        style={{ zIndex: 5 }}
       >
         {({ TransitionProps, placement }) => (
           <Grow
@@ -105,19 +106,18 @@ export default function UserInfo({ user, logout }) {
                       <PersonIcon /> Profile
                     </Link>
                   </MenuItem>
-                  {user && user.role !== "admin" ? (
-                    <MenuItem onClick={handleClose}>
-                      <Link to="/orders/me" className={classes.text_color}>
-                        <ViewListIcon /> Orders
-                      </Link>
-                    </MenuItem>
-                  ) : (
+                  {user && user.role === "admin" && (
                     <MenuItem onClick={handleClose}>
                       <Link to="/dashboard" className={classes.text_color}>
                         <DashboardIcon /> Dashboard
                       </Link>
                     </MenuItem>
                   )}
+                  <MenuItem onClick={handleClose}>
+                    <Link to="/orders/me" className={classes.text_color}>
+                      <ViewListIcon /> Orders
+                    </Link>
+                  </MenuItem>
 
                   <MenuItem
                     onClick={handleClose}

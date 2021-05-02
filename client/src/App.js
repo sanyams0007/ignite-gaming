@@ -9,6 +9,8 @@ import Footer from "./components/layout/Footer";
 
 import ProtectedRoute from "./components/route/ProtectedRoute";
 
+import Dashboard from "./components/admin/dashboard/Dashboard";
+
 import Login from "./components/user/Login";
 import Register from "./components/user/Register";
 import Profile from "./components/user/Profile";
@@ -23,6 +25,9 @@ import OrderSuccess from "./components/cart/OrderSuccess";
 //import Shipping from "./components/cart/Shipping";
 //import ReviewOrder from "./components/cart/ReviewOrder";
 //import Payment from "./components/cart/Payment";
+
+import OrdersList from "./components/order/OrdersList";
+import OrderDetail from "./components/order/OrderDetail";
 
 //Styles
 import "./App.css";
@@ -99,6 +104,23 @@ const App = () => {
                   path="/password/update"
                   exact
                   component={UpdatePassword}
+                />
+
+                <ProtectedRoute
+                  path="/orders/me"
+                  exact
+                  component={OrdersList}
+                />
+                <ProtectedRoute
+                  path="/order/:id"
+                  exact
+                  component={OrderDetail}
+                />
+
+                <ProtectedRoute
+                  path="/dashboard"
+                  isAdmin={true}
+                  component={Dashboard}
                 />
               </Switch>
             </Grid>
