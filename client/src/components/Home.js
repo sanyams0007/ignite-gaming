@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "material-react-toastify";
 
 // Components and Pages
 import Game from "./product/Game";
-import ToastAlert from "./layout/ToastAlert";
 import MetaData from "./layout/MetaData";
 import Loader from "./layout/Loader";
 import { Grid, Box, Typography, Paper } from "@material-ui/core";
@@ -60,6 +60,7 @@ const Home = () => {
   } = useSelector((state) => state.products);
 
   const setCurrentPageNo = (event, value) => {
+    console.log(value);
     setCurrentPage(value);
   };
 
@@ -73,10 +74,12 @@ const Home = () => {
 
   useEffect(() => {
     if (error) {
+      toast.error(error);
       return;
     }
+
     dispatch(getProducts(keyword, currentPage, price, category, rating));
-  }, [dispatch, error, keyword, currentPage, price, category, rating]);
+  }, [toast, dispatch, error, keyword, currentPage, price, category, rating]);
 
   let count = productsCount;
 
@@ -84,9 +87,14 @@ const Home = () => {
     count = filteredProductsCount;
   }
 
+  useEffect(() => {
+    if (keyword) setCurrentPage(1);
+    console.log(currentPage);
+  }, [keyword]);
+  console.log(currentPage);
+
   let pages = Math.ceil(count / resultsPerPage);
 
-  console.log(count, pages);
   return (
     <>
       <MetaData title={"Best Gaming Platform"} />
@@ -166,6 +174,7 @@ const Home = () => {
                   sm={8}
                   md={9}
                   container
+                  alignContent="flex-start"
                   spacing={2}
                   style={{ margin: "0" }}
                 >
@@ -184,7 +193,14 @@ const Home = () => {
                     Latest <span>Products</span>
                   </Typography>
                 </Grid>
-                <Grid item xs={12} container spacing={2} v>
+                <Grid
+                  item
+                  xs={12}
+                  container
+                  alignContent="flex-start"
+                  spacing={2}
+                  v
+                >
                   {products &&
                     products.map((product) => (
                       <Grid key={product._id} item xs={12} sm={6} md={4}>
@@ -196,16 +212,11 @@ const Home = () => {
             )}
             {pages >= 2 && (
               <Grid item xs={12}>
-                {/* <Pagination
-                  page={currentPage}
-                  pages={pages}
-                  changePage={setCurrentPageNo}
-                /> */}
                 <Pagination
                   color="secondary"
                   size="large"
                   page={currentPage}
-                  defaultPage={1}
+                  /* defaultPage={1} */
                   count={pages}
                   onChange={setCurrentPageNo}
                 />
@@ -213,7 +224,6 @@ const Home = () => {
             )}
           </Grid>
           <Grid item xs={false} sm={1} lg={keyword ? 1 : 2}></Grid>
-          {error && <ToastAlert message={error} severity="error" />}
         </>
       )}
     </>

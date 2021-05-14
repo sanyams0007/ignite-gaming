@@ -14,8 +14,13 @@ const Cart = () => {
       <MetaData title="Your Cart" />
       {cartItems.length === 0 ? (
         <Grid item xs={12}>
-          <Typography align="center" variant="h2" component="h2">
-            Your Cart is Empty
+          <Typography
+            align="center"
+            variant="h2"
+            component="h2"
+            style={{ margin: "20px 0" }}
+          >
+            Empty <span> Cart</span>
           </Typography>
         </Grid>
       ) : (

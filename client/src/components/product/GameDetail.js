@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductDetails } from "../../actions/productActions";
+import { toast } from "material-react-toastify";
 
+import { getProductDetails, clearErrors } from "../../actions/productActions";
 import { addItemToCart } from "../../actions/cartActions";
 import { NEW_REVIEW_RESET } from "../../constants/productConstants";
 
@@ -20,11 +21,10 @@ import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 
-import ToastAlert from "../layout/ToastAlert";
 import Loader from "../layout/Loader";
 import MetaData from "../layout/MetaData";
-import ImageCarousel from "../ImageCarousel";
-import ReviewModal from "../ReviewModal";
+import Carousel from "../custom/Carousel";
+import ReviewModal from "../custom/ReviewModal";
 import ListReviews from "./ListReviews";
 
 const GameDetail = () => {
@@ -53,15 +53,23 @@ const GameDetail = () => {
   useEffect(() => {
     dispatch(getProductDetails(id));
 
-    if (error) return;
+    if (error) {
+      toast.error(error);
+      dispatch(clearErrors());
+      return;
+    }
 
-    if (reviewError) return;
+    if (reviewError) {
+      toast.error(reviewError);
+      dispatch(clearErrors());
+      return;
+    }
 
     if (success) {
+      toast.success("Review added successfully");
       dispatch({ type: NEW_REVIEW_RESET });
-      console.log("success review");
     }
-  }, [dispatch, reviewError, error, id, success]);
+  }, [toast, dispatch, reviewError, error, id, success]);
 
   const addToCart = () => {
     dispatch(addItemToCart(id, qty));
@@ -90,7 +98,7 @@ const GameDetail = () => {
             style={{ margin: "0 auto", border: "3px solid blue" }}
           >
             <Grid item xs={12} lg={5} style={{ border: "3px solid green" }}>
-              <ImageCarousel images={product.images} alt={product.title} />
+              <Carousel images={product.images} alt={product.title} />
             </Grid>
             <Grid item xs={12} lg={7}>
               <Typography variant="h4" gutterBottom>
@@ -162,7 +170,9 @@ const GameDetail = () => {
               </Typography>
               <Divider />
               <Typography variant="h6">Description</Typography>
-              <Typography>Release Date: 22/2/2021</Typography>
+              <Typography>
+                Release Date: {product.release && product.release}
+              </Typography>
               <Typography paragraph>{product.description}</Typography>
 
               <Typography component="p" paragraph>
@@ -202,7 +212,6 @@ const GameDetail = () => {
               </Grid>
             )}
           </Grid>
-          {error && <ToastAlert message={error} severity="error" />}
         </>
       )}
     </>

@@ -8,52 +8,6 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
-import IconButton from "@material-ui/core/IconButton";
-import EditIcon from "@material-ui/icons/Edit";
-import DeleteIcon from "@material-ui/icons/Delete";
-import { Link } from "react-router-dom";
-
-const columns = [
-  { id: "ID", label: "Product ID", minWidth: 150 },
-  { id: "Name", label: "Name", minWidth: 120 },
-  {
-    id: "Price",
-    label: "Price",
-    minWidth: 50,
-    align: "left",
-    format: (value) => `$ ${value.toLocaleString("en-US")}`,
-  },
-  {
-    id: "Stock",
-    label: "Stock",
-    minWidth: 50,
-    align: "right",
-    format: (value) =>
-      Number(value) > 0 ? (
-        <span style={{ color: "green" }}>{Number(value)}</span>
-      ) : (
-        <span style={{ color: "red" }}>{Number(value)}</span>
-      ),
-  },
-  {
-    id: "Detail",
-    label: "More Info.",
-    minWidth: 100,
-    align: "right",
-    format: (value) => (
-      <>
-        <IconButton aria-label="edit">
-          <Link to={value}>
-            <EditIcon color="primary" />
-          </Link>
-        </IconButton>
-        <IconButton aria-label="delete">
-          <DeleteIcon color="error" />
-        </IconButton>
-      </>
-    ),
-  },
-];
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,9 +16,6 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiListItem-root.Mui-selected": {
       color: "#fff",
     },
-    /* "& .MuiTableContainer-root": {
-      overflowX: "none",
-    }, */
   },
   container: {
     minHeight: "50vh",
@@ -83,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function StickyHeadTable({ rows }) {
+const DataTable = ({ columns, rows }) => {
   const classes = useStyles();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(7);
@@ -150,4 +101,6 @@ export default function StickyHeadTable({ rows }) {
       />
     </Paper>
   );
-}
+};
+
+export default DataTable;

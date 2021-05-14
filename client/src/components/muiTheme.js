@@ -52,12 +52,6 @@ const theme = createMuiTheme({
         margin: "0 10px",
       },
     },
-    MuiSvgIcon: {
-      root: {
-        /* color: "white", */
-        //it causes icon to have white color
-      },
-    },
     MuiTypography: {
       root: {
         color: "#fff",

@@ -1,40 +1,37 @@
-import React from "react";
+import { useState } from "react";
 import clsx from "clsx";
+
 import { makeStyles } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import Drawer from "@material-ui/core/Drawer";
-import Box from "@material-ui/core/Box";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
-import Badge from "@material-ui/core/Badge";
-import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import Link from "@material-ui/core/Link";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import NotificationsIcon from "@material-ui/icons/Notifications";
-import ListItems from "./ListItems";
 
 import MetaData from "../../layout/MetaData";
-import Loader from "../../layout/Loader";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import ProductsList from "../ProductsList";
+import ProtectedRoute from "../../route/ProtectedRoute";
+import ListItems from "./ListItems";
 
-//import Chart from "./Chart";
-//import Deposits from "./Deposits";
-//import Orders from "./Orders";
+import ProductsList from "../ProductsList";
+import NewProduct from "../NewProduct";
+import UpdateProduct from "../UpdateProduct";
+
+import UsersList from "../UsersList";
+import UpdateUser from "../UpdateUser";
+
+import OrdersList from "../OrdersList";
+import ProcessOrder from "../ProcessOrder";
+
+import ProductReviews from "../ProductReviews";
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
-    position: "relative",
   },
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
@@ -45,28 +42,6 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "flex-end",
     padding: "0 8px",
     ...theme.mixins.toolbar,
-  },
-  appBar: {
-    position: "absolute",
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  menuButton: {
-    marginRight: 36,
-  },
-  menuButtonHidden: {
-    display: "none",
   },
   title: {
     flexGrow: 1,
@@ -94,16 +69,10 @@ const useStyles = makeStyles((theme) => ({
       width: theme.spacing(9),
     },
   },
-  appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    height: "100vh",
-    overflow: "auto",
   },
-  container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
-  },
+
   paper: {
     padding: theme.spacing(2),
     display: "flex",
@@ -124,14 +93,19 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiListItem-button:hover": {
       backgroundColor: "#141414",
     },
+    /*  "& .MuiListItem-button:active": {
+      backgroundColor: "#141414",
+    }, */
   },
 }));
 
 export default function Dashboard(props) {
   const { path } = props.match;
-  console.log(path);
+
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
+
+  const [open, setOpen] = useState(true);
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -143,33 +117,47 @@ export default function Dashboard(props) {
   const defaultDashboard = () => {
     return (
       <>
-        <div className={classes.appBarSpacer}>
-          <Typography
-            align="center"
-            component="h2"
-            variant="h2"
-            color="inherit"
-            noWrap
-            className={classes.title}
-          >
-            Admin <span>Dashboard</span>
-          </Typography>
-        </div>
-        <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}></Paper>
-            </Grid>
+        <Grid
+          item
+          spacing={2}
+          xs={12}
+          alignContent="flex-start"
+          container
+          style={{ margin: "0 auto" }}
+        >
+          <Grid item xs={12}>
+            <Typography
+              align="center"
+              component="h2"
+              variant="h2"
+              className={classes.title}
+            >
+              Admin <span>Dashboard</span>
+            </Typography>
+          </Grid>
 
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}></Paper>
-            </Grid>
-
+          <Grid item xs={12} container spacing={3} style={{ margin: "0 auto" }}>
             <Grid item xs={12}>
-              <Paper className={classes.paper}></Paper>
+              <Paper className={fixedHeightPaper}></Paper>
+            </Grid>
+
+            <Grid item xs={12} md={6} lg={3}>
+              <Paper className={fixedHeightPaper}></Paper>
+            </Grid>
+
+            <Grid item xs={12} md={6} lg={3}>
+              <Paper className={fixedHeightPaper}></Paper>
+            </Grid>
+
+            <Grid item xs={12} md={6} lg={3}>
+              <Paper className={fixedHeightPaper}></Paper>
+            </Grid>
+
+            <Grid item xs={12} md={6} lg={3}>
+              <Paper className={fixedHeightPaper}></Paper>
             </Grid>
           </Grid>
-        </Container>
+        </Grid>
       </>
     );
   };
@@ -178,49 +166,17 @@ export default function Dashboard(props) {
     <>
       <MetaData title={"Welcome to Dashboard"} />
       <Grid xs={12} className={classes.root}>
-        {/*  <div className={classes.root}> */}
-        {/* <CssBaseline /> */}
-        {/* <AppBar
-          position="absolute"
-          className={clsx(classes.appBar, open && classes.appBarShift)}
-        >
-          <Toolbar className={classes.toolbar}>
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              onClick={handleDrawerOpen}
-              className={clsx(
-                classes.menuButton,
-                open && classes.menuButtonHidden
-              )}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography
-              component="h1"
-              variant="h6"
-              color="inherit"
-              noWrap
-              className={classes.title}
-            >
-              Dashboard
-            </Typography>
-          </Toolbar>
-        </AppBar> */}
-        {/* Chart */}
-        {/* <Chart /> */}
-        {/* <Deposits /> */}
-        {/* <Orders /> */}
-        {/* Recent Deposits */}
-        {/* Recent Orders */}
-        {/* <Container  className={clsx(classes.appBar, open && classes.appBarShift)} ></Container> */}
         <Drawer
           variant="permanent"
           classes={{
             paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
           }}
           open={open}
+          style={{
+            height: "100vh",
+            position: "sticky",
+            top: "0",
+          }}
         >
           {open ? (
             <div className={classes.toolbarIcon}>
@@ -247,48 +203,61 @@ export default function Dashboard(props) {
           </div>
         </Drawer>
 
-        {/* <Link to="/admin">Home</Link> */}
         <main className={classes.content}>
-          <Route exact path={`${path}`} component={defaultDashboard} />
-          <Route path={`${path}/admin/products`} component={ProductsList} />
+          <ProtectedRoute exact path={`${path}`} component={defaultDashboard} />
+
+          <ProtectedRoute
+            exact
+            path={`${path}/admin/products`}
+            isAdmin={true}
+            component={ProductsList}
+          />
+          <ProtectedRoute
+            exact
+            path={`${path}/admin/product`}
+            isAdmin={true}
+            component={NewProduct}
+          />
+          <ProtectedRoute
+            exact
+            path={`${path}/admin/product/:id`}
+            isAdmin={true}
+            component={UpdateProduct}
+          />
+
+          <ProtectedRoute
+            exact
+            path={`${path}/admin/users`}
+            isAdmin={true}
+            component={UsersList}
+          />
+          <ProtectedRoute
+            exact
+            path={`${path}/admin/user/:id`}
+            isAdmin={true}
+            component={UpdateUser}
+          />
+
+          <ProtectedRoute
+            exact
+            path={`${path}/admin/orders`}
+            isAdmin={true}
+            component={OrdersList}
+          />
+          <ProtectedRoute
+            exact
+            path={`${path}/admin/order/:id`}
+            isAdmin={true}
+            component={ProcessOrder}
+          />
+
+          <ProtectedRoute
+            exact
+            path={`${path}/admin/reviews`}
+            isAdmin={true}
+            component={ProductReviews}
+          />
         </main>
-
-        {/* <Route exact path="/admin">
-            <Random />
-          </Route>
-          <Route exact path="/admin">
-            <Random />
-          </Route> */}
-
-        {/* <main className={classes.content}>
-          <div className={classes.appBarSpacer}>
-            <Typography
-              align="center"
-              component="h2"
-              variant="h2"
-              color="inherit"
-              noWrap
-              className={classes.title}
-            >
-              Admin <span>Dashboard</span>
-            </Typography>
-          </div>
-          <Container maxWidth="lg" className={classes.container}>
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={8} lg={9}>
-                <Paper className={fixedHeightPaper}></Paper>
-              </Grid>
-
-              <Grid item xs={12} md={4} lg={3}>
-                <Paper className={fixedHeightPaper}></Paper>
-              </Grid>
-
-              <Grid item xs={12}>
-                <Paper className={classes.paper}></Paper>
-              </Grid>
-            </Grid>
-          </Container>
-        </main> */}
       </Grid>
     </>
   );

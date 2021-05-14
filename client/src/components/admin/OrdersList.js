@@ -5,27 +5,41 @@ import { toast } from "material-react-toastify";
 
 import MetaData from "../layout/MetaData";
 import Loader from "../layout/Loader";
-import OrderTable from "../custom/Table";
+import OrdersTable from "../custom/Table";
 
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
+import IconButton from "@material-ui/core/IconButton";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import DeleteIcon from "@material-ui/icons/Delete";
 
-import { myOrders, clearErrors } from "../../actions/orderActions";
+import {
+  allOrders,
+  clearErrors,
+  deleteOrder,
+} from "../../actions/orderActions";
+import { DELETE_ORDER_RESET } from "../../constants/orderConstants";
 
-const OrdersList = () => {
+const OrdersList = ({ history, match }) => {
   const dispatch = useDispatch();
 
-  const { loading, error, orders } = useSelector((state) => state.myOrders);
+  const { loading, error, orders } = useSelector((state) => state.allOrders);
+  const { isDeleted } = useSelector((state) => state.order);
 
   useEffect(() => {
+    dispatch(allOrders());
+
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
-      return;
     }
 
-    dispatch(myOrders());
-  }, [toast, error, dispatch]);
+    if (isDeleted) {
+      toast.success("Order deleted successfully");
+      history.push(match.path);
+      dispatch({ type: DELETE_ORDER_RESET });
+    }
+  }, [toast, error, dispatch, isDeleted, history]);
 
   const rows = [];
 
@@ -37,12 +51,12 @@ const OrdersList = () => {
         ItemCount: order.orderItems.length,
         Status: order.orderStatus,
         Date: order.createdAt,
-        Detail: `/order/${order._id}`,
+        Action: order._id,
       });
     });
 
   const columns = [
-    { id: "OrderID", label: "OrderID", minWidth: 170 },
+    { id: "OrderID", label: "Order ID", minWidth: 170 },
     { id: "ItemCount", label: "No of Items", minWidth: 50 },
     {
       id: "Amount",
@@ -73,28 +87,45 @@ const OrdersList = () => {
       format: (value) => new Date(value).toLocaleDateString(),
     },
     {
-      id: "Detail",
-      label: "More Info.",
+      id: "Action",
+      label: "Actions",
       minWidth: 100,
       align: "right",
-      format: (value) => <Link to={value}>Detail</Link>,
+      format: (value) => (
+        <>
+          <IconButton aria-label="details">
+            <Link to={`order/${value}`}>
+              <VisibilityIcon color="primary" />
+            </Link>
+          </IconButton>
+          <IconButton
+            aria-label="delete"
+            onClick={() => deleteOrderHandler(value)}
+          >
+            <DeleteIcon color="error" />
+          </IconButton>
+        </>
+      ),
     },
   ];
 
+  const deleteOrderHandler = (id) => {
+    dispatch(deleteOrder(id));
+  };
+
   return (
     <>
-      <MetaData title={"My Orders"} />
+      <MetaData title={"All Orders"} />
       {loading ? (
         <Loader />
       ) : (
         <Grid
           item
           xs={12}
-          sm={10}
           alignContent="flex-start"
           container
           spacing={2}
-          style={{ margin: "0 auto", border: "3px solid blue" }}
+          style={{ margin: "0 auto" }}
         >
           <Grid item xs={12}>
             <Typography
@@ -103,11 +134,11 @@ const OrdersList = () => {
               component="h2"
               style={{ margin: "20px 0" }}
             >
-              My <span>Orders</span>
+              All <span>Orders</span>
             </Typography>
           </Grid>
-          <Grid item xs={12} style={{ border: "3px solid green" }}>
-            <OrderTable columns={columns} rows={rows} />
+          <Grid item xs={12}>
+            <OrdersTable columns={columns} rows={rows} />
           </Grid>
         </Grid>
       )}

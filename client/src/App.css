@@ -45,15 +45,6 @@ ol li {
   cursor: pointer;
 }
 
-.center-section {
-  width: 85%;
-  margin: auto;
-}
-
-.ElementsApp input {
-  background-color: #fff !important;
-}
-
 .MuiListItem-root.Mui-selected {
   background-color: #fff !important;
 }
@@ -62,13 +53,15 @@ ol li {
   margin: 0 !important;
 }
 
-button {
-  text-align: center;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  background-color: #9922ee;
-  padding: 7px 20px;
-  border-radius: 25px;
-  box-shadow: none;
+.StripeElement {
+  display: block;
+  margin: 10px 0 20px 0;
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 1em;
+  font-family: "Source Code Pro", monospace;
+  border: 0;
+  outline: 0;
+  border-radius: 4px;
+  background: white;
 }

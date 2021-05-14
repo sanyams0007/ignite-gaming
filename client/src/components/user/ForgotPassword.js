@@ -1,58 +1,21 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { toast } from "material-react-toastify";
+
+import { forgotPassword, clearErrors } from "../../actions/userActions";
+import MetaData from "../layout/MetaData";
 
 import { Grid, Typography, Button } from "@material-ui/core";
-import { forgotPassword } from "../../actions/userActions";
-import ToastAlert from "../layout/ToastAlert";
-import MetaData from "../layout/MetaData";
-import InputBase from "@material-ui/core/InputBase";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 
-const CustomInput = withStyles((theme) => ({
-  root: {
-    "label + &": {
-      marginTop: "30px",
-    },
-  },
-  input: {
-    borderRadius: 4,
-    position: "relative",
-    backgroundColor: "#f9f9f9",
-    fontSize: 20,
-    width: "100%",
-    padding: "10px 12px",
-    "&:focus": {
-      backgroundColor: theme.palette.common.white,
-    },
-  },
-}))(InputBase);
-
-const useStyles = makeStyles({
-  top_heading: {
-    margin: "25px auto",
-  },
-  container: {
-    border: "3px solid blue",
-    padding: "50px",
-  },
-  box: {
-    margin: "20px 10px",
-  },
-  input_box: {
-    width: "100%",
-    margin: "25px 0",
-  },
-  label: {
-    fontSize: 23,
-  },
-});
+import { CustomInput, commonStyles, containerStyles } from "./userStyle";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
 
-  const classes = useStyles();
+  const classes = commonStyles();
+  const containerStyle = containerStyles();
   const dispatch = useDispatch();
 
   const { loading, error, message } = useSelector(
@@ -61,13 +24,16 @@ const ForgotPassword = () => {
 
   useEffect(() => {
     if (error) {
+      toast.error(error);
+      dispatch(clearErrors());
       return;
     }
 
     if (message) {
+      toast.success(message);
       return;
     }
-  }, [dispatch, error, message]);
+  }, [toast, dispatch, error, message]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -80,10 +46,12 @@ const ForgotPassword = () => {
       <Grid
         item
         xs={12}
-        sm={10}
+        sm={8}
+        md={6}
+        lg={4}
         container
-        justify="center"
-        style={{ margin: "0 auto 12%", border: "3px solid coral" }}
+        alignContent="flex-start"
+        style={{ margin: "0 auto", border: "3px solid coral" }}
       >
         <Grid item xs={12}>
           <Typography
@@ -95,32 +63,30 @@ const ForgotPassword = () => {
             Forgot <span>Password</span>
           </Typography>
         </Grid>
-        <Grid item xs={12} sm={10} md={6} className={classes.container}>
-          <form align="center" onSubmit={handleSubmit}>
-            <FormControl className={classes.input_box}>
-              <InputLabel shrink htmlFor="email" className={classes.label}>
-                Enter Your Registered Email
-              </InputLabel>
-              <CustomInput
-                type="email"
-                name="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </FormControl>
-            <Button
-              className={classes.box}
-              color="secondary"
-              variant="contained"
-              type="submit"
-              disabled={loading ? true : false}
-            >
-              Send Email
-            </Button>
-          </form>
+        <Grid item xs={12} className={containerStyle.container}>
+          <FormControl className={classes.input_box}>
+            <InputLabel shrink htmlFor="email" className={classes.label}>
+              Enter Your Registered Email
+            </InputLabel>
+            <CustomInput
+              type="email"
+              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </FormControl>
+          <Button
+            className={containerStyle.button}
+            color="primary"
+            variant="contained"
+            type="submit"
+            onClick={handleSubmit}
+            disabled={loading ? true : false}
+          >
+            Send Email
+          </Button>
         </Grid>
       </Grid>
-      {error && <ToastAlert message={error} severity="error" />}
     </>
   );
 };

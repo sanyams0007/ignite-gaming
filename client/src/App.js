@@ -1,8 +1,10 @@
 import { useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { ToastContainer } from "material-react-toastify";
 
 // Components and Pages
 import Header from "./components/layout/Header";
+import Header2 from "./components/layout/Header2";
 import Home from "./components/Home";
 import GameDetail from "./components/product/GameDetail";
 import Footer from "./components/layout/Footer";
@@ -22,9 +24,6 @@ import ResetPassword from "./components/user/ResetPassword";
 import Cart from "./components/cart/Cart";
 import Checkout from "./components/cart/Checkout";
 import OrderSuccess from "./components/cart/OrderSuccess";
-//import Shipping from "./components/cart/Shipping";
-//import ReviewOrder from "./components/cart/ReviewOrder";
-//import Payment from "./components/cart/Payment";
 
 import OrdersList from "./components/order/OrdersList";
 import OrderDetail from "./components/order/OrderDetail";
@@ -33,6 +32,7 @@ import OrderDetail from "./components/order/OrderDetail";
 import "./App.css";
 import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "./components/muiTheme";
+import "material-react-toastify/dist/ReactToastify.css";
 import Grid from "@material-ui/core/Grid";
 
 import { loadUser } from "./actions/userActions";
@@ -129,6 +129,19 @@ const App = () => {
             </Grid>
           </Grid>
         </Router>
+        <div>
+          <ToastContainer
+            position="bottom-center"
+            autoClose={5000}
+            hideProgressBar
+            newestOnTop={false}
+            closeOnClick={false}
+            rtl={false}
+            pauseOnFocusLoss
+            draggable={false}
+            pauseOnHover
+          />
+        </div>
       </ThemeProvider>
     </>
   );

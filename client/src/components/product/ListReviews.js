@@ -4,6 +4,7 @@ import Rating from "@material-ui/lab/Rating";
 const ListReviews = ({ reviews }) => {
   return (
     <>
+      <Divider style={{ width: "100%" }} />
       {reviews.map((review) => (
         <>
           <Grid item xs={12} md={8}>
@@ -16,7 +17,7 @@ const ListReviews = ({ reviews }) => {
             <Typography gutterBottom>by {review.name}</Typography>
             <Typography>{review.comment}</Typography>
           </Grid>
-          <Divider />
+          <Divider style={{ width: "100%" }} />
         </>
       ))}
     </>

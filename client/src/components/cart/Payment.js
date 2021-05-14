@@ -1,3 +1,6 @@
+import { useMemo } from "react";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
 import {
   useStripe,
   useElements,
@@ -5,10 +8,8 @@ import {
   CardExpiryElement,
   CardCvcElement,
 } from "@stripe/react-stripe-js";
-import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { toast } from "material-react-toastify";
 
-import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 //import TextField from "@material-ui/core/TextField";
@@ -16,42 +17,52 @@ import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import InputLabel from "@material-ui/core/InputLabel";
 
-import ToastAlert from "../layout/ToastAlert";
 import MetaData from "../layout/MetaData";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { createOrder, clearErrors } from "../../actions/orderActions";
+import { clearCart } from "../../actions/cartActions";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: "transparent",
-    "& .MuiInputBase-input": {
-      color: "#dd22cc",
+const useOptions = () => {
+  const options = useMemo(() => ({
+    style: {
+      base: {
+        fontSize: "18px",
+        color: "#424770",
+        letterSpacing: "0.025em",
+        fontFamily: "Source Code Pro, monospace",
+        "::placeholder": {
+          color: "#aab7c4",
+        },
+      },
+      invalid: {
+        color: "#9e2146",
+      },
     },
-    "& .MuiInput-underline:before": {
-      borderBottom: "1px solid #fff",
-    },
-    "& .MuiSvgIcon-root": {
-      fill: "#fff",
-    },
-  },
-}));
+  }));
+
+  return options;
+};
 
 export default function Payment({ prev }) {
-  //const classes = useStyles();
   const [disable, setDisable] = useState(false);
 
   const stripe = useStripe();
   const elements = useElements();
   const dispatch = useDispatch();
   const history = useHistory();
+  const options = useOptions();
 
   const { user } = useSelector((state) => state.auth);
   const { cartItems, shippingInfo } = useSelector((state) => state.cart);
   const { error } = useSelector((state) => state.newOrder);
-  shippingInfo && console.log(shippingInfo);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (error) {
+      toast.success(error);
+      dispatch(clearErrors());
+    }
+  }, [dispatch, error, toast]);
 
   const order = {
     orderItems: cartItems,
@@ -87,6 +98,10 @@ export default function Payment({ prev }) {
   const handlePayment = async (e) => {
     e.preventDefault();
 
+    if (!stripe || !elements) {
+      return;
+    }
+
     setDisable(true);
 
     let res;
@@ -117,7 +132,7 @@ export default function Payment({ prev }) {
       });
 
       if (result.error) {
-        console.log(result.error.message);
+        toast.error(result.error.message);
         setDisable(false);
       } else {
         // the payment is processed or not
@@ -128,14 +143,14 @@ export default function Payment({ prev }) {
           };
 
           dispatch(createOrder(order));
-
+          dispatch(clearCart());
           history.push("/success");
         } else {
-          console.log("There is some issue while payment processing");
+          toast.error("There is some issue while payment processing");
         }
       }
     } catch (error) {
-      console.log(error.response.data.message);
+      toast.error(error.response.data.message);
       setDisable(false);
     }
   };
@@ -148,41 +163,25 @@ export default function Payment({ prev }) {
           Payment method
         </Typography>
       </Grid>
-      <Grid item xs={12} md={6}>
+      <Grid item xs={12}>
         <InputLabel shrink htmlFor="cardNumber">
           Card Number
         </InputLabel>
-        <Box bgcolor="#fff">
-          <CardNumberElement type="text" id="cardNumber" fullWidth />
-        </Box>
+        <CardNumberElement options={options} />
       </Grid>
       <Grid item xs={12} md={6}>
         <InputLabel shrink htmlFor="expDate">
           Card Expiry
         </InputLabel>
-        <Box bgcolor="#fff">
-          <CardExpiryElement
-            type="text"
-            required
-            id="expDate"
-            fullWidth
-            autoComplete="cc-exp"
-          />
-        </Box>
+        <CardExpiryElement options={options} />
       </Grid>
       <Grid item xs={12} md={6}>
         <InputLabel shrink htmlFor="cvv">
           Card CVV / CVC
         </InputLabel>
-        <Box bgcolor="#fff">
-          <CardCvcElement
-            type="text"
-            id="cvv"
-            fullWidth
-            autoComplete="cc-csc"
-          />
-        </Box>
+        <CardCvcElement options={options} />
       </Grid>
+
       <Grid item xs={12}>
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Button
@@ -199,11 +198,10 @@ export default function Payment({ prev }) {
             variant="contained"
             color="primary"
           >
-            Pay {` $${orderInfo && orderInfo.invoiceTotal}`}
+            Pay {` $ ${orderInfo && orderInfo.invoiceTotal}`}
           </Button>
         </Box>
       </Grid>
-      {error && <ToastAlert message={error} severity="error" />}
     </>
   );
 }

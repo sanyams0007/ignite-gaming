@@ -43,13 +43,12 @@ const NavSearch = styled.div`
   width: 25%;
   padding: 5px;
   border-radius: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background: linear-gradient(145deg, #72f, #c1b);
   > form {
     width: 100%;
-    display: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     > input {
       ::placeholder {
         color: white;

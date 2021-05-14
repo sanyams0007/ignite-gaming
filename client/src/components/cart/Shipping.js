@@ -1,32 +1,16 @@
 import { countries } from "countries-list";
 import { useDispatch, useSelector } from "react-redux";
-import { makeStyles } from "@material-ui/core/styles";
-//import { useHistory } from "react-router";
 import { useState } from "react";
 
 import MetaData from "../layout/MetaData";
 import { saveShippingInfo } from "../../actions/cartActions";
+import { useStyles } from "./cartStyles";
 
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: "transparent",
-    "& .MuiInputBase-input": {
-      color: "#dd22cc",
-    },
-    "& .MuiInput-underline:before": {
-      borderBottom: "1px solid #fff",
-    },
-    "& .MuiSvgIcon-root": {
-      fill: "#fff",
-    },
-  },
-}));
 
 const Shipping = ({ next }) => {
   const classes = useStyles();

@@ -1,7 +1,7 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector } from "react-redux";
+
 import { Grid, Typography, Button, Box } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 import MetaData from "../layout/MetaData";
@@ -13,6 +13,7 @@ const useStyles = makeStyles({
   },
   container: {
     border: "3px solid blue",
+    padding: "50px 25px",
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
@@ -23,9 +24,6 @@ const useStyles = makeStyles({
   },
   box: {
     margin: "20px 10px",
-  },
-  button: {
-    borderRadius: 10,
   },
 });
 
@@ -45,7 +43,7 @@ const Profile = () => {
           sm={10}
           container
           alignContent="flex-start"
-          style={{ margin: "0 auto 8%", border: "3px solid coral" }}
+          style={{ margin: "0 auto", border: "3px solid coral" }}
         >
           <Grid item xs={12}>
             <Typography
@@ -104,13 +102,17 @@ const Profile = () => {
               justifyContent="space-around"
             >
               {user.role !== "admin" ? (
-                <Button color="secondary" variant="contained">
-                  <Link to="/orders/me">My Orders</Link>
-                </Button>
+                <Link to="/orders/me">
+                  <Button color="secondary" variant="contained">
+                    My Orders
+                  </Button>
+                </Link>
               ) : (
-                <Button color="secondary" variant="contained">
-                  <Link to="/dashboard">Dashboard</Link>
-                </Button>
+                <Link to="/dashboard">
+                  <Button color="secondary" variant="contained">
+                    Dashboard
+                  </Button>
+                </Link>
               )}
 
               <Button color="secondary" variant="contained">

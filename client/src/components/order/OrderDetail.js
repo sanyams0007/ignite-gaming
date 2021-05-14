@@ -1,16 +1,17 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { toast } from "material-react-toastify";
 
 import MetaData from "../layout/MetaData";
 import Loader from "../layout/Loader";
-import ToastAlert from "../layout/ToastAlert";
+
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Divider from "@material-ui/core/Divider";
 import Box from "@material-ui/core/Box";
 
-import { getOrderDetails } from "../../actions/orderActions";
+import { getOrderDetails, clearErrors } from "../../actions/orderActions";
 
 const OrderDetail = () => {
   const dispatch = useDispatch();
@@ -21,8 +22,12 @@ const OrderDetail = () => {
   useEffect(() => {
     dispatch(getOrderDetails(id));
 
-    if (error) return;
-  }, [error, dispatch, id]);
+    if (error) {
+      toast.error(error);
+      dispatch(clearErrors());
+      return;
+    }
+  }, [toast, error, dispatch, id]);
 
   return (
     <>
@@ -128,7 +133,6 @@ const OrderDetail = () => {
                 </>
               ))}
           </Grid>
-          {error && <ToastAlert message={error} severity="error" />}
         </Grid>
       )}
     </>

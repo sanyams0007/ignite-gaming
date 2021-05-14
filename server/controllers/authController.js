@@ -12,24 +12,12 @@ const cloudinary = require("cloudinary");
 // @description  register a user
 // @access
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
-  /* const result = await cloudinary.v2.uploader.upload(
-    "https://res.cloudinary.com/ignitegaming/image/upload/v1619004773/avatars/default_avatar_oamuj3.png",
-    {
-      folder: "avatars",
-      width: 150,
-      crop: "scale",
-    }
-  ); */
   const { name, email, password } = req.body;
 
   const user = await User.create({
     name,
     email,
     password,
-    /* avatar: {
-      public_id: result.public_id,
-      url: result.secure_url,
-    }, */
   });
 
   sendToken(user, 200, res);
@@ -133,7 +121,6 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
 // @description  forgot password
 // @access
 exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
-  console.log(req.body.email);
   const user = await User.findOne({ email: req.body.email });
 
   if (!user) {

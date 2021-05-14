@@ -5,7 +5,7 @@ import { toast } from "material-react-toastify";
 
 import MetaData from "../layout/MetaData";
 import Loader from "../layout/Loader";
-import ProductsTable from "../custom/Table";
+import UsersTable from "../custom/Table";
 
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
@@ -13,75 +13,57 @@ import IconButton from "@material-ui/core/IconButton";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 
-import {
-  getAdminProducts,
-  deleteProduct,
-  clearErrors,
-} from "../../actions/productActions";
-import { DELETE_PRODUCT_RESET } from "../../constants/productConstants";
+import { allUsers, deleteUser, clearErrors } from "../../actions/userActions";
+import { DELETE_USER_RESET } from "../../constants/userConstants";
 
-const ProductsList = ({ history, match }) => {
+const UsersList = ({ history, match }) => {
   const dispatch = useDispatch();
 
-  const { loading, error, products } = useSelector((state) => state.products);
-  const { error: deleteError, isDeleted } = useSelector(
-    (state) => state.product
-  );
+  const { loading, error, users } = useSelector((state) => state.allUsers);
+  const { isDeleted } = useSelector((state) => state.user);
 
   useEffect(() => {
+    dispatch(allUsers());
+
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
     }
 
-    if (deleteError) {
-      toast.error(deleteError);
-      dispatch(clearErrors());
-    }
-
     if (isDeleted) {
-      toast.success("Product deleted successfully");
+      toast.success("User deleted successfully");
       history.push(match.path);
-      dispatch({ type: DELETE_PRODUCT_RESET });
+      dispatch({ type: DELETE_USER_RESET });
     }
-
-    dispatch(getAdminProducts());
-  }, [toast, error, dispatch, isDeleted, deleteError, history]);
+  }, [toast, error, dispatch, isDeleted, history]);
 
   const rows = [];
 
-  products &&
-    products.forEach((product) => {
+  users &&
+    users.forEach((user) => {
       rows.push({
-        ID: product._id,
-        Name: product.name,
-        Price: product.price,
-        Stock: product.stock,
-        Action: product._id,
+        UserID: user._id,
+        Name: user.name,
+        Email: user.email,
+        Role: user.role,
+        Action: user._id,
       });
     });
 
   const columns = [
-    { id: "ID", label: "Product ID", minWidth: 150 },
-    { id: "Name", label: "Name", minWidth: 120 },
+    { id: "UserID", label: "User ID", minWidth: 150 },
+    { id: "Name", label: "Name", minWidth: 100 },
     {
-      id: "Price",
-      label: "Price",
-      minWidth: 50,
+      id: "Email",
+      label: "Email",
+      minWidth: 100,
       align: "left",
-      format: (value) => `$ ${value.toLocaleString("en-US")}`,
     },
     {
-      id: "Stock",
-      label: "Stock",
-      minWidth: 50,
+      id: "Role",
+      label: "Role",
+      minWidth: 100,
       align: "right",
-      format: (value) =>
-        Number(value) > 0 ? (
-          <span style={{ color: "green" }}>{Number(value)}</span>
-        ) : (
-          <span style={{ color: "red" }}>{Number(value)}</span>
-        ),
     },
     {
       id: "Action",
@@ -91,13 +73,13 @@ const ProductsList = ({ history, match }) => {
       format: (value) => (
         <>
           <IconButton aria-label="edit">
-            <Link to={`product/${value}`}>
+            <Link to={`user/${value}`}>
               <EditIcon color="primary" />
             </Link>
           </IconButton>
           <IconButton
             aria-label="delete"
-            onClick={() => deleteProductHandler(value)}
+            onClick={() => deleteUserHandler(value)}
           >
             <DeleteIcon color="error" />
           </IconButton>
@@ -106,13 +88,13 @@ const ProductsList = ({ history, match }) => {
     },
   ];
 
-  const deleteProductHandler = (id) => {
-    dispatch(deleteProduct(id));
+  const deleteUserHandler = (id) => {
+    dispatch(deleteUser(id));
   };
 
   return (
     <>
-      <MetaData title={"All Products"} />
+      <MetaData title={"All Users"} />
       {loading ? (
         <Loader />
       ) : (
@@ -131,11 +113,11 @@ const ProductsList = ({ history, match }) => {
               component="h2"
               style={{ margin: "20px 0" }}
             >
-              All <span>Products</span>
+              All <span>Users</span>
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <ProductsTable columns={columns} rows={rows} />
+            <UsersTable columns={columns} rows={rows} />
           </Grid>
         </Grid>
       )}
@@ -143,4 +125,4 @@ const ProductsList = ({ history, match }) => {
   );
 };
 
-export default ProductsList;
+export default UsersList;

@@ -1,19 +1,21 @@
 import React, { useState, useRef, useEffect } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
+
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Grow from "@material-ui/core/Grow";
 import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
-import { makeStyles } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
 import PersonIcon from "@material-ui/icons/Person";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import DashboardIcon from "@material-ui/icons/Dashboard";
+import ShoppingCart from "@material-ui/icons/ShoppingCart";
 import ViewListIcon from "@material-ui/icons/ViewList";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
   },
@@ -22,17 +24,23 @@ const useStyles = makeStyles({
     backgroundColor: "#fff",
     boxShadow: "0px 0px 5px 2px rgba(221,34,204,0.6)",
   },
-  image: {
+  /* image: {
     height: "50px",
     width: "50px",
     border: "1px solid",
     borderRadius: "100px",
     background: "#f3f3f3",
-  },
+  }, */
   text_color: {
     color: "#000!important",
   },
-});
+  sectionMobile: {
+    display: "none",
+    [theme.breakpoints.down("sm")]: {
+      display: "flex",
+    },
+  },
+}));
 
 export default function UserInfo({ user, logout }) {
   const classes = useStyles();
@@ -81,6 +89,7 @@ export default function UserInfo({ user, logout }) {
       <Popper
         open={open}
         anchorEl={anchorRef.current}
+        anchor
         role={undefined}
         transition
         disablePortal
@@ -113,6 +122,14 @@ export default function UserInfo({ user, logout }) {
                       </Link>
                     </MenuItem>
                   )}
+                  <MenuItem
+                    onClick={handleClose}
+                    className={classes.sectionMobile}
+                  >
+                    <Link to="/cart" className={classes.text_color}>
+                      <ShoppingCart /> Cart
+                    </Link>
+                  </MenuItem>
                   <MenuItem onClick={handleClose}>
                     <Link to="/orders/me" className={classes.text_color}>
                       <ViewListIcon /> Orders

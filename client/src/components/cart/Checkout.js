@@ -1,42 +1,25 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { makeStyles } from "@material-ui/core/styles";
 
 // Payment
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 
-import Paper from "@material-ui/core/Paper";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
-import Button from "@material-ui/core/Button";
-import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 import Shipping from "./Shipping";
 import Grid from "@material-ui/core/Grid";
 import ReviewOrder from "./ReviewOrder";
 import Payment from "./Payment";
-//import Review from "./Review";
 
-const useStyles = makeStyles((theme) => ({
-  stepper: {
-    padding: theme.spacing(3, 0, 5),
-  },
-  buttons: {
-    display: "flex",
-    justifyContent: "flex-end",
-  },
-  button: {
-    marginTop: theme.spacing(3),
-    marginLeft: theme.spacing(1),
-  },
-}));
+import { checkoutStyle } from "./cartStyles";
 
 const steps = ["Shipping address", "Review your order", "Payment details"];
 
 export default function Checkout() {
-  const classes = useStyles();
+  const classes = checkoutStyle();
 
   const [stripeApiKey, setStripeApiKey] = useState("");
   const [activeStep, setActiveStep] = useState(0);
@@ -103,46 +86,18 @@ export default function Checkout() {
         </Stepper>
       </Grid>
       <>
-        {activeStep === steps.length ? (
-          <Grid item xs={12}>
-            <Typography variant="h5" gutterBottom>
-              Thank you for your order.
-            </Typography>
-            <Typography variant="subtitle1">
-              Your order number is #2001539. We have emailed your order
-              confirmation, and will send you an update when your order has
-              shipped.
-            </Typography>
-          </Grid>
-        ) : (
-          <Grid
-            item
-            spacing={3}
-            xs={12}
-            md={10}
-            lg={8}
-            container
-            justify="center"
-            style={{ margin: "0 auto" }}
-          >
-            {getStepContent(activeStep)}
-            {/* <Grid item xs={12} justify="space-evenly">
-              {activeStep !== 0 && (
-                <Button onClick={handleBack} className={classes.button}>
-                  Back
-                </Button>
-              )}
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleNext}
-                className={classes.button}
-              >
-                {activeStep === steps.length - 1 ? "Place order" : "Continue"}
-              </Button>
-            </Grid> */}
-          </Grid>
-        )}
+        <Grid
+          item
+          spacing={3}
+          xs={12}
+          md={10}
+          lg={8}
+          container
+          justify="center"
+          style={{ margin: "0 auto" }}
+        >
+          {getStepContent(activeStep)}
+        </Grid>
       </>
     </Grid>
   );

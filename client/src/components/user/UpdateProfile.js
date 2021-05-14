@@ -1,41 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
+import { toast } from "material-react-toastify";
+
+import { UPDATE_PROFILE_RESET } from "../../constants/userConstants";
+import {
+  updateProfile,
+  loadUser,
+  clearErrors,
+} from "../../actions/userActions";
+
+import MetaData from "../layout/MetaData";
 
 import { Grid, Typography, Button } from "@material-ui/core";
-import { updateProfile, loadUser } from "../../actions/userActions";
-import ToastAlert from "../layout/ToastAlert";
-import MetaData from "../layout/MetaData";
 import Avatar from "@material-ui/core/Avatar";
-import InputBase from "@material-ui/core/InputBase";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
-import { UPDATE_PROFILE_RESET } from "../../constants/userConstants";
 
-const CustomInput = withStyles((theme) => ({
-  root: {
-    "label + &": {
-      marginTop: "30px",
-    },
-  },
-  input: {
-    borderRadius: 4,
-    position: "relative",
-    backgroundColor: "#f9f9f9",
-    fontSize: 20,
-    width: "100%",
-    padding: "10px 12px",
-    "&:focus": {
-      backgroundColor: theme.palette.common.white,
-    },
-  },
-}))(InputBase);
+import { CustomInput, commonStyles, containerStyles } from "./userStyle";
 
 const useStyles = makeStyles({
-  top_heading: {
-    margin: "25px auto",
-  },
   container: {
     border: "3px solid blue",
     padding: "50px",
@@ -48,19 +33,6 @@ const useStyles = makeStyles({
     width: "250px",
     height: "250px",
   },
-  box: {
-    margin: "20px 10px",
-  },
-  button: {
-    borderRadius: 10,
-  },
-  input_box: {
-    width: "100%",
-    margin: "25px 0",
-  },
-  label: {
-    fontSize: 23,
-  },
 });
 
 const UpdateProfile = () => {
@@ -70,6 +42,8 @@ const UpdateProfile = () => {
   const [avatarPreview, setAvatarPreview] = useState("");
 
   const classes = useStyles();
+  const common = commonStyles();
+  const containerStyle = containerStyles();
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -86,10 +60,13 @@ const UpdateProfile = () => {
     }
 
     if (error) {
+      toast.error(error);
+      dispatch(clearErrors());
       return;
     }
 
     if (isUpdated) {
+      toast.success("Profile update successfull");
       dispatch(loadUser());
 
       history.push("/me");
@@ -137,7 +114,7 @@ const UpdateProfile = () => {
           <Typography
             align="center"
             variant="h2"
-            className={classes.top_heading}
+            className={common.top_heading}
             component="h2"
           >
             Update <span>Profile</span>
@@ -157,7 +134,7 @@ const UpdateProfile = () => {
           />
 
           <Button
-            className={classes.box}
+            className={containerStyle.button}
             color="secondary"
             component="label"
             variant="contained"
@@ -174,8 +151,11 @@ const UpdateProfile = () => {
         </Grid>
         <Grid item xs={12} md={6} className={classes.container}>
           <form align="center" encType="multipart/form-data">
-            <FormControl className={classes.input_box}>
-              <InputLabel shrink htmlFor="name" className={classes.label}>
+            <FormControl
+              className={common.input_box}
+              style={{ marginBottom: "25px" }}
+            >
+              <InputLabel shrink htmlFor="name" className={common.label}>
                 Full Name
               </InputLabel>
               <CustomInput
@@ -185,8 +165,11 @@ const UpdateProfile = () => {
                 onChange={(e) => setName(e.target.value)}
               />
             </FormControl>
-            <FormControl className={classes.input_box}>
-              <InputLabel shrink htmlFor="email" className={classes.label}>
+            <FormControl
+              className={common.input_box}
+              style={{ marginBottom: "25px" }}
+            >
+              <InputLabel shrink htmlFor="email" className={common.label}>
                 Email
               </InputLabel>
               <CustomInput
@@ -198,7 +181,7 @@ const UpdateProfile = () => {
             </FormControl>
             <Button
               onClick={handleSubmit}
-              className={classes.box}
+              className={containerStyle.button}
               color="secondary"
               variant="contained"
               type="submit"
@@ -209,7 +192,6 @@ const UpdateProfile = () => {
           </form>
         </Grid>
       </Grid>
-      {error && <ToastAlert message={error} severity="error" />}
     </>
   );
 };
