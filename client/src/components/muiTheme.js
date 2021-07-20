@@ -50,6 +50,9 @@ const theme = createMuiTheme({
       root: {
         color: "#fff",
         margin: "0 10px",
+        "&:hover": {
+          backgroundColor: "rgba(255,255,255,0.04)",
+        },
       },
     },
     MuiTypography: {

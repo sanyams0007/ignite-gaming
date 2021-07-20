@@ -34,6 +34,7 @@ import {
 export const getProducts =
   (keyword = "", currentPage = 1, price, category, rating = 0) =>
   async (dispatch) => {
+    //let cancelToken;
     try {
       dispatch({ type: ALL_PRODUCTS_REQUEST });
 
@@ -42,6 +43,12 @@ export const getProducts =
       if (category) {
         link = `/api/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&category=${category}&ratings[gte]=${rating}`;
       }
+      /*  if (typeof cancelToken != typeof undefined) {
+        cancelToken.cancel("cancelling previous req.");
+      } 
+
+      cancelToken = axios.CancelToken.source();*/
+
       const { data } = await axios.get(link);
 
       dispatch({

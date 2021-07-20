@@ -31,7 +31,7 @@ const Cart = () => {
           container
           alignContent="flex-start"
           alignItems="flex-start"
-          style={{ margin: "0 auto", border: "3px solid coral" }}
+          style={{ margin: "0 auto" }}
         >
           <Grid item xs={12}>
             <Typography
@@ -43,20 +43,12 @@ const Cart = () => {
               Your Cart : <span>{cartItems.length} item</span>
             </Typography>
           </Grid>
-          <Grid
-            item
-            xs={12}
-            sm={7}
-            container
-            style={{ border: "3px solid green" }}
-          >
+          <Grid item xs={12} sm={7}>
             {cartItems.map((item) => (
-              <>
-                <CartItem item={item} />
-              </>
+              <CartItem item={item} key={item.product} />
             ))}
           </Grid>
-          <Grid xs={12} sm={5} item style={{ border: "3px solid yellow" }}>
+          <Grid xs={12} sm={5} item>
             <CartSummary />
           </Grid>
         </Grid>

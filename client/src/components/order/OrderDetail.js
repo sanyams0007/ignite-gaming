@@ -27,7 +27,7 @@ const OrderDetail = () => {
       dispatch(clearErrors());
       return;
     }
-  }, [toast, error, dispatch, id]);
+  }, [error, dispatch, id]);
 
   return (
     <>
@@ -42,7 +42,7 @@ const OrderDetail = () => {
           alignContent="flex-start"
           container
           spacing={2}
-          style={{ margin: "0 auto", border: "3px solid blue" }}
+          style={{ margin: "0 auto" }}
         >
           <Grid item xs={12}>
             <Typography
@@ -101,12 +101,12 @@ const OrderDetail = () => {
             <Typography variant="h6" component="h4" gutterBottom>
               Order Items:
             </Typography>
-            <Divider />
+
             {order.orderItems &&
               order.orderItems.map((item) => (
-                <>
+                <div key={item.product}>
+                  <Divider />
                   <Box
-                    key={item.product}
                     display="flex"
                     alignItems="center"
                     justifyContent="space-between"
@@ -126,11 +126,10 @@ const OrderDetail = () => {
                     <Typography component="p">{item.name}</Typography>
                     <Typography component="p">{`$ ${item.price}`}</Typography>
                     <Typography component="p">
-                      {`${item.quantity} Pieces`}
+                      {`${item.quantity} Unit`}
                     </Typography>
                   </Box>
-                  <Divider />
-                </>
+                </div>
               ))}
           </Grid>
         </Grid>

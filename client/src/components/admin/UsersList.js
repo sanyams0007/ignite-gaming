@@ -35,23 +35,23 @@ const UsersList = ({ history, match }) => {
       history.push(match.path);
       dispatch({ type: DELETE_USER_RESET });
     }
-  }, [toast, error, dispatch, isDeleted, history]);
+  }, [match.path, error, dispatch, isDeleted, history]);
 
   const rows = [];
 
   users &&
     users.forEach((user) => {
       rows.push({
-        UserID: user._id,
+        ID: user._id,
         Name: user.name,
         Email: user.email,
         Role: user.role,
-        Action: user._id,
+        Actions: user._id,
       });
     });
 
   const columns = [
-    { id: "UserID", label: "User ID", minWidth: 150 },
+    { id: "ID", label: "User ID", minWidth: 150 },
     { id: "Name", label: "Name", minWidth: 100 },
     {
       id: "Email",
@@ -66,7 +66,7 @@ const UsersList = ({ history, match }) => {
       align: "right",
     },
     {
-      id: "Action",
+      id: "Actions",
       label: "Actions",
       minWidth: 100,
       align: "right",

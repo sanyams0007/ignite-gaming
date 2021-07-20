@@ -3,13 +3,7 @@ import Box from "@material-ui/core/Box";
 import { Grid } from "@material-ui/core";
 const Loader = () => {
   return (
-    <Grid
-      item
-      xs={12}
-      justify="center"
-      alignItems="center"
-      style={{ height: "100%" }}
-    >
+    <Grid item xs={12} style={{ height: "100%" }}>
       <Box
         display="flex"
         justifyContent="center"

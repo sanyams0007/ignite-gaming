@@ -23,18 +23,23 @@ export const useStyles = makeStyles((theme) => ({
 
 export const cartItemStyle = makeStyles({
   container: {
-    border: "1px solid coral",
+    borderRadius: "0 4px 4px 0",
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: "0 10px",
     textAlign: "center",
+    backgroundColor: "rgba(255,255,255,.12)",
   },
   media: {
-    maxWidth: "100%",
-    objectFit: "contain",
+    borderRadius: " 4px 0 0 4px",
+    backgroundColor: "rgba(255,255,255,.12)",
+    objectFit: "fill",
     margin: "0 auto",
+    minWidth: "120px",
+    width: "100%",
+    minHeight: "100%",
+    maxHeight: "180px",
   },
   line: {
     alignSelf: "normal",

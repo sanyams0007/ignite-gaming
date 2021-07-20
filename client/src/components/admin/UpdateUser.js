@@ -54,7 +54,7 @@ const UpdateUser = ({ history, match }) => {
         type: UPDATE_USER_RESET,
       });
     }
-  }, [toast, dispatch, error, isUpdated, history, userId, user]);
+  }, [dispatch, error, isUpdated, history, userId, user]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

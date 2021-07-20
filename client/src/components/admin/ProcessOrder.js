@@ -24,8 +24,6 @@ import { UPDATE_ORDER_RESET } from "../../constants/orderConstants";
 const ProcessOrder = ({ match }) => {
   const classes = useStyles();
 
-  const [status, setStatus] = useState("");
-
   const dispatch = useDispatch();
 
   const { loading, order = {} } = useSelector((state) => state.orderDetails);
@@ -41,13 +39,20 @@ const ProcessOrder = ({ match }) => {
     orderStatus,
   } = order;
 
+  const [status, setStatus] = useState(orderStatus ? orderStatus : "");
+
   const orderId = match.params.id;
   const orderState = ["Processing", "Shipped", "Delivered"];
 
+  const handleSubmit = (id) => {
+    const formData = new FormData();
+    formData.set("status", status);
+
+    dispatch(updateOrder(id, formData));
+  };
+
   useEffect(() => {
     dispatch(getOrderDetails(orderId));
-
-    setStatus(orderStatus);
 
     if (error) {
       toast.error(error);
@@ -58,15 +63,11 @@ const ProcessOrder = ({ match }) => {
       toast.success("Order updated successfully");
       dispatch({ type: UPDATE_ORDER_RESET });
     }
-  }, [toast, error, dispatch, isUpdated, orderId]);
+  }, [error, dispatch, isUpdated, orderId]);
 
-  const handleSubmit = (id) => {
-    const formData = new FormData();
-
-    formData.set("status", status);
-
-    dispatch(updateOrder(id, formData));
-  };
+  useEffect(() => {
+    if (orderStatus) setStatus(orderStatus);
+  }, [orderStatus]);
 
   return (
     <>
@@ -81,7 +82,7 @@ const ProcessOrder = ({ match }) => {
           alignContent="flex-start"
           container
           spacing={3}
-          style={{ margin: "0 auto", border: "3px solid blue" }}
+          style={{ margin: "0 auto" }}
         >
           <Grid item xs={12}>
             <Typography
@@ -126,7 +127,7 @@ const ProcessOrder = ({ match }) => {
                 `${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.postalCode}, ${shippingInfo.country} `}
             </Typography>
           </Grid>
-          <Grid item xs={12} md={6} justify="center">
+          <Grid item xs={12} md={6}>
             <Typography color="secondary" variant="h6" component="h4">
               <b> Order Info. </b>
             </Typography>
@@ -205,12 +206,11 @@ const ProcessOrder = ({ match }) => {
             >
               <b>Order Items</b>
             </Typography>
-            <Divider />
             {orderItems &&
               orderItems.map((item) => (
-                <>
+                <div key={item.product}>
+                  <Divider />
                   <Box
-                    key={item.product}
                     display="flex"
                     alignItems="center"
                     justifyContent="space-between"
@@ -230,11 +230,10 @@ const ProcessOrder = ({ match }) => {
                     <Typography component="p">{item.name}</Typography>
                     <Typography component="p">{`$ ${item.price}`}</Typography>
                     <Typography component="p">
-                      {`${item.quantity} Pieces`}
+                      {`${item.quantity} Unit`}
                     </Typography>
                   </Box>
-                  <Divider />
-                </>
+                </div>
               ))}
           </Grid>
         </Grid>

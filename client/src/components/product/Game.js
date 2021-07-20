@@ -1,52 +1,65 @@
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { makeStyles } from "@material-ui/core/styles";
+
+import { addItemToCart } from "../../actions/cartActions";
+
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import Rating from "@material-ui/lab/Rating";
 import Box from "@material-ui/core/Box";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
-import { Link } from "react-router-dom";
-import {
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Typography,
-  makeStyles,
-  Button,
-} from "@material-ui/core";
 
 const useStyle = makeStyles({
   card: {
     minHeight: "100%",
-    minWidth: "33%",
-    border: "1px solid coral",
     textAlign: "center",
     display: "flex",
     flexDirection: "column",
   },
   media: {
-    maxHeight: "300px",
+    height: "300px",
+    minHeight: "100%",
     maxWidth: "230px",
+    width: "100%",
     margin: "0 auto",
-    objectFit: "contain",
+    objectFit: "cover",
   },
   content: {
     padding: "10px",
+  },
+  action: {
+    display: "flex",
+    justifyContent: "space-evenly",
+    alignItems: "center",
     marginTop: "auto",
   },
 });
 
 const Game = ({ product }) => {
   const classes = useStyle();
+  const dispatch = useDispatch();
+
+  const addToCart = () => {
+    dispatch(addItemToCart(product._id, 1));
+  };
+
   return (
-    <Card className={classes.card}>
+    <Card className={classes.card} elevation={0}>
       <CardMedia
         className={classes.media}
         image={product.images[0].url}
         component="img"
         alt={product.name}
       />
+
       <CardContent className={classes.content}>
         <Typography gutterBottom variant="h6" component="h2">
-          <Link to={`/product/${product._id}`}> {product.name}</Link>
+          <Link to={`/product/${product._id}`}>{product.name}</Link>
         </Typography>
 
         <Box
@@ -68,19 +81,27 @@ const Game = ({ product }) => {
             component="span"
           >{` (${product.numOfReviews} Reviews)`}</Typography>
         </Box>
+        {/*  <Typography variant="h6" component="p">
+          <span style={{ color: "#ff4747" }}>$ </span>
+          {product.price}
+        </Typography> */}
+      </CardContent>
+      <div className={classes.action}>
         <Typography variant="h6" component="p">
           <span style={{ color: "#ff4747" }}>$ </span>
           {product.price}
         </Typography>
-      </CardContent>
-      {/* <CardActions className={classes.action}>
-        <Button color="primary" variant="contained">
-          <Link to={`/product/${product._id}`}>Detail</Link>
-        </Button>
-        <Button color="primary" variant="contained">
-          <AddShoppingCartIcon />
-        </Button>
-      </CardActions> */}
+        {product.stock >= 1 && (
+          <Button
+            onClick={addToCart}
+            variant="contained"
+            color="primary"
+            aria-label="add to shopping cart"
+          >
+            <AddShoppingCartIcon />
+          </Button>
+        )}
+      </div>
     </Card>
   );
 };

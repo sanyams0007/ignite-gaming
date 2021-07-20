@@ -39,7 +39,7 @@ const UpdatePassword = () => {
         type: UPDATE_PASSWORD_RESET,
       });
     }
-  }, [toast, dispatch, error, isUpdated, history]);
+  }, [dispatch, error, isUpdated, history]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -61,7 +61,7 @@ const UpdatePassword = () => {
         lg={4}
         container
         alignContent="flex-start"
-        style={{ margin: "0 auto", border: "3px solid coral" }}
+        style={{ margin: "0 auto" }}
       >
         <Grid item xs={12}>
           <Typography

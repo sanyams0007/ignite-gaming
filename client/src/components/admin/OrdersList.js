@@ -39,24 +39,24 @@ const OrdersList = ({ history, match }) => {
       history.push(match.path);
       dispatch({ type: DELETE_ORDER_RESET });
     }
-  }, [toast, error, dispatch, isDeleted, history]);
+  }, [error, dispatch, isDeleted, history, match.path]);
 
   const rows = [];
 
   orders &&
     orders.forEach((order) => {
       rows.push({
-        OrderID: order._id,
+        ID: order._id,
         Amount: order.totalPrice,
         ItemCount: order.orderItems.length,
         Status: order.orderStatus,
         Date: order.createdAt,
-        Action: order._id,
+        Actions: order._id,
       });
     });
 
   const columns = [
-    { id: "OrderID", label: "Order ID", minWidth: 170 },
+    { id: "ID", label: "Order ID", minWidth: 170 },
     { id: "ItemCount", label: "No of Items", minWidth: 50 },
     {
       id: "Amount",
@@ -87,7 +87,7 @@ const OrdersList = ({ history, match }) => {
       format: (value) => new Date(value).toLocaleDateString(),
     },
     {
-      id: "Action",
+      id: "Actions",
       label: "Actions",
       minWidth: 100,
       align: "right",

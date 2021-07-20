@@ -56,7 +56,7 @@ const NewProduct = ({ history }) => {
       toast.success("Product Added Successfully.");
       dispatch({ type: NEW_PRODUCT_RESET });
     }
-  }, [toast, error, dispatch, success, history]);
+  }, [error, dispatch, success, history]);
 
   const handleChange = (e) => {
     const files = Array.from(e.target.files);

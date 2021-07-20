@@ -49,7 +49,7 @@ const ReviewOrder = ({ prev, next }) => {
   return (
     <>
       <MetaData title="Order Review" />
-      <Grid item spacing={3} xs={12}>
+      <Grid item xs={12}>
         <Typography variant="h6" gutterBottom>
           Order Review
         </Typography>
@@ -75,7 +75,7 @@ const ReviewOrder = ({ prev, next }) => {
         </Typography>
       </Grid>
       <Grid item xs={12} md={7}>
-        <Box my={2} bgcolor="rgba(255,255,255,.12)" borderRadius="10px">
+        <Box bgcolor="rgba(255,255,255,.12)" borderRadius="10px">
           <TableContainer component={Paper}>
             <Table aria-label="order detail">
               <TableHead>
@@ -88,7 +88,6 @@ const ReviewOrder = ({ prev, next }) => {
                     )}{" "}
                     items)
                   </TableCell>
-
                   <TableCell align="right">Est. Total&nbsp;($)</TableCell>
                 </TableRow>
                 <TableRow>

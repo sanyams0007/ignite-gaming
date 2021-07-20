@@ -49,9 +49,11 @@ const UpdateProduct = ({ match, history }) => {
 
   const dispatch = useDispatch();
 
-  const { loading, error: updateError, isUpdated } = useSelector(
-    (state) => state.product
-  );
+  const {
+    loading,
+    error: updateError,
+    isUpdated,
+  } = useSelector((state) => state.product);
   const { error, product } = useSelector((state) => state.productDetails);
 
   const productId = match.params.id;
@@ -84,16 +86,7 @@ const UpdateProduct = ({ match, history }) => {
       history.push("/dashboard/admin/products");
       dispatch({ type: UPDATE_PRODUCT_RESET });
     }
-  }, [
-    toast,
-    error,
-    dispatch,
-    isUpdated,
-    history,
-    updateError,
-    productId,
-    product,
-  ]);
+  }, [error, dispatch, isUpdated, history, updateError, productId, product]);
 
   const handleChange = (e) => {
     const files = Array.from(e.target.files);
@@ -137,7 +130,6 @@ const UpdateProduct = ({ match, history }) => {
   return (
     <>
       <MetaData title={"Update Product"} />
-
       <Grid
         item
         spacing={2}

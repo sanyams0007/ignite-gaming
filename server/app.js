@@ -9,7 +9,7 @@ const dotenv = require("dotenv");
 
 const errorMiddleware = require("./middlewares/errors");
 
-//Setting up config file
+//Setting up config file and middlewares
 dotenv.config({ path: "server/config/config.env" });
 
 app.use(express.json());

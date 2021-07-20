@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "material-react-toastify";
+import useAlan from "../hooks/useAlan";
 
 import { logout } from "../../actions/userActions";
 import UserMenu from "../custom/UserMenu";
@@ -99,6 +100,8 @@ const useStyles = makeStyles((theme) => ({
   },
   text_color: {
     color: "#000!important",
+    display: "flex",
+    alignItems: "center",
   },
   paper: {
     "& .MuiPopover-paper": {
@@ -113,6 +116,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Header = () => {
+  useAlan();
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -166,13 +170,13 @@ const Header = () => {
     >
       <MenuItem onClick={handleMobileMenuClose}>
         <Link to="/login" className={classes.text_color}>
-          <AccountCircle /> Login
+          <AccountCircle /> <span style={{ marginLeft: "10px" }}>Login</span>
         </Link>
       </MenuItem>
       <MenuItem onClick={handleMobileMenuClose}>
         <Link to="/cart" className={classes.text_color}>
           <Badge badgeContent={cartItems.length} color="secondary">
-            <ShoppingCart /> Cart
+            <ShoppingCart /> <span style={{ marginLeft: "10px" }}>Cart</span>
           </Badge>
         </Link>
       </MenuItem>
@@ -181,7 +185,7 @@ const Header = () => {
 
   return (
     <>
-      <AppBar position="static" color="transparent" elevation>
+      <AppBar position="static" color="transparent" elevation={0}>
         <Toolbar className={classes.toolbar}>
           <Link to="/">
             <div className={classes.logoContainer}>

@@ -16,7 +16,6 @@ import { addItemToCart, removeItemFromCart } from "../../actions/cartActions";
 
 const CartItem = ({ item }) => {
   const dispatch = useDispatch();
-
   const classes = cartItemStyle();
 
   const removeFromCart = (id) => {
@@ -40,28 +39,15 @@ const CartItem = ({ item }) => {
   };
 
   return (
-    <Grid
-      item
-      xs={12}
-      container
-      justify="space-between"
-      style={{ margin: "10px auto", border: "3px solid blue" }}
-    >
-      <Grid
-        item
-        xs={4}
-        sm={5}
-        md={4}
-        lg={3}
-        style={{ border: "3px solid white" }}
-      >
+    <Grid container style={{ margin: "0 0 15px 0" }}>
+      <Grid item xs={4} sm={5} md={4} lg={3}>
         <img className={classes.media} alt={item.product} src={item.image} />
       </Grid>
       <Grid className={classes.container} item xs={8} sm={7}>
         <Typography gutterBottom>
           <Link to={`/products/${item.product}`}>{item.name}</Link>
         </Typography>
-        <Typography variant="h5" gutterBottom>
+        <Typography variant="h6" gutterBottom>
           ${item.price}
         </Typography>
         <Divider className={classes.line} />

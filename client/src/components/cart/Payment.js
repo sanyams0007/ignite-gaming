@@ -1,4 +1,5 @@
-import { useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import {
@@ -12,36 +13,30 @@ import { toast } from "material-react-toastify";
 
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-//import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import InputLabel from "@material-ui/core/InputLabel";
 
 import MetaData from "../layout/MetaData";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+
 import { createOrder, clearErrors } from "../../actions/orderActions";
 import { clearCart } from "../../actions/cartActions";
 
-const useOptions = () => {
-  const options = useMemo(() => ({
-    style: {
-      base: {
-        fontSize: "18px",
-        color: "#424770",
-        letterSpacing: "0.025em",
-        fontFamily: "Source Code Pro, monospace",
-        "::placeholder": {
-          color: "#aab7c4",
-        },
-      },
-      invalid: {
-        color: "#9e2146",
+const options = {
+  style: {
+    base: {
+      fontSize: "18px",
+      color: "#424770",
+      letterSpacing: "0.025em",
+      fontFamily: "Source Code Pro, monospace",
+      "::placeholder": {
+        color: "#aab7c4",
       },
     },
-  }));
-
-  return options;
+    invalid: {
+      color: "#9e2146",
+    },
+  },
 };
 
 export default function Payment({ prev }) {
@@ -51,7 +46,6 @@ export default function Payment({ prev }) {
   const elements = useElements();
   const dispatch = useDispatch();
   const history = useHistory();
-  const options = useOptions();
 
   const { user } = useSelector((state) => state.auth);
   const { cartItems, shippingInfo } = useSelector((state) => state.cart);
@@ -62,7 +56,7 @@ export default function Payment({ prev }) {
       toast.success(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, error, toast]);
+  }, [dispatch, error]);
 
   const order = {
     orderItems: cartItems,
@@ -161,6 +155,11 @@ export default function Payment({ prev }) {
       <Grid item xs={12}>
         <Typography variant="h6" gutterBottom>
           Payment method
+        </Typography>
+      </Grid>
+      <Grid item xs={12}>
+        <Typography color="error" gutterBottom>
+          Test Card No: 4000 0027 6000 3184 | Date: any future date | CVV: 007
         </Typography>
       </Grid>
       <Grid item xs={12}>

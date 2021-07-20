@@ -71,12 +71,35 @@ export const marginStyles = makeStyles((theme) => ({
   },
 }));
 
-//css to look for
-// cartItem
-//checkout
-// ordersuccess
-//payment
-//shipping
-//orderTable
+export const profileStyles = makeStyles({
+  top_heading: {
+    margin: "25px auto",
+  },
+  container: {
+    padding: "50px 25px",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+  },
+  avatar: {
+    width: "250px",
+    height: "250px",
+  },
+  box: {
+    margin: "20px 10px",
+  },
+});
 
-//Game
+export const updateProfileStyles = makeStyles({
+  container: {
+    padding: "50px",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  avatar: {
+    width: "250px",
+    height: "250px",
+  },
+});

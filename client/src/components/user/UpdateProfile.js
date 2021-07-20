@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { makeStyles } from "@material-ui/core/styles";
 import { toast } from "material-react-toastify";
 
 import { UPDATE_PROFILE_RESET } from "../../constants/userConstants";
@@ -13,27 +12,19 @@ import {
 
 import MetaData from "../layout/MetaData";
 
-import { Grid, Typography, Button } from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 
-import { CustomInput, commonStyles, containerStyles } from "./userStyle";
-
-const useStyles = makeStyles({
-  container: {
-    border: "3px solid blue",
-    padding: "50px",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  avatar: {
-    width: "250px",
-    height: "250px",
-  },
-});
+import {
+  updateProfileStyles,
+  CustomInput,
+  commonStyles,
+  containerStyles,
+} from "./userStyle";
 
 const UpdateProfile = () => {
   const [name, setName] = useState("");
@@ -41,7 +32,7 @@ const UpdateProfile = () => {
   const [avatar, setAvatar] = useState("");
   const [avatarPreview, setAvatarPreview] = useState("");
 
-  const classes = useStyles();
+  const classes = updateProfileStyles();
   const common = commonStyles();
   const containerStyle = containerStyles();
   const dispatch = useDispatch();
@@ -74,7 +65,7 @@ const UpdateProfile = () => {
         type: UPDATE_PROFILE_RESET,
       });
     }
-  }, [dispatch, error, isUpdated, history]);
+  }, [dispatch, user, error, isUpdated, history]);
 
   const handleChange = (e) => {
     const reader = new FileReader();
@@ -108,7 +99,7 @@ const UpdateProfile = () => {
         sm={10}
         container
         alignContent="flex-start"
-        style={{ margin: "0 auto", border: "3px solid coral" }}
+        style={{ margin: "0 auto" }}
       >
         <Grid item xs={12}>
           <Typography
@@ -120,13 +111,7 @@ const UpdateProfile = () => {
             Update <span>Profile</span>
           </Typography>
         </Grid>
-        <Grid
-          item
-          xs={12}
-          md={6}
-          className={classes.container}
-          alignItems="center"
-        >
+        <Grid item xs={12} md={6} className={classes.container}>
           <Avatar
             alt="Avatar Preview"
             src={avatarPreview}

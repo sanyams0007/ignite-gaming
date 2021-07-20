@@ -10,13 +10,12 @@ import CloseIcon from "@material-ui/icons/Close";
 import Rating from "@material-ui/lab/Rating";
 import IconButton from "@material-ui/core/IconButton";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
-import {
-  Button,
-  Grid,
-  TextareaAutosize,
-  Typography,
-  Divider,
-} from "@material-ui/core";
+
+import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
+import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 
 const useStyles = makeStyles({
   modal: {
@@ -26,16 +25,16 @@ const useStyles = makeStyles({
   },
   paper: {
     backgroundColor: "#9922ee",
-    border: "2px solid #000",
     padding: "20px",
   },
   modal_header: {
     display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   modal_data: {
     display: "flex",
     flexDirection: "column",
-    marginTop: "1rem",
   },
   divider: {
     backgroundColor: "rgba(255,255,255,0.5)",
@@ -82,13 +81,7 @@ const ReviewModal = ({ dispatch, id, open, handleModalClose }) => {
       <Fade in={open}>
         <Grid container justify="center" alignItems="center">
           <Grid item xs={10} md={6} container className={classes.paper}>
-            <Grid
-              item
-              xs={12}
-              justify="space-between"
-              alignItems="center"
-              className={classes.modal_header}
-            >
+            <Grid item xs={12} className={classes.modal_header}>
               <Typography variant="h5">Submit Review</Typography>
               <IconButton
                 onClick={handleModalClose}
@@ -111,10 +104,10 @@ const ReviewModal = ({ dispatch, id, open, handleModalClose }) => {
                 onChange={handleRating}
                 value={rating}
                 emptyIcon={<StarBorderIcon fontSize="inherit" />}
-                style={{ alignSelf: "flex-start" }}
+                style={{ alignSelf: "flex-start", margin: "10px 0" }}
               />
               <TextareaAutosize
-                rowsMin={5}
+                rowsMin={7}
                 value={comment}
                 placeholder="Write your feedback here..."
                 onChange={handleComment}

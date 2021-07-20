@@ -69,11 +69,16 @@ export default function Checkout() {
       lg={10}
       container
       justify="center"
-      style={{ margin: "0 auto", border: "3px solid brown" }}
+      style={{ margin: "0 auto" }}
     >
       <Grid item xs={12}>
-        <Typography component="h1" variant="h4" align="center">
-          Checkout
+        <Typography
+          align="center"
+          variant="h2"
+          component="h2"
+          style={{ margin: "20px 0" }}
+        >
+          Check-<span>out</span>
         </Typography>
       </Grid>
       <Grid item xs={12} md={8}>

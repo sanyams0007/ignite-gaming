@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { ToastContainer } from "material-react-toastify";
+//import useAlan from "./components/hooks/useAlan";
 
-// Components and Pages
+// Components / Pages
 import Header from "./components/layout/Header";
-import Header2 from "./components/layout/Header2";
 import Home from "./components/Home";
 import GameDetail from "./components/product/GameDetail";
 import Footer from "./components/layout/Footer";
@@ -35,10 +35,13 @@ import theme from "./components/muiTheme";
 import "material-react-toastify/dist/ReactToastify.css";
 import Grid from "@material-ui/core/Grid";
 
+// Redux / Context
 import { loadUser } from "./actions/userActions";
 import store from "./store";
 
 const App = () => {
+  //useAlan();
+
   useEffect(() => {
     store.dispatch(loadUser());
   }, []);
@@ -55,12 +58,7 @@ const App = () => {
             <Grid item xs={12}>
               <Header />
             </Grid>
-            <Grid
-              item
-              xs={12}
-              container
-              style={{ minHeight: "75%", border: "2px solid red" }}
-            >
+            <Grid item xs={12} container style={{ minHeight: "80%" }}>
               <Switch>
                 <Route path="/" exact>
                   <Home />

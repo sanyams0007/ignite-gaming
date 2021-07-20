@@ -34,23 +34,26 @@ const Login = () => {
     (state) => state.auth
   );
 
-  const redirect = location.search ? location.search.split("=")[1] : "/";
+  let { from } = location.state || { from: { pathname: "/" } };
 
   useEffect(() => {
-    if (isAuthenticated) history.push(redirect);
+    if (isAuthenticated) {
+      history.push("/");
+    }
 
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
       return;
     }
-  }, [toast, dispatch, error, isAuthenticated, history]);
+  }, [dispatch, error, isAuthenticated, history]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (email && password) {
       dispatch(login(email, password));
+      history.replace(from);
     }
   };
   return (
@@ -67,7 +70,7 @@ const Login = () => {
           lg={4}
           container
           alignContent="flex-start"
-          style={{ margin: "0 auto", border: "3px solid coral" }}
+          style={{ margin: "0 auto" }}
         >
           <Grid item xs={12}>
             <Typography

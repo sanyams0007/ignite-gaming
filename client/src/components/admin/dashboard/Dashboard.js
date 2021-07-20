@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import clsx from "clsx";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -10,6 +12,11 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+
+import { getAdminProducts } from "../../../actions/productActions";
+import { allOrders } from "../../../actions/orderActions";
+import { allUsers } from "../../../actions/userActions";
 
 import MetaData from "../../layout/MetaData";
 import ProtectedRoute from "../../route/ProtectedRoute";
@@ -72,13 +79,23 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
   },
+  cardlink: {
+    display: "flex",
+    justifyContent: "space-between",
+    width: "100%",
+  },
+  svg: {
+    maxHeight: "80px",
+  },
 
   paper: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(2, 2, 0, 2),
     display: "flex",
     overflow: "auto",
     flexDirection: "column",
-    background: "lightgray",
+    background: "rgba(255,255,255,.11)",
+    justifyContent: "space-evenly",
+    textAlign: "center",
   },
   fixedHeight: {
     height: 240,
@@ -93,16 +110,26 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiListItem-button:hover": {
       backgroundColor: "#141414",
     },
-    /*  "& .MuiListItem-button:active": {
-      backgroundColor: "#141414",
-    }, */
   },
 }));
 
 export default function Dashboard(props) {
   const { path } = props.match;
+  const { products } = useSelector((state) => state.products);
+  const { orders = [] } = useSelector((state) => state.allOrders);
+  const { users } = useSelector((state) => state.allUsers);
+
+  let outOfStock = 0;
+  products.forEach((product) => {
+    if (product.stock <= 0) {
+      outOfStock += 1;
+    }
+  });
+
+  const totalAmount = orders.reduce((acc, order) => acc + order.totalPrice, 0);
 
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   const [open, setOpen] = useState(true);
 
@@ -114,15 +141,21 @@ export default function Dashboard(props) {
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
+  useEffect(() => {
+    dispatch(getAdminProducts());
+    dispatch(allOrders());
+    dispatch(allUsers());
+  }, [dispatch]);
+
   const defaultDashboard = () => {
     return (
       <>
         <Grid
           item
-          spacing={2}
           xs={12}
           alignContent="flex-start"
           container
+          spacing={2}
           style={{ margin: "0 auto" }}
         >
           <Grid item xs={12}>
@@ -138,23 +171,66 @@ export default function Dashboard(props) {
 
           <Grid item xs={12} container spacing={3} style={{ margin: "0 auto" }}>
             <Grid item xs={12}>
-              <Paper className={fixedHeightPaper}></Paper>
+              <Paper className={fixedHeightPaper}>
+                <Typography variant="h3">Total Amount </Typography>
+                <Typography color="primary" variant="h4">
+                  <b>$ {totalAmount}</b>
+                </Typography>
+              </Paper>
             </Grid>
 
             <Grid item xs={12} md={6} lg={3}>
-              <Paper className={fixedHeightPaper}></Paper>
+              <Paper className={fixedHeightPaper}>
+                <Typography variant="h4">Products</Typography>
+                <Typography color="primary" variant="h4">
+                  <b>{products && products.length}</b>
+                </Typography>
+                <Divider />
+                <Link
+                  to={`${path}/admin/products`}
+                  className={classes.cardlink}
+                >
+                  <Typography>View Details</Typography>
+                  <ChevronRightIcon />
+                </Link>
+              </Paper>
             </Grid>
 
             <Grid item xs={12} md={6} lg={3}>
-              <Paper className={fixedHeightPaper}></Paper>
+              <Paper className={fixedHeightPaper}>
+                <Typography variant="h4">Orders</Typography>
+                <Typography color="primary" variant="h4">
+                  <b>{orders && orders.length}</b>
+                </Typography>
+                <Divider />
+                <Link to={`${path}/admin/orders`} className={classes.cardlink}>
+                  <Typography>View Details</Typography>
+                  <ChevronRightIcon />
+                </Link>
+              </Paper>
             </Grid>
 
             <Grid item xs={12} md={6} lg={3}>
-              <Paper className={fixedHeightPaper}></Paper>
+              <Paper className={fixedHeightPaper}>
+                <Typography variant="h4">Users</Typography>
+                <Typography color="primary" variant="h4">
+                  <b>{users && users.length}</b>
+                </Typography>
+                <Divider />
+                <Link to={`${path}/admin/users`} className={classes.cardlink}>
+                  <Typography>View Details</Typography>
+                  <ChevronRightIcon />
+                </Link>
+              </Paper>
             </Grid>
 
             <Grid item xs={12} md={6} lg={3}>
-              <Paper className={fixedHeightPaper}></Paper>
+              <Paper className={fixedHeightPaper}>
+                <Typography variant="h4">Out of Stock</Typography>
+                <Typography color="primary" variant="h4">
+                  <b>{outOfStock}</b>
+                </Typography>
+              </Paper>
             </Grid>
           </Grid>
         </Grid>
@@ -165,7 +241,7 @@ export default function Dashboard(props) {
   return (
     <>
       <MetaData title={"Welcome to Dashboard"} />
-      <Grid xs={12} className={classes.root}>
+      <Grid item xs={12} className={classes.root}>
         <Drawer
           variant="permanent"
           classes={{

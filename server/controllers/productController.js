@@ -11,7 +11,7 @@ const cloudinary = require("cloudinary");
 // @description  gets all products
 exports.getProducts = catchAsyncErrors(async (req, res, next) => {
   // return next(new ErrorHandler("Try Again..", 400));
-  const resultsPerPage = 6;
+  const resultsPerPage = req.query.resCount || 6;
 
   const productsCount = await Product.countDocuments();
 
@@ -24,12 +24,12 @@ exports.getProducts = catchAsyncErrors(async (req, res, next) => {
   let products = await apiFeatures.query;
 
   let filteredProductsCount = products.length;
-  apiFeatures.pagination(resultsPerPage);
+  apiFeatures.pagination(Number(resultsPerPage));
 
   products = await apiFeatures.query;
 
   const page = Number(req.query.page) > pages ? 1 : Number(req.query.page);
-  //: Number(req.query.page),
+
   res.status(200).json({
     success: true,
     productsCount,
@@ -113,7 +113,7 @@ exports.getProductReview = catchAsyncErrors(async (req, res, next) => {
 // @route       GET api/admin/products
 // @description  gets all products for admin
 exports.getAdminProducts = catchAsyncErrors(async (req, res, next) => {
-  const products = await Product.find({}).sort({ createdAt: -1 });
+  const products = await Product.find({}).sort({ _id: -1 });
 
   //: Number(req.query.page),
   res.status(200).json({

@@ -12,7 +12,14 @@ const ProtectedRoute = ({ isAdmin, component: Component, ...rest }) => {
           {...rest}
           render={(props) => {
             if (isAuthenticated === false) {
-              return <Redirect to="/login" />;
+              return (
+                <Redirect
+                  to={{
+                    pathname: "/login",
+                    state: { from: props.location },
+                  }}
+                />
+              );
             }
 
             if (isAdmin === true && user.role !== "admin") {

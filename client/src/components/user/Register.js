@@ -42,7 +42,7 @@ const Register = () => {
       dispatch(clearErrors());
       return;
     }
-  }, [toast, dispatch, error, isAuthenticated, history]);
+  }, [dispatch, error, isAuthenticated, history]);
 
   const handleChange = (e) => {
     setUserData({
@@ -66,7 +66,7 @@ const Register = () => {
         lg={4}
         container
         alignContent="flex-start"
-        style={{ margin: "0 auto", border: "3px solid coral" }}
+        style={{ margin: "0 auto" }}
       >
         <Grid item xs={12}>
           <Typography

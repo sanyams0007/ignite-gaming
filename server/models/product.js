@@ -33,6 +33,7 @@ const productSchema = new mongoose.Schema({
       },
     },
   ],
+  //disable platform
   platform: [{ type: String, required: true }],
   category: {
     type: String,

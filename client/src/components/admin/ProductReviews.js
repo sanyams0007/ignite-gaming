@@ -46,23 +46,23 @@ const ProductReviews = () => {
       toast.success("Review deleted successfully");
       dispatch({ type: DELETE_REVIEW_RESET });
     }
-  }, [toast, error, dispatch, productId, isDeleted]);
+  }, [error, dispatch, productId, isDeleted]);
 
   const rows = [];
 
   reviews &&
     reviews.forEach((review) => {
       rows.push({
-        ReviewID: review._id,
+        ID: review._id,
         Rating: review.rating,
         Comment: review.comment,
         User: review.name,
-        Action: review._id,
+        Actions: review._id,
       });
     });
 
   const columns = [
-    { id: "ReviewID", label: "Review ID", minWidth: 150 },
+    { id: "ID", label: "Review ID", minWidth: 150 },
     { id: "Rating", label: "Rating", minWidth: 40 },
     {
       id: "Comment",
@@ -77,7 +77,7 @@ const ProductReviews = () => {
       align: "right",
     },
     {
-      id: "Action",
+      id: "Actions",
       label: "Actions",
       minWidth: 50,
       align: "right",

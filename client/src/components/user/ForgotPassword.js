@@ -33,7 +33,7 @@ const ForgotPassword = () => {
       toast.success(message);
       return;
     }
-  }, [toast, dispatch, error, message]);
+  }, [dispatch, error, message]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -51,7 +51,7 @@ const ForgotPassword = () => {
         lg={4}
         container
         alignContent="flex-start"
-        style={{ margin: "0 auto", border: "3px solid coral" }}
+        style={{ margin: "0 auto" }}
       >
         <Grid item xs={12}>
           <Typography

@@ -23,13 +23,16 @@ import RemoveIcon from "@material-ui/icons/Remove";
 
 import Loader from "../layout/Loader";
 import MetaData from "../layout/MetaData";
-import Carousel from "../custom/Carousel";
+import ImageCarousel from "../custom/ImageCarousel";
 import ReviewModal from "../custom/ReviewModal";
 import ListReviews from "./ListReviews";
+import Game from "./Game";
+import axios from "axios";
 
 const GameDetail = () => {
   const [open, setOpen] = useState(false);
   const [qty, setQty] = useState(1);
+  const [products, setProducts] = useState([]);
 
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -40,6 +43,18 @@ const GameDetail = () => {
 
   const handleModalClose = () => {
     setOpen(false);
+  };
+
+  const addToCart = () => {
+    dispatch(addItemToCart(id, qty));
+  };
+
+  const increaseQty = () => {
+    setQty((current) => (current >= product.stock ? current : current + 1));
+  };
+
+  const decreaseQty = () => {
+    setQty((current) => (current <= 1 ? current : current - 1));
   };
 
   const { loading, error, product } = useSelector(
@@ -69,18 +84,37 @@ const GameDetail = () => {
       toast.success("Review added successfully");
       dispatch({ type: NEW_REVIEW_RESET });
     }
-  }, [toast, dispatch, reviewError, error, id, success]);
+  }, [dispatch, reviewError, error, success, id]);
 
-  const addToCart = () => {
-    dispatch(addItemToCart(id, qty));
-  };
+  /* useEffect(() => {
+    if (product) {
+      dispatch(
+        getProducts("", 1, [1, 500], product?.category, 0)
+      );
+    }
+  }, [dispatch, product]); */
 
-  const increaseQty = () => {
-    setQty((current) => (current >= product.stock ? current : current + 1));
-  };
-  const decreaseQty = () => {
-    setQty((current) => (current <= 1 ? current : current - 1));
-  };
+  useEffect(() => {
+    const getRecommendedProducts = async () => {
+      const link = `/api/products?keyword=&page=1&price[lte]=500&price[gte]=1&category=${product?.category}&ratings[gte]=0&resCount=20`;
+      try {
+        let res;
+        if (product?.category) {
+          res = await axios.get(link);
+          setProducts(res.data.products);
+        }
+      } catch ({ response }) {
+        console.log(response);
+      }
+    };
+    getRecommendedProducts();
+  }, [product]);
+
+  if (!product) return null;
+
+  const recommendedProducts = products
+    .filter(({ _id }) => _id !== product._id)
+    .slice(0, 4);
 
   return (
     <>
@@ -95,20 +129,22 @@ const GameDetail = () => {
             sm={10}
             container
             spacing={2}
-            style={{ margin: "0 auto", border: "3px solid blue" }}
+            style={{ margin: "0 auto" }}
           >
-            <Grid item xs={12} lg={5} style={{ border: "3px solid green" }}>
-              <Carousel images={product.images} alt={product.title} />
+            <Grid item xs={12} lg={5}>
+              {product.images && (
+                <ImageCarousel images={product.images} alt={product.title} />
+              )}
             </Grid>
             <Grid item xs={12} lg={7}>
-              <Typography variant="h4" gutterBottom>
+              <Typography variant="h3" component="h2" gutterBottom>
                 {product.name}
               </Typography>
-              <Typography variant="subtitle2" gutterBottom component="p">
+              <Typography variant="h6" gutterBottom component="h2">
                 Product # {product._id}
               </Typography>
-              <Divider />
-              <Box display="flex" alignItems="center" pt={1} pb={2}>
+              <Divider style={{ margin: "20px 0" }} />
+              <Box display="flex" alignItems="center">
                 <Rating
                   defaultValue={0.0}
                   precision={0.5}
@@ -122,9 +158,10 @@ const GameDetail = () => {
                   component="span"
                 >{` (${product.numOfReviews} Reviews)`}</Typography>
               </Box>
-              <Divider />
+              <Divider style={{ margin: "20px 0" }} />
               <Typography variant="h6" gutterBottom>
-                $ {product.price}
+                <span style={{ color: "#ff4747" }}>$ </span>
+                {product.price}
               </Typography>
               {product.stock > 0 && (
                 <Box display="flex" alignItems="center">
@@ -160,20 +197,25 @@ const GameDetail = () => {
                 </Box>
               )}
 
-              <Typography component="p" paragraph>
+              <Typography variant="body1" component="p">
                 Status :
-                <span>
+                <span style={{ color: product.stock > 0 ? "green" : "red" }}>
                   {product.stock > 0
-                    ? `In Stock  (${product.stock})`
-                    : "Out Of Stock"}
+                    ? ` In Stock (${product.stock})`
+                    : " Out Of Stock"}
                 </span>
               </Typography>
-              <Divider />
+              <Divider style={{ margin: "20px 0" }} />
               <Typography variant="h6">Description</Typography>
-              <Typography>
+              <Typography variant="body1">
                 Release Date: {product.release && product.release}
               </Typography>
-              <Typography paragraph>{product.description}</Typography>
+              <Typography variant="body1">
+                Genre : {product.category && product.category}
+              </Typography>
+              <Typography paragraph variant="body1" component="p">
+                {product.description}
+              </Typography>
 
               <Typography component="p" paragraph>
                 Sold By : <strong>{product.seller}</strong>
@@ -189,7 +231,7 @@ const GameDetail = () => {
                 </Button>
               ) : (
                 <Button variant="contained" color="primary">
-                  <Link to="/login">Login to Submit Review</Link>
+                  <Link to={`/login`}>Login to Submit Review</Link>
                 </Button>
               )}
 
@@ -200,6 +242,30 @@ const GameDetail = () => {
                 handleModalClose={handleModalClose}
               />
             </Grid>
+
+            {recommendedProducts.length > 0 && (
+              <Grid
+                item
+                xs={12}
+                container
+                alignContent="flex-start"
+                spacing={3}
+                style={{ margin: "0 auto" }}
+              >
+                <Grid item xs={12}>
+                  <Typography gutterBottom variant="h6">
+                    You might also like:
+                  </Typography>
+                  <Divider />
+                </Grid>
+                {recommendedProducts.map((product) => (
+                  <Grid key={product._id} item xs={12} sm={6} md={4} lg={3}>
+                    <Game product={product} />
+                  </Grid>
+                ))}
+              </Grid>
+            )}
+
             {product.reviews && product.reviews.length > 0 && (
               <Grid
                 item
@@ -208,6 +274,11 @@ const GameDetail = () => {
                 container
                 style={{ margin: "50px auto 20px" }}
               >
+                <Grid item xs={12}>
+                  <Typography gutterBottom variant="h6">
+                    Reviews:
+                  </Typography>
+                </Grid>
                 <ListReviews reviews={product.reviews} />
               </Grid>
             )}

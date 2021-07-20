@@ -25,14 +25,14 @@ const OrdersList = () => {
     }
 
     dispatch(myOrders());
-  }, [toast, error, dispatch]);
+  }, [error, dispatch]);
 
   const rows = [];
 
   orders &&
     orders.forEach((order) => {
       rows.push({
-        OrderID: order._id,
+        ID: order._id,
         Amount: order.totalPrice,
         ItemCount: order.orderItems.length,
         Status: order.orderStatus,
@@ -42,7 +42,7 @@ const OrdersList = () => {
     });
 
   const columns = [
-    { id: "OrderID", label: "OrderID", minWidth: 170 },
+    { id: "ID", label: "OrderID", minWidth: 170 },
     { id: "ItemCount", label: "No of Items", minWidth: 50 },
     {
       id: "Amount",
@@ -94,7 +94,7 @@ const OrdersList = () => {
           alignContent="flex-start"
           container
           spacing={2}
-          style={{ margin: "0 auto", border: "3px solid blue" }}
+          style={{ margin: "0 auto" }}
         >
           <Grid item xs={12}>
             <Typography
@@ -106,7 +106,7 @@ const OrdersList = () => {
               My <span>Orders</span>
             </Typography>
           </Grid>
-          <Grid item xs={12} style={{ border: "3px solid green" }}>
+          <Grid item xs={12}>
             <OrderTable columns={columns} rows={rows} />
           </Grid>
         </Grid>

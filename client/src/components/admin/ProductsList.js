@@ -46,7 +46,7 @@ const ProductsList = ({ history, match }) => {
     }
 
     dispatch(getAdminProducts());
-  }, [toast, error, dispatch, isDeleted, deleteError, history]);
+  }, [error, dispatch, match.path, isDeleted, deleteError, history]);
 
   const rows = [];
 
@@ -57,7 +57,7 @@ const ProductsList = ({ history, match }) => {
         Name: product.name,
         Price: product.price,
         Stock: product.stock,
-        Action: product._id,
+        Actions: product._id,
       });
     });
 
@@ -84,7 +84,7 @@ const ProductsList = ({ history, match }) => {
         ),
     },
     {
-      id: "Action",
+      id: "Actions",
       label: "Actions",
       minWidth: 100,
       align: "right",

@@ -5,7 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 
 import { useSelector } from "react-redux";
-import { Divider } from "@material-ui/core";
+import { Divider, Paper } from "@material-ui/core";
 
 export default function CartSummary() {
   const history = useHistory();
@@ -13,11 +13,11 @@ export default function CartSummary() {
   const { cartItems } = useSelector((state) => state.cart);
 
   const handleCheckout = () => {
-    history.push("/login?redirect=checkout");
+    history.push("/checkout");
   };
 
   return (
-    <Box p={2}>
+    <Paper elevation={0}>
       <Typography variant="h5" gutterBottom>
         Order Summary
       </Typography>
@@ -63,6 +63,6 @@ export default function CartSummary() {
           Checkout
         </Button>
       </Box>
-    </Box>
+    </Paper>
   );
 }

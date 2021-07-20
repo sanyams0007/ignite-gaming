@@ -1,34 +1,18 @@
 import { Link } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
 import { useSelector } from "react-redux";
 
-import { Grid, Typography, Button, Box } from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
 import Avatar from "@material-ui/core/Avatar";
 import MetaData from "../layout/MetaData";
 import Loader from "../layout/Loader";
 
-const useStyles = makeStyles({
-  top_heading: {
-    margin: "25px auto",
-  },
-  container: {
-    border: "3px solid blue",
-    padding: "50px 25px",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-  },
-  avatar: {
-    width: "250px",
-    height: "250px",
-  },
-  box: {
-    margin: "20px 10px",
-  },
-});
+import { profileStyles } from "./userStyle";
 
 const Profile = () => {
-  const classes = useStyles();
+  const classes = profileStyles();
   const { user, loading } = useSelector((state) => state.auth);
 
   return (
@@ -43,7 +27,7 @@ const Profile = () => {
           sm={10}
           container
           alignContent="flex-start"
-          style={{ margin: "0 auto", border: "3px solid coral" }}
+          style={{ margin: "0 auto" }}
         >
           <Grid item xs={12}>
             <Typography
@@ -60,7 +44,7 @@ const Profile = () => {
             xs={12}
             md={6}
             className={classes.container}
-            alignItems="center"
+            style={{ alignItems: "center" }}
           >
             <Avatar
               alt={user && user.name}

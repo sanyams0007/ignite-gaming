@@ -21,7 +21,7 @@ const OrderSuccess = () => {
         lg={5}
         container
         alignContent="flex-start"
-        style={{ margin: "0 auto", border: "3px solid coral" }}
+        style={{ margin: "0 auto" }}
       >
         <Grid item xs={12}>
           <Typography
