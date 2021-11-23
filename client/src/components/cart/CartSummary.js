@@ -17,7 +17,7 @@ export default function CartSummary() {
   };
 
   return (
-    <Paper elevation={0}>
+    <Paper elevation={2}>
       <Typography variant="h5" gutterBottom>
         Order Summary
       </Typography>

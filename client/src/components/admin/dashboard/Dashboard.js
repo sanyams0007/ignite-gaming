@@ -174,7 +174,7 @@ export default function Dashboard(props) {
               <Paper className={fixedHeightPaper}>
                 <Typography variant="h3">Total Amount </Typography>
                 <Typography color="primary" variant="h4">
-                  <b>$ {totalAmount}</b>
+                  <b>$ {totalAmount.toFixed(2)}</b>
                 </Typography>
               </Paper>
             </Grid>

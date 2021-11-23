@@ -3,7 +3,6 @@ const Product = require("../models/product");
 
 const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
-const { now } = require("mongoose");
 
 /* LOGGED IN USER ROUTES */
 
@@ -94,7 +93,7 @@ exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
   const order = await Order.findById(req.params.id);
 
   if (order.orderStatus === "Delivered") {
-    return next(new ErrorHandler("You have already delivered thi order", 400));
+    return next(new ErrorHandler("You have already delivered this order", 400));
   }
 
   order.orderItems.forEach(async (item) => {

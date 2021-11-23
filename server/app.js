@@ -31,7 +31,8 @@ app.use("/api", auth);
 app.use("/api", payment);
 app.use("/api", order);
 
-// Middle to handle errors Note: MUST COME AT LAST BEFORE EXPORT
+// Middle to handle errors 
+// Note: MUST COME AT LAST BEFORE EXPORTING APP
 app.use(errorMiddleware);
 
 module.exports = app;

@@ -32,6 +32,12 @@ const useStyle = makeStyles({
   content: {
     padding: "10px",
   },
+  title: {
+    transitionDuration: ".3s",
+    "&:hover": {
+      color: "#DD22CC",
+    },
+  },
   action: {
     display: "flex",
     justifyContent: "space-evenly",
@@ -59,7 +65,9 @@ const Game = ({ product }) => {
 
       <CardContent className={classes.content}>
         <Typography gutterBottom variant="h6" component="h2">
-          <Link to={`/product/${product._id}`}>{product.name}</Link>
+          <Link className={classes.title} to={`/product/${product._id}`}>
+            {product.name}
+          </Link>
         </Typography>
 
         <Box
@@ -81,10 +89,6 @@ const Game = ({ product }) => {
             component="span"
           >{` (${product.numOfReviews} Reviews)`}</Typography>
         </Box>
-        {/*  <Typography variant="h6" component="p">
-          <span style={{ color: "#ff4747" }}>$ </span>
-          {product.price}
-        </Typography> */}
       </CardContent>
       <div className={classes.action}>
         <Typography variant="h6" component="p">

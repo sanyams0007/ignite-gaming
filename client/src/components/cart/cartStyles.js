@@ -34,12 +34,13 @@ export const cartItemStyle = makeStyles({
   media: {
     borderRadius: " 4px 0 0 4px",
     backgroundColor: "rgba(255,255,255,.12)",
-    objectFit: "fill",
-    margin: "0 auto",
+    objectFit: "cover",
     minWidth: "120px",
     width: "100%",
     minHeight: "100%",
     maxHeight: "180px",
+    aspectRatio: "16 / 9",
+    objectPosition: "center",
   },
   line: {
     alignSelf: "normal",

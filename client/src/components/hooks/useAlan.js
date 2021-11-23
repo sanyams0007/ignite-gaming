@@ -15,6 +15,7 @@ const COMMANDS = {
   REMOVE_ITEM: "remove-item",
   REMOVE_ALL_ITEMS: "remove-all-items",
   GO_FOR_CHECKOUT: "go-for-checkout",
+  SEARCH_ITEM: "search-item",
 };
 
 export default function useAlan() {
@@ -26,7 +27,14 @@ export default function useAlan() {
   const { cartItems } = useSelector((state) => state.cart);
   const { products } = useSelector((state) => state.products);
 
-  /* Opens carts */
+  /* const n = "Battlefield 4";
+  const p = products.find((product) =>
+    console.log(product.name, n, product.name.toLowerCase() === n.toLowerCase())
+  );
+
+  console.log(n, p); */
+
+  /* Opens cart */
   const openCart = useCallback(() => {
     if (cartItems.length >= 1) {
       alanInstance.playText("Opening cart");
@@ -34,20 +42,18 @@ export default function useAlan() {
     } else alanInstance.playText("You have no items in your cart");
   }, [alanInstance, cartItems, history]);
 
-  //command: add-item, payload: name: Battlefield 4, quantity: 1
-
-  /* Adds item to cart on user voice command */
+  /* Adds item to cart */
   const addItem = useCallback(
     ({ detail: { name, quantity } }) => {
-      const item = products.find(
-        (product) => product.name.toLowerCase() === name.toLowerCase()
-      );
+      const itemToBeAdded = products.find((product) => {
+        return product.name.toLowerCase() === name.toLowerCase();
+      });
 
-      console.log(name, item);
-      if (item == null) {
+      console.log(name, itemToBeAdded);
+      if (itemToBeAdded == null) {
         alanInstance.playText(`I cannot find item named ${name}.`);
       } else {
-        dispatch(addItemToCart(item._id, quantity));
+        dispatch(addItemToCart(itemToBeAdded._id, quantity));
         alanInstance.playText(
           `Added ${quantity} of the ${name} item to your cart.`
         );
@@ -56,24 +62,37 @@ export default function useAlan() {
     [alanInstance, addItemToCart]
   );
 
-  /* Removes item from cart on user voice command */
+  /* Search for item */
+  const searchItem = useCallback(
+    ({ detail: { keyword } }) => {
+      alanInstance.playText(`searching for ${keyword}`);
+      if (keyword.trim()) {
+        history.push(`/search/${keyword}`);
+      } else {
+        history.push("/");
+      }
+    },
+    [alanInstance]
+  );
+
+  /* Removes item from cart */
   const removeItem = useCallback(
     ({ detail: { name } }) => {
-      const item = cartItems.find(
+      const itemToBeRemoved = cartItems.find(
         (product) => product.name.toLowerCase() === name.toLowerCase()
       );
 
-      if (item == null) {
+      if (itemToBeRemoved == null) {
         alanInstance.playText(`I cannot find item ${name} in the cart.`);
       } else {
-        dispatch(removeItemFromCart(item.product));
+        dispatch(removeItemFromCart(itemToBeRemoved.product));
         alanInstance.playText(`Removed the ${name} item from your cart.`);
       }
     },
     [alanInstance, cartItems, removeItemFromCart]
   );
 
-  /* Clear cart */
+  /* Clear Cart */
   const removeAllItems = useCallback(() => {
     dispatch(clearCart());
     alanInstance.playText(`Cleared your cart.`);
@@ -96,6 +115,7 @@ export default function useAlan() {
     window.addEventListener(COMMANDS.REMOVE_ITEM, removeItem);
     window.addEventListener(COMMANDS.REMOVE_ALL_ITEMS, removeAllItems);
     window.addEventListener(COMMANDS.GO_FOR_CHECKOUT, goForCheckout);
+    window.addEventListener(COMMANDS.SEARCH_ITEM, searchItem);
 
     return () => {
       window.removeEventListener(COMMANDS.OPEN_CART, openCart);
@@ -103,8 +123,16 @@ export default function useAlan() {
       window.removeEventListener(COMMANDS.REMOVE_ITEM, removeItem);
       window.removeEventListener(COMMANDS.REMOVE_ALL_ITEMS, removeAllItems);
       window.removeEventListener(COMMANDS.GO_FOR_CHECKOUT, goForCheckout);
+      window.removeEventListener(COMMANDS.SEARCH_ITEM, searchItem);
     };
-  }, [openCart, addItem, removeItem, removeAllItems, goForCheckout]);
+  }, [
+    openCart,
+    addItem,
+    removeItem,
+    removeAllItems,
+    goForCheckout,
+    searchItem,
+  ]);
 
   /* effect for creating Alan instance only once app starts */
   useEffect(() => {

@@ -36,7 +36,7 @@ h2 > span {
 
 a {
   text-decoration: none !important;
-  color: white !important;
+  color: white;
 }
 
 ul li,
@@ -65,4 +65,10 @@ ol li {
   outline: 0;
   border-radius: 4px;
   background: white;
+}
+
+.paypal-buttons {
+  margin-top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
 }

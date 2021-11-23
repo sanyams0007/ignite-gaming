@@ -82,19 +82,43 @@ const OrderDetail = () => {
                 `${order.shippingInfo.address}, ${order.shippingInfo.city}, ${order.shippingInfo.postalCode}, ${order.shippingInfo.country} `}
             </Typography>
           </Grid>
-          <Grid item xs={12} md={3}>
-            <Typography variant="h6" component="h6">
-              Payment :
-              <b>
-                {order.paymentInfo && order.paymentInfo.status === "succeeded"
-                  ? " PAID"
-                  : " NOT PAID"}
-              </b>
+          <Grid item xs={12} sm={6} md={3}>
+            <Typography variant="h6" component="h6" gutterBottom>
+              Payment Info:
+            </Typography>
+            <Typography component="p" gutterBottom>
+              <b> Status : </b>
+              {order.paymentInfo &&
+              (order.paymentInfo.status === "succeeded" ||
+                order.paymentInfo.status === "COMPLETED") ? (
+                <b style={{ color: "#2cb978", fontSize: "18px" }}> PAID </b>
+              ) : (
+                <b style={{ color: "red", fontSize: "18px" }}> NOT PAID </b>
+              )}
+            </Typography>
+            <Typography component="p" gutterBottom>
+              <b> Mode : </b>
+              {order.paymentInfo &&
+                order.paymentInfo.provider &&
+                order.paymentInfo.provider}
+            </Typography>
+            <Typography component="p" gutterBottom>
+              <b> Transaction ID : </b>
+              {order.paymentInfo.id ? order.paymentInfo.id : "Not Available"}
             </Typography>
           </Grid>
-          <Grid item xs={12} md={3}>
+          <Grid item xs={12} sm={6} md={3}>
             <Typography variant="h6" component="h4">
-              Order Status : <b>{order.orderStatus && order.orderStatus}</b>
+              Order Status :{" "}
+              {String(order.orderStatus).includes("Delivered") ? (
+                <b style={{ color: "#2cb978", fontSize: "18px" }}>
+                  {order.orderStatus}
+                </b>
+              ) : (
+                <b style={{ color: "red", fontSize: "18px" }}>
+                  {order.orderStatus}
+                </b>
+              )}
             </Typography>
           </Grid>
           <Grid item xs={12}>

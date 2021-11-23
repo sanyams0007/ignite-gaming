@@ -27,8 +27,9 @@ const ReviewOrder = ({ prev, next }) => {
   }
 
   const TAX_RATE = 0.07;
+  const SHIPPING_RATE = 50;
   const invoiceSubtotal = subtotal(cartItems);
-  const SHIPPING_COST = invoiceSubtotal > 50 ? 0 : 4.9;
+  const SHIPPING_COST = invoiceSubtotal > SHIPPING_RATE ? 0 : 4.9;
   const invoiceTaxes = TAX_RATE * invoiceSubtotal + SHIPPING_COST;
   const invoiceTotal = invoiceTaxes + invoiceSubtotal;
 
@@ -45,6 +46,8 @@ const ReviewOrder = ({ prev, next }) => {
     sessionStorage.setItem("orderInfo", JSON.stringify(data));
     next();
   };
+
+  console.log(SHIPPING_RATE > 0 ? 3 : 4);
 
   return (
     <>
@@ -75,71 +78,73 @@ const ReviewOrder = ({ prev, next }) => {
         </Typography>
       </Grid>
       <Grid item xs={12} md={7}>
-        <Box bgcolor="rgba(255,255,255,.12)" borderRadius="10px">
-          <TableContainer component={Paper}>
-            <Table aria-label="order detail">
-              <TableHead>
-                <TableRow>
-                  <TableCell align="center" colSpan={3}>
-                    Details (
-                    {cartItems.reduce(
-                      (acc, item) => acc + Number(item.quantity),
-                      0
-                    )}{" "}
-                    items)
-                  </TableCell>
-                  <TableCell align="right">Est. Total&nbsp;($)</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>Description</TableCell>
-                  <TableCell align="right">Qty.</TableCell>
-                  <TableCell align="right">Price&nbsp;($)</TableCell>
-                  <TableCell align="right">Total</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {cartItems.map((item) => (
-                  <TableRow key={item.product}>
-                    <TableCell>{item.name}</TableCell>
-                    <TableCell align="right">{item.quantity}</TableCell>
-                    <TableCell align="right">{item.price}</TableCell>
-                    <TableCell align="right">
-                      {ccyFormat(item.price * item.quantity)}
-                    </TableCell>
-                  </TableRow>
-                ))}
-
-                <TableRow>
-                  <TableCell rowSpan={3} />
-                  <TableCell colSpan={2}>Subtotal</TableCell>
-                  <TableCell align="right">
-                    {ccyFormat(invoiceSubtotal)}
-                  </TableCell>
-                </TableRow>
-                {invoiceSubtotal.toFixed(2) < 50 ? (
-                  <TableRow>
-                    <TableCell rowSpan={3} />
-                    <TableCell colSpan={2}>Shipping</TableCell>
-                    <TableCell align="right">
-                      {ccyFormat(SHIPPING_COST)}
-                    </TableCell>
-                  </TableRow>
-                ) : null}
-                <TableRow>
-                  <TableCell>Tax</TableCell>
-                  <TableCell align="right">{`${(TAX_RATE * 100).toFixed(
+        <TableContainer
+          style={{
+            backgroundColor: "rgba(255,255,255,.12)",
+            borderRadius: "10px",
+          }}
+        >
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell align="center" colSpan={3}>
+                  Details (
+                  {cartItems.reduce(
+                    (acc, item) => acc + Number(item.quantity),
                     0
-                  )} %`}</TableCell>
-                  <TableCell align="right">{ccyFormat(invoiceTaxes)}</TableCell>
+                  )}{" "}
+                  items)
+                </TableCell>
+                <TableCell align="right">Est. Total&nbsp;($)</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Description</TableCell>
+                <TableCell align="right">Qty.</TableCell>
+                <TableCell align="right">Price&nbsp;($)</TableCell>
+                <TableCell align="right">Total</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {cartItems.map((item) => (
+                <TableRow key={item.product}>
+                  <TableCell>{item.name}</TableCell>
+                  <TableCell align="right">{item.quantity}</TableCell>
+                  <TableCell align="right">{item.price}</TableCell>
+                  <TableCell align="right">
+                    {ccyFormat(item.price * item.quantity)}
+                  </TableCell>
                 </TableRow>
+              ))}
+
+              <TableRow>
+                <TableCell rowSpan={SHIPPING_RATE < 0 ? 3 : 4} />
+                <TableCell colSpan={2}>Subtotal</TableCell>
+                <TableCell align="right">
+                  {ccyFormat(invoiceSubtotal)}
+                </TableCell>
+              </TableRow>
+              {SHIPPING_COST && (
                 <TableRow>
-                  <TableCell colSpan={2}>Total</TableCell>
-                  <TableCell align="right">{ccyFormat(invoiceTotal)}</TableCell>
+                  <TableCell colSpan={2}>Shipping</TableCell>
+                  <TableCell align="right">
+                    {ccyFormat(SHIPPING_COST)}
+                  </TableCell>
                 </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Box>
+              )}
+              <TableRow>
+                <TableCell>Tax</TableCell>
+                <TableCell align="right">{`${(TAX_RATE * 100).toFixed(
+                  0
+                )} %`}</TableCell>
+                <TableCell align="right">{ccyFormat(invoiceTaxes)}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell colSpan={SHIPPING_COST > 0 ? 2 : 0}>Total</TableCell>
+                <TableCell align="right">{ccyFormat(invoiceTotal)}</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
       </Grid>
       <Grid item xs={12}>
         <Box display="flex" justifyContent="space-between" alignItems="center">

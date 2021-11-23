@@ -1,9 +1,4 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-
-// Payment
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
+import { useState } from "react";
 
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
@@ -21,7 +16,6 @@ const steps = ["Shipping address", "Review your order", "Payment details"];
 export default function Checkout() {
   const classes = checkoutStyle();
 
-  const [stripeApiKey, setStripeApiKey] = useState("");
   const [activeStep, setActiveStep] = useState(0);
 
   const handleNext = () => {
@@ -32,15 +26,6 @@ export default function Checkout() {
     setActiveStep(activeStep - 1);
   };
 
-  useEffect(() => {
-    const getStripApiKey = async () => {
-      const { data } = await axios.get("/api/stripeapi");
-      setStripeApiKey(data.stripeApiKey);
-    };
-
-    getStripApiKey();
-  }, []);
-
   function getStepContent(step) {
     switch (step) {
       case 0:
@@ -49,15 +34,10 @@ export default function Checkout() {
         return <ReviewOrder prev={handleBack} next={handleNext} />;
       case 2:
         return (
-          stripeApiKey && (
-            <Elements stripe={loadStripe(stripeApiKey)}>
-              <Payment prev={handleBack} />
-            </Elements>
-          )
+          <>
+            <Payment prev={handleBack} />
+          </>
         );
-
-      default:
-        throw new Error("Unknown step");
     }
   }
 

@@ -185,15 +185,17 @@ const ProcessOrder = ({ match }) => {
             </Typography>
             <Typography component="p" gutterBottom>
               <b> Status : </b>
-              {paymentInfo && paymentInfo.status === "succeeded" ? (
+              {paymentInfo &&
+              (paymentInfo.status === "succeeded" ||
+                order.paymentInfo.status === "COMPLETED") ? (
                 <span style={{ color: "green" }}>PAID</span>
               ) : (
                 <span style={{ color: "red" }}>NOT PAID</span>
               )}
             </Typography>
             <Typography component="p" gutterBottom>
-              <b> Stripe ID : </b>
-              {paymentInfo && paymentInfo.id}
+              <b> Transaction ID : </b>
+              {paymentInfo && paymentInfo.id ? paymentInfo.id : "Not Available"}
             </Typography>
           </Grid>
 
@@ -222,7 +224,7 @@ const ProcessOrder = ({ match }) => {
                       alt={item.name}
                       style={{
                         justifySelf: "flex-start",
-                        maxWidth: "100px",
+                        maxWidth: "70px",
                         width: "100%",
                       }}
                     />

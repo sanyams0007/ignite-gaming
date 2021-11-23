@@ -137,7 +137,12 @@ const GameDetail = () => {
               )}
             </Grid>
             <Grid item xs={12} lg={7}>
-              <Typography variant="h3" component="h2" gutterBottom>
+              <Typography
+                color="secondary"
+                variant="h3"
+                component="h2"
+                gutterBottom
+              >
                 {product.name}
               </Typography>
               <Typography variant="h6" gutterBottom component="h2">
@@ -207,13 +212,13 @@ const GameDetail = () => {
               </Typography>
               <Divider style={{ margin: "20px 0" }} />
               <Typography variant="h6">Description</Typography>
-              <Typography variant="body1">
+              <Typography variant="body1" gutterBottom>
                 Release Date: {product.release && product.release}
               </Typography>
-              <Typography variant="body1">
+              <Typography variant="body1" gutterBottom>
                 Genre : {product.category && product.category}
               </Typography>
-              <Typography paragraph variant="body1" component="p">
+              <Typography paragraph variant="body1" component="p" gutterBottom>
                 {product.description}
               </Typography>
 

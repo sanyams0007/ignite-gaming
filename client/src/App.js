@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { ToastContainer } from "material-react-toastify";
+import { ThemeProvider } from "@material-ui/core/styles";
 //import useAlan from "./components/hooks/useAlan";
 
 // Components / Pages
@@ -29,10 +30,9 @@ import OrdersList from "./components/order/OrdersList";
 import OrderDetail from "./components/order/OrderDetail";
 
 //Styles
-import "./App.css";
-import { ThemeProvider } from "@material-ui/core/styles";
-import theme from "./components/muiTheme";
 import "material-react-toastify/dist/ReactToastify.css";
+import "./App.css";
+import theme from "./components/muiTheme";
 import Grid from "@material-ui/core/Grid";
 
 // Redux / Context

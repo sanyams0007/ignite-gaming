@@ -41,6 +41,41 @@ exports.getProducts = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
+// @route       GET api/products/all
+// @description  gets all products (for voice assistance and )
+exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
+  // return next(new ErrorHandler("Try Again..", 400));
+  /* const resultsPerPage = req.query.resCount || 6;
+
+  const productsCount = await Product.countDocuments();
+
+  const pages = Math.ceil(productsCount / resultsPerPage);
+
+  const apiFeatures = new APIFeatures(Product.find(), req.query)
+    .search()
+    .filter();
+
+  let products = await apiFeatures.query;
+
+  let filteredProductsCount = products.length;
+  apiFeatures.pagination(Number(resultsPerPage)); */
+  const category = req.query.category || "";
+
+  const products = await Product.find({}).select("name category");
+
+  //console.log(products);
+  res.status(200).json({ games: products });
+  /* res.status(200).json({
+    success: true,
+    productsCount,  
+    resultsPerPage,
+    products,
+    pages,
+    page,
+    filteredProductsCount,
+  }); */
+});
+
 // @route       GET api/product/:id
 // @description  get single product details
 exports.getSingleProduct = catchAsyncErrors(async (req, res, next) => {

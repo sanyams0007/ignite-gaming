@@ -123,12 +123,12 @@ const Home = () => {
                   <Paper
                     elevation={0}
                     style={{
-                      backgroundColor: "rgba(255,255,255,.12)",
-                      paddingLeft: "10px",
+                      backgroundColor: "rgba(255,255,255,.10)",
+                      padding: "15px",
                     }}
                   >
-                    <Typography gutterBottom>Advance Searching</Typography>
-                    <Box paddingRight={2}>
+                    <Typography gutterBottom>Advance Filters</Typography>
+                    <Box>
                       <Typography variant="h5">Price</Typography>
                       <Slider
                         value={value}
@@ -148,6 +148,7 @@ const Home = () => {
                       <ul>
                         {categories.map((category) => (
                           <li
+                            style={{ padding: "5px 0 0 10px" }}
                             key={category}
                             onClick={() => setCategory(category)}
                           >
@@ -160,7 +161,11 @@ const Home = () => {
                       <Typography variant="h5">Ratings</Typography>
                       <ul>
                         {[5, 4, 3, 2, 1].map((star) => (
-                          <li key={star} onClick={() => setRating(star)}>
+                          <li
+                            style={{ padding: "5px 0 0 10px" }}
+                            key={star}
+                            onClick={() => setRating(star)}
+                          >
                             <Rating
                               defaultValue={star}
                               name="user-rating"

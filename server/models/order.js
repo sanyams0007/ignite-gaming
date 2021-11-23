@@ -68,6 +68,9 @@ const orderSchema = mongoose.Schema({
     status: {
       type: String,
     },
+    provider: {
+      type: String,
+    },
   },
   paidAt: {
     type: Date,

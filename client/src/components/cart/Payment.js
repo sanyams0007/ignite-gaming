@@ -1,65 +1,44 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
-import {
-  useStripe,
-  useElements,
-  CardNumberElement,
-  CardExpiryElement,
-  CardCvcElement,
-} from "@stripe/react-stripe-js";
-import { toast } from "material-react-toastify";
+
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+
+import Accordion from "@material-ui/core/Accordion";
+import AccordionDetails from "@material-ui/core/AccordionDetails";
+import AccordionSummary from "@material-ui/core/AccordionSummary";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import Box from "@material-ui/core/Box";
-import InputLabel from "@material-ui/core/InputLabel";
 
 import MetaData from "../layout/MetaData";
+import StripeScreen from "./payments/Stripe";
+import PayPalScreen from "./payments/PayPal";
 
 import { createOrder, clearErrors } from "../../actions/orderActions";
-import { clearCart } from "../../actions/cartActions";
-
-const options = {
-  style: {
-    base: {
-      fontSize: "18px",
-      color: "#424770",
-      letterSpacing: "0.025em",
-      fontFamily: "Source Code Pro, monospace",
-      "::placeholder": {
-        color: "#aab7c4",
-      },
-    },
-    invalid: {
-      color: "#9e2146",
-    },
-  },
-};
+import COD from "./payments/COD";
 
 export default function Payment({ prev }) {
+  const [expanded, setExpanded] = useState(false);
+  const [stripeApiKey, setStripeApiKey] = useState("");
+
+  const handleChange = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
   const [disable, setDisable] = useState(false);
 
-  const stripe = useStripe();
-  const elements = useElements();
-  const dispatch = useDispatch();
-  const history = useHistory();
-
-  const { user } = useSelector((state) => state.auth);
   const { cartItems, shippingInfo } = useSelector((state) => state.cart);
-  const { error } = useSelector((state) => state.newOrder);
 
-  useEffect(() => {
-    if (error) {
-      toast.success(error);
-      dispatch(clearErrors());
-    }
-  }, [dispatch, error]);
+  const orderItems = cartItems.map((item) => {
+    delete item.stock;
+    return item;
+  });
 
   const order = {
-    orderItems: cartItems,
+    orderItems,
     shippingInfo,
   };
 
@@ -71,135 +50,93 @@ export default function Payment({ prev }) {
     order.totalPrice = orderInfo.invoiceTotal;
   }
 
-  const paymentData = {
-    description: "Software development services",
-    shipping: {
-      name: `${shippingInfo.firstName} ${shippingInfo.lastName} `,
-      address: {
-        line1: `${shippingInfo.address}`,
-        postal_code: `${shippingInfo.postalCode}`,
-        city: `${shippingInfo.city}`,
-        country: `${shippingInfo.country}`.split("-")[1],
-      },
-    },
-    amount: Math.round(orderInfo.invoiceTotal * 100),
-    currency: "usd",
-    payment_method_types: ["card"],
-  };
-
-  // card no: 4000 0027 6000 3184
-
-  const handlePayment = async (e) => {
-    e.preventDefault();
-
-    if (!stripe || !elements) {
-      return;
-    }
-
-    setDisable(true);
-
-    let res;
-
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-
-      res = await axios.post("/api/payment/process", paymentData, config);
-
-      const clientSecret = res.data.client_secret;
-
-      if (!stripe || !elements) {
-        return;
-      }
-
-      const result = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: elements.getElement(CardNumberElement),
-          billing_details: {
-            name: user.name,
-            email: user.email,
-          },
-        },
-      });
-
-      if (result.error) {
-        toast.error(result.error.message);
-        setDisable(false);
-      } else {
-        // the payment is processed or not
-        if (result.paymentIntent.status === "succeeded") {
-          order.paymentInfo = {
-            id: result.paymentIntent.id,
-            status: result.paymentIntent.status,
-          };
-
-          dispatch(createOrder(order));
-          dispatch(clearCart());
-          history.push("/success");
-        } else {
-          toast.error("There is some issue while payment processing");
-        }
-      }
-    } catch (error) {
-      toast.error(error.response.data.message);
-      setDisable(false);
-    }
-  };
+  useEffect(() => {
+    const getStripApiKey = async () => {
+      const { data } = await axios.get("/api/stripeapi");
+      setStripeApiKey(data.stripeApiKey);
+    };
+    getStripApiKey();
+  }, []);
 
   return (
     <>
       <MetaData title="Payment" />
       <Grid item xs={12}>
-        <Typography variant="h6" gutterBottom>
-          Payment method
-        </Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <Typography color="error" gutterBottom>
-          Test Card No: 4000 0027 6000 3184 | Date: any future date | CVV: 007
-        </Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <InputLabel shrink htmlFor="cardNumber">
-          Card Number
-        </InputLabel>
-        <CardNumberElement options={options} />
-      </Grid>
-      <Grid item xs={12} md={6}>
-        <InputLabel shrink htmlFor="expDate">
-          Card Expiry
-        </InputLabel>
-        <CardExpiryElement options={options} />
-      </Grid>
-      <Grid item xs={12} md={6}>
-        <InputLabel shrink htmlFor="cvv">
-          Card CVV / CVC
-        </InputLabel>
-        <CardCvcElement options={options} />
+        <Accordion
+          expanded={expanded === "stripe"}
+          onChange={handleChange("stripe")}
+        >
+          <AccordionSummary
+            style={{ background: "#7069fe" }}
+            expandIcon={<ExpandMoreIcon />}
+            id="stripe"
+          >
+            <Typography variant="h6">Pay Using Stripe</Typography>
+          </AccordionSummary>
+          <Grid
+            spacing={1}
+            container
+            justify="center"
+            style={{ margin: "0 auto" }}
+          >
+            {stripeApiKey && (
+              <Elements stripe={loadStripe(stripeApiKey)}>
+                <StripeScreen order={order} blockPrev={setDisable} />
+              </Elements>
+            )}
+          </Grid>
+        </Accordion>
+
+        <Accordion
+          expanded={expanded === "paypal"}
+          onChange={handleChange("paypal")}
+        >
+          <AccordionSummary
+            style={{ background: "#0079C1" }}
+            expandIcon={<ExpandMoreIcon />}
+          >
+            <Typography variant="h6">Pay Using PayPal</Typography>
+          </AccordionSummary>
+
+          <PayPalScreen
+            order={order}
+            createOrder={createOrder}
+            clearErrors={clearErrors}
+            setDisable={setDisable}
+          />
+        </Accordion>
+
+        <Accordion expanded={expanded === "cod"} onChange={handleChange("cod")}>
+          <AccordionSummary
+            style={{ background: "#2cb978" }}
+            expandIcon={<ExpandMoreIcon />}
+          >
+            <Typography variant="h6">Cash On Delivery</Typography>
+          </AccordionSummary>
+          <AccordionDetails
+            style={{
+              justifyContent: "space-between",
+              paddingRight: "0px",
+            }}
+          >
+            <COD
+              order={order}
+              createOrder={createOrder}
+              clearErrors={clearErrors}
+            />
+          </AccordionDetails>
+        </Accordion>
       </Grid>
 
       <Grid item xs={12}>
-        <Box display="flex" justifyContent="space-between" alignItems="center">
-          <Button
-            disabled={disable}
-            onClick={prev}
-            variant="contained"
-            color="primary"
-          >
-            Back
-          </Button>
-          <Button
-            disabled={disable}
-            onClick={handlePayment}
-            variant="contained"
-            color="primary"
-          >
-            Pay {` $ ${orderInfo && orderInfo.invoiceTotal}`}
-          </Button>
-        </Box>
+        <Button
+          disabled={disable}
+          onClick={prev}
+          variant="contained"
+          color="primary"
+        >
+          Back
+        </Button>
       </Grid>
     </>
   );
