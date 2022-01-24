@@ -27,6 +27,9 @@ export const commonStyles = makeStyles((theme) => ({
   input_box: {
     width: "100%",
     margin: "20px 0 5px",
+    "&:first-child": {
+      margin: "8px 0",
+    },
   },
 
   label: {
@@ -62,6 +65,12 @@ export const signInOutStyles = makeStyles((theme) => ({
   },
   link: {
     fontSize: 18,
+    "&:hover": {
+      textDecoration: "underline",
+    },
+  },
+  demoBox: {
+    borderTop: "1px solid rgba(255,255,255,.5)",
   },
 }));
 

@@ -136,6 +136,11 @@ const Login = () => {
                 </Typography>
               </Link>
             </Typography>
+            <div>
+              <Typography> Or Try Demo</Typography>
+              <Typography> User</Typography>
+              <Typography> Admin</Typography>
+            </div>
           </Grid>
         </Grid>
       )}

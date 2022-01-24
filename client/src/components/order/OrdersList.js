@@ -41,6 +41,8 @@ const OrdersList = () => {
       });
     });
 
+  rows.sort((a, b) => new Date(b.Date) - new Date(a.Date));
+
   const columns = [
     { id: "ID", label: "OrderID", minWidth: 170 },
     { id: "ItemCount", label: "No of Items", minWidth: 50 },

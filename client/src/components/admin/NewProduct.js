@@ -15,6 +15,7 @@ import SaveIcon from "@material-ui/icons/Save";
 
 import { newProduct, clearErrors } from "../../actions/productActions";
 import { NEW_PRODUCT_RESET } from "../../constants/productConstants";
+import { categories } from "../util";
 
 const NewProduct = ({ history }) => {
   const classes = useStyles();
@@ -27,20 +28,6 @@ const NewProduct = ({ history }) => {
   const [seller, setSeller] = useState("");
   const [images, setImages] = useState([]);
   const [imagesPreview, setImagesPreview] = useState([]);
-
-  const categories = [
-    "RPG",
-    "Shooter/FPS",
-    "Shooter/TPS",
-    "Action",
-    "Adventure",
-    "Horror",
-    "Survival/Strategy",
-    "Racing",
-    "Sports/Outdoor",
-    "Fighting",
-    "Battle Royale",
-  ];
 
   const dispatch = useDispatch();
 

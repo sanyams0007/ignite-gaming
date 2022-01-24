@@ -8,7 +8,7 @@ import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
-import Button from "@material-ui/core/Button";
+import Chip from "@material-ui/core/Chip";
 import TextField from "@material-ui/core/TextField";
 
 import { cartItemStyle } from "./cartStyles";
@@ -76,14 +76,11 @@ const CartItem = ({ item }) => {
           </IconButton>
         </Box>
         <Divider className={classes.line} />
-        <Button
-          onClick={() => removeFromCart(item.product)}
-          variant="contained"
+        <Chip
           color="primary"
-          aria-label="remove from shopping cart"
-        >
-          Remove
-        </Button>
+          label="Remove"
+          onClick={() => removeFromCart(item.product)}
+        />
       </Grid>
     </Grid>
   );

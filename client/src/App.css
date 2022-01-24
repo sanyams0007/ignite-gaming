@@ -28,6 +28,10 @@ body {
 
 #root {
   height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  align-content: space-between;
 }
 
 h2 > span {
@@ -60,7 +64,6 @@ ol li {
   padding: 10px 14px;
   font-size: 1em;
   font-family: "Source Code Pro", monospace;
-
   border: 0;
   outline: 0;
   border-radius: 4px;

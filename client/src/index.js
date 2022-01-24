@@ -7,10 +7,7 @@ import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 ReactDOM.render(
   <Provider store={store}>
-    <PayPalScriptProvider
-      /*  options={{ components: "buttons" }} */
-      deferLoading={true}
-    >
+    <PayPalScriptProvider deferLoading={true}>
       <App />
     </PayPalScriptProvider>
   </Provider>,

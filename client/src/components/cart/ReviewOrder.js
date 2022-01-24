@@ -5,7 +5,6 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
@@ -33,6 +32,8 @@ const ReviewOrder = ({ prev, next }) => {
   const invoiceTaxes = TAX_RATE * invoiceSubtotal + SHIPPING_COST;
   const invoiceTotal = invoiceTaxes + invoiceSubtotal;
 
+  console.log(SHIPPING_COST);
+
   const proceedToPayment = (e) => {
     e.preventDefault();
 
@@ -46,8 +47,6 @@ const ReviewOrder = ({ prev, next }) => {
     sessionStorage.setItem("orderInfo", JSON.stringify(data));
     next();
   };
-
-  console.log(SHIPPING_RATE > 0 ? 3 : 4);
 
   return (
     <>
@@ -117,13 +116,13 @@ const ReviewOrder = ({ prev, next }) => {
               ))}
 
               <TableRow>
-                <TableCell rowSpan={SHIPPING_RATE < 0 ? 3 : 4} />
+                <TableCell rowSpan={SHIPPING_COST === 0 ? 3 : 4} />
                 <TableCell colSpan={2}>Subtotal</TableCell>
                 <TableCell align="right">
                   {ccyFormat(invoiceSubtotal)}
                 </TableCell>
               </TableRow>
-              {SHIPPING_COST && (
+              {SHIPPING_COST > 0 && (
                 <TableRow>
                   <TableCell colSpan={2}>Shipping</TableCell>
                   <TableCell align="right">
@@ -133,13 +132,13 @@ const ReviewOrder = ({ prev, next }) => {
               )}
               <TableRow>
                 <TableCell>Tax</TableCell>
-                <TableCell align="right">{`${(TAX_RATE * 100).toFixed(
-                  0
-                )} %`}</TableCell>
+                <TableCell align="right">{`${(
+                  TAX_RATE * 100
+                ).toFixed()} %`}</TableCell>
                 <TableCell align="right">{ccyFormat(invoiceTaxes)}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell colSpan={SHIPPING_COST > 0 ? 2 : 0}>Total</TableCell>
+                <TableCell colSpan={SHIPPING_COST > 0 ? 2 : 1}>Total</TableCell>
                 <TableCell align="right">{ccyFormat(invoiceTotal)}</TableCell>
               </TableRow>
             </TableBody>

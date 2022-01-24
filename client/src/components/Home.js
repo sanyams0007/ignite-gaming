@@ -15,8 +15,13 @@ import Slider from "@material-ui/core/Slider";
 import Rating from "@material-ui/lab/Rating";
 import Pagination from "@material-ui/lab/Pagination";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
+/* import Chip from "@material-ui/core/Chip";
+import DoneIcon from "@material-ui/icons/Done"; */
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
 
 import { getProducts } from "../actions/productActions";
+import { categories, marks } from "./util";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -32,36 +37,13 @@ const Home = () => {
     filteredProductsCount,
   } = useSelector((state) => state.products);
 
-  const [currentPage, setCurrentPage] = useState(/* page ? page : */ 1);
+  const [currentPage, setCurrentPage] = useState(
+    () => JSON.parse(sessionStorage.getItem("lastPage")) || 1
+  );
   const [price, setPrice] = useState([1, 500]);
   const [value, setValue] = useState([1, 500]);
   const [category, setCategory] = useState("");
   const [rating, setRating] = useState(0);
-
-  const categories = [
-    "RPG",
-    "Shooter/FPS",
-    "Shooter/TPS",
-    "Action",
-    "Adventure",
-    "Horror",
-    "Survival/Strategy",
-    "Racing",
-    "Sports/Outdoor",
-    "Fighting",
-    "Battle Royale",
-  ];
-
-  const marks = [
-    {
-      value: 0,
-      label: "$0",
-    },
-    {
-      value: 500,
-      label: "$500",
-    },
-  ];
 
   const setCurrentPageNo = (event, value) => {
     setCurrentPage(value);
@@ -90,11 +72,17 @@ const Home = () => {
     }
 
     dispatch(getProducts(keyword, currentPage, price, category, rating));
+
+    return () => {
+      sessionStorage.setItem("lastPage", JSON.stringify(currentPage));
+    };
   }, [dispatch, error, keyword, currentPage, price, category, rating]);
 
   useEffect(() => {
-    if (keyword) setCurrentPage(page ? page : 1);
-  }, [keyword, page]);
+    if (keyword) {
+      setCurrentPage(1);
+    }
+  }, [keyword]);
 
   return (
     <>
@@ -116,7 +104,7 @@ const Home = () => {
               <>
                 <Grid item xs={12}>
                   <Typography variant="h2" align="center" component="h2">
-                    {products.length ? "Search results" : "No match found"}
+                    {products.length > 0 ? "Search results" : "No match found"}
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={4} md={3}>
@@ -127,9 +115,19 @@ const Home = () => {
                       padding: "15px",
                     }}
                   >
-                    <Typography gutterBottom>Advance Filters</Typography>
+                    <Box display="flex" justifyContent="space-between">
+                      <Typography variant="h5" gutterBottom>
+                        Advance Filters
+                      </Typography>
+                      {/* <Chip
+                        color="primary"
+                        label="Clear all"
+                        onDelete={handleDelete}
+                        deleteIcon={<DoneIcon />}
+                      /> */}
+                    </Box>
                     <Box>
-                      <Typography variant="h5">Price</Typography>
+                      <Typography>Price</Typography>
                       <Slider
                         value={value}
                         onChange={handleChange}
@@ -137,28 +135,40 @@ const Home = () => {
                         aria-labelledby="range-slider"
                         getAriaValueText={(newValue) => `$${newValue}`}
                         valueLabelFormat={(newValue) => `$${newValue}`}
-                        min={0}
+                        min={1}
                         max={500}
                         onChangeCommitted={handlePrice}
                         marks={marks}
                       />
                     </Box>
                     <Box my={2}>
-                      <Typography variant="h5">Categories</Typography>
-                      <ul>
+                      <Typography>Genres</Typography>
+
+                      <Select
+                        fullWidth
+                        displayEmpty
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
+                        style={{
+                          background: "#c1c1c1",
+                          borderRadius: "5px",
+                          textIndent: "5px",
+                          marginTop: "10px",
+                        }}
+                      >
+                        <MenuItem value="" disabled>
+                          Select Genre
+                        </MenuItem>
+                        <MenuItem value="">All</MenuItem>
                         {categories.map((category) => (
-                          <li
-                            style={{ padding: "5px 0 0 10px" }}
-                            key={category}
-                            onClick={() => setCategory(category)}
-                          >
+                          <MenuItem key={category} value={category}>
                             {category}
-                          </li>
+                          </MenuItem>
                         ))}
-                      </ul>
+                      </Select>
                     </Box>
                     <Box>
-                      <Typography variant="h5">Ratings</Typography>
+                      <Typography>Ratings</Typography>
                       <ul>
                         {[5, 4, 3, 2, 1].map((star) => (
                           <li

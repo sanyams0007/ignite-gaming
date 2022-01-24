@@ -7,13 +7,8 @@ import { toast } from "material-react-toastify";
 
 import { clearCart } from "../../../actions/cartActions";
 
-export default function PayPal({
-  order,
-  clearErrors,
-  createOrder,
-  setDisable,
-}) {
-  const [{ options, isPending }, paypalDispatch] = usePayPalScriptReducer();
+export default function PayPal({ order, clearErrors, createOrder }) {
+  const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
 
   const { error } = useSelector((state) => state.newOrder);
 
@@ -35,8 +30,6 @@ export default function PayPal({
     const body = { ...order, orderItems: items };
     delete body.shippingInfo;
 
-    setDisable(true);
-
     // code to create the order on paypal and get orderId
     try {
       const { data } = await axios.post(
@@ -49,7 +42,6 @@ export default function PayPal({
     } catch (err) {
       console.error(err.error);
       toast.error(err.error);
-      setDisable(false);
     }
   };
 
@@ -73,7 +65,6 @@ export default function PayPal({
   const onError = (err) => {
     console.error(err.error);
     toast.error(err.error);
-    setDisable(false);
   };
 
   useEffect(() => {
@@ -83,7 +74,6 @@ export default function PayPal({
         paypalDispatch({
           type: "resetOptions",
           value: {
-            ...options,
             "client-id": data.paypalApiKey,
             currency: "USD",
           },
@@ -95,14 +85,14 @@ export default function PayPal({
     };
 
     getPaypalApiKey();
-  }, []);
+  }, [paypalDispatch]);
 
   useEffect(() => {
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, error]);
+  }, [dispatch, error, clearErrors]);
 
   return (
     <>

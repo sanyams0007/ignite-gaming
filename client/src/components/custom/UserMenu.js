@@ -11,7 +11,11 @@ import DashboardIcon from "@material-ui/icons/Dashboard";
 import ShoppingCart from "@material-ui/icons/ShoppingCart";
 import ViewListIcon from "@material-ui/icons/ViewList";
 import Badge from "@material-ui/core/Badge";
+
 const useStyles = makeStyles((theme) => ({
+  avatar: {
+    cursor: "pointer",
+  },
   paper: {
     "& .MuiPopover-paper": {
       top: "65px!important",
@@ -46,13 +50,14 @@ export default function UserMenu({ user, logout, cartItems }) {
   const menuId = "user-menu";
 
   return (
-    <div>
+    <>
       <Avatar
         alt={user && user.name}
         src={user.avatar && user.avatar.url}
         aria-controls={menuId}
         aria-haspopup="true"
         onClick={handleMenuOpen}
+        className={classes.avatar}
       />
       <Menu
         anchorEl={anchorEl}
@@ -97,6 +102,6 @@ export default function UserMenu({ user, logout, cartItems }) {
           </Link>
         </MenuItem>
       </Menu>
-    </div>
+    </>
   );
 }

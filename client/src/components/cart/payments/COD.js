@@ -31,7 +31,7 @@ export default function COD({ order, clearErrors, createOrder }) {
       toast.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, error]);
+  }, [dispatch, error, clearErrors]);
 
   return (
     <>

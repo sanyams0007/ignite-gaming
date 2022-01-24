@@ -1,31 +1,20 @@
-import Carousel from "react-material-ui-carousel";
+import ImageGallery from "react-image-gallery";
+import "../../../node_modules/react-image-gallery/styles/css/image-gallery.css";
 
-const ImageCarousel = ({ images, alt }) => {
+const ImageCarousel = ({ images }) => {
+  const imagesForGallery = images.map((img) => ({
+    original: img.url,
+    originalAlt: img._id,
+  }));
+
   return (
-    <Carousel
+    <ImageGallery
+      showFullscreenButton={false}
+      showBullets={true}
       autoPlay={true}
-      animation={"slide"}
-      indicators={true}
-      timeout={300}
-      navButtonsAlwaysVisible={true}
-    >
-      {images.map((image) => (
-        <img
-          key={image._id}
-          style={{
-            objectFit: "contain",
-            maxHeight: "80vh",
-            height: "100%",
-            maxWidth: "100%",
-            width: "100%",
-            display: "block",
-            margin: " auto",
-          }}
-          src={image.url}
-          alt={alt}
-        />
-      ))}
-    </Carousel>
+      showPlayButton={true}
+      items={imagesForGallery}
+    />
   );
 };
 

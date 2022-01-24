@@ -12,6 +12,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import SaveIcon from "@material-ui/icons/Save";
+import { categories } from "../util";
 
 import {
   updateProduct,
@@ -32,20 +33,6 @@ const UpdateProduct = ({ match, history }) => {
   const [images, setImages] = useState([]);
   const [oldImages, setOldImages] = useState([]);
   const [imagesPreview, setImagesPreview] = useState([]);
-
-  const categories = [
-    "RPG",
-    "Shooter/FPS",
-    "Shooter/TPS",
-    "Action",
-    "Adventure",
-    "Horror",
-    "Survival/Strategy",
-    "Racing",
-    "Sports/Outdoor",
-    "Fighting",
-    "Battle Royale",
-  ];
 
   const dispatch = useDispatch();
 

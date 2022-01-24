@@ -28,9 +28,6 @@ const ProtectedRoute = ({ isAdmin, component: Component, ...rest }) => {
             return <Component {...props} />;
           }}
         />
-        /* <Route {...rest}>
-          {isAuthenticated ? <Component /> : <Redirect to="/login" />}
-        </Route> */
       )}
     </>
   );

@@ -24,10 +24,11 @@ const useStyle = makeStyles({
   media: {
     height: "300px",
     minHeight: "100%",
-    maxWidth: "230px",
+    maxWidth: "240px",
     width: "100%",
     margin: "0 auto",
     objectFit: "cover",
+    borderRadius: "5px",
   },
   content: {
     padding: "10px",

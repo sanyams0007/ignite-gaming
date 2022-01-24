@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     minHeight: "50vh",
     minWidth: "60%",
+    overflowX: "auto",
   },
   pagination: {
     "& .MuiSelect-root": {
@@ -96,6 +97,7 @@ const DataTable = ({ columns, rows }) => {
         page={page}
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
+        style={{ overflow: "hidden" }}
       />
     </Paper>
   );

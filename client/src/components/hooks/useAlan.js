@@ -59,7 +59,7 @@ export default function useAlan() {
         );
       }
     },
-    [alanInstance, addItemToCart]
+    [alanInstance, dispatch, products]
   );
 
   /* Search for item */
@@ -72,7 +72,7 @@ export default function useAlan() {
         history.push("/");
       }
     },
-    [alanInstance]
+    [alanInstance, history]
   );
 
   /* Removes item from cart */
@@ -89,14 +89,14 @@ export default function useAlan() {
         alanInstance.playText(`Removed the ${name} item from your cart.`);
       }
     },
-    [alanInstance, cartItems, removeItemFromCart]
+    [alanInstance, cartItems, dispatch]
   );
 
   /* Clear Cart */
   const removeAllItems = useCallback(() => {
     dispatch(clearCart());
     alanInstance.playText(`Cleared your cart.`);
-  }, [alanInstance, clearCart]);
+  }, [alanInstance, dispatch]);
 
   /* Proceed to Checkout */
   const goForCheckout = useCallback(() => {
@@ -106,7 +106,7 @@ export default function useAlan() {
         : alanInstance.playText("Please login to continue");
       history.push("/checkout");
     } else alanInstance.playText("You have no items in your cart");
-  }, [alanInstance, cartItems, history]);
+  }, [alanInstance, cartItems, history, user]);
 
   /* effect for dispatching/creating and clearing custom events */
   useEffect(() => {

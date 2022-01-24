@@ -113,8 +113,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Dashboard(props) {
-  const { path } = props.match;
+export default function Dashboard({ match }) {
+  const { path } = match;
   const { products } = useSelector((state) => state.products);
   const { orders = [] } = useSelector((state) => state.allOrders);
   const { users } = useSelector((state) => state.allUsers);
@@ -279,7 +279,7 @@ export default function Dashboard(props) {
           </div>
         </Drawer>
 
-        <main className={classes.content}>
+        <div className={classes.content}>
           <ProtectedRoute exact path={`${path}`} component={defaultDashboard} />
 
           <ProtectedRoute
@@ -333,7 +333,7 @@ export default function Dashboard(props) {
             isAdmin={true}
             component={ProductReviews}
           />
-        </main>
+        </div>
       </Grid>
     </>
   );

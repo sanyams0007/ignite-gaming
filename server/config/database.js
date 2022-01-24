@@ -8,7 +8,12 @@ const connectDatabase = () => {
       useUnifiedTopology: true,
       useFindAndModify: false,
     })
-    .then(() => console.log("Successfully connected to Database"))
+    .then((con) =>
+      console.log(
+        "Successfully connected to Database with Host: ",
+        con.connection.host
+      )
+    )
     .catch(() => console.log("Failed to connect to Database"));
 };
 

@@ -32,6 +32,7 @@ const Cart = () => {
           alignContent="flex-start"
           alignItems="flex-start"
           style={{ margin: "0 auto" }}
+          spacing={2}
         >
           <Grid item xs={12}>
             <Typography

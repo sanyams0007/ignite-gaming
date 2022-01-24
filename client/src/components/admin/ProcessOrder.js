@@ -9,7 +9,6 @@ import { useStyles } from "../cart/cartStyles";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
-import Divider from "@material-ui/core/Divider";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -37,6 +36,7 @@ const ProcessOrder = ({ match }) => {
     taxPrice,
     shippingPrice,
     orderStatus,
+    itemsPrice,
   } = order;
 
   const [status, setStatus] = useState(orderStatus ? orderStatus : "");
@@ -99,7 +99,7 @@ const ProcessOrder = ({ match }) => {
               Order ID # {order._id && order._id}
             </Typography>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={4}>
             <Typography
               color="secondary"
               variant="h6"
@@ -127,17 +127,59 @@ const ProcessOrder = ({ match }) => {
                 `${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.postalCode}, ${shippingInfo.country} `}
             </Typography>
           </Grid>
-          <Grid item xs={12} md={6}>
+
+          <Grid item xs={12} md={4}>
+            <Typography color="secondary" variant="h6" component="h6">
+              <b>Payment Info.</b>
+            </Typography>
+            <Typography component="p" gutterBottom>
+              <b> Subtotal : </b>
+              {`$ ${itemsPrice}`}
+            </Typography>
+
+            <Typography component="p" gutterBottom>
+              <b> Shipping : </b>
+              {`$ ${shippingPrice}`}
+            </Typography>
+            <Typography component="p" gutterBottom>
+              <b> Tax : </b>
+              {`$ ${taxPrice}`}
+            </Typography>
+            <Typography component="p" gutterBottom>
+              <b> Total : </b>
+              {`$ ${totalPrice}`}
+            </Typography>
+            <Typography component="p" gutterBottom>
+              <b> Status : </b>
+              {paymentInfo &&
+              (paymentInfo.status === "succeeded" ||
+                order.paymentInfo.status === "COMPLETED") ? (
+                <span style={{ color: "green" }}>PAID</span>
+              ) : (
+                <span style={{ color: "red" }}>NOT PAID</span>
+              )}
+            </Typography>
+            <Typography component="p" gutterBottom>
+              <b> Transaction ID : </b>
+              {paymentInfo && paymentInfo.id ? paymentInfo.id : "Not Available"}
+            </Typography>
+          </Grid>
+
+          <Grid item xs={12} md={4}>
             <Typography color="secondary" variant="h6" component="h4">
               <b> Order Info. </b>
             </Typography>
             <Typography component="p" gutterBottom>
-              <b> Order Status : </b>
+              <b> Status : </b>
               {String(orderStatus).includes("Delivered") ? (
                 <span style={{ color: "green" }}>{orderStatus}</span>
               ) : (
                 <span style={{ color: "red" }}>{orderStatus}</span>
               )}
+            </Typography>
+            <Typography component="p" gutterBottom>
+              <b> Placed On : </b>
+              {new Date(order.createdAt).toDateString()}
             </Typography>
 
             <TextField
@@ -167,37 +209,6 @@ const ProcessOrder = ({ match }) => {
               Update Status
             </Button>
           </Grid>
-          <Grid item xs={12} md={6}>
-            <Typography color="secondary" variant="h6" component="h6">
-              <b>Payment Info.</b>
-            </Typography>
-            <Typography component="p" gutterBottom>
-              <b> Shipping : </b>
-              {`$ ${shippingPrice}`}
-            </Typography>
-            <Typography component="p" gutterBottom>
-              <b> Tax : </b>
-              {`$ ${taxPrice}`}
-            </Typography>
-            <Typography component="p" gutterBottom>
-              <b> Total : </b>
-              {`$ ${totalPrice}`}
-            </Typography>
-            <Typography component="p" gutterBottom>
-              <b> Status : </b>
-              {paymentInfo &&
-              (paymentInfo.status === "succeeded" ||
-                order.paymentInfo.status === "COMPLETED") ? (
-                <span style={{ color: "green" }}>PAID</span>
-              ) : (
-                <span style={{ color: "red" }}>NOT PAID</span>
-              )}
-            </Typography>
-            <Typography component="p" gutterBottom>
-              <b> Transaction ID : </b>
-              {paymentInfo && paymentInfo.id ? paymentInfo.id : "Not Available"}
-            </Typography>
-          </Grid>
 
           <Grid item xs={12}>
             <Typography
@@ -208,34 +219,33 @@ const ProcessOrder = ({ match }) => {
             >
               <b>Order Items</b>
             </Typography>
+
             {orderItems &&
               orderItems.map((item) => (
-                <div key={item.product}>
-                  <Divider />
-                  <Box
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="space-between"
-                    my={2}
-                    padding="20px 0"
-                  >
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      style={{
-                        justifySelf: "flex-start",
-                        maxWidth: "70px",
-                        width: "100%",
-                      }}
-                    />
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  padding="10px 0"
+                  justifyContent="space-between"
+                  key={item.product}
+                  borderTop="1px solid rgba(255, 255, 255, 0.12)"
+                >
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    style={{
+                      justifySelf: "flex-start",
+                      maxWidth: "70px",
+                      width: "100%",
+                    }}
+                  />
 
-                    <Typography component="p">{item.name}</Typography>
-                    <Typography component="p">{`$ ${item.price}`}</Typography>
-                    <Typography component="p">
-                      {`${item.quantity} Unit`}
-                    </Typography>
-                  </Box>
-                </div>
+                  <Typography component="p">{item.name}</Typography>
+                  <Typography component="p">{`$ ${item.price}`}</Typography>
+                  <Typography component="p">
+                    {`${item.quantity} Unit`}
+                  </Typography>
+                </Box>
               ))}
           </Grid>
         </Grid>

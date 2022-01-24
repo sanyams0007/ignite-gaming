@@ -32,7 +32,7 @@ import OrderDetail from "./components/order/OrderDetail";
 //Styles
 import "material-react-toastify/dist/ReactToastify.css";
 import "./App.css";
-import theme from "./components/muiTheme";
+import theme from "./components/Theme/muiTheme";
 import Grid from "@material-ui/core/Grid";
 
 // Redux / Context
@@ -50,96 +50,80 @@ const App = () => {
     <>
       <ThemeProvider theme={theme}>
         <Router>
+          <Header />
           <Grid
+            item
+            xs={12}
             container
-            alignContent="space-between"
-            style={{ height: "100%" }}
+            component="main"
+            style={{ minHeight: "80%" }}
           >
-            <Grid item xs={12}>
-              <Header />
-            </Grid>
-            <Grid item xs={12} container style={{ minHeight: "80%" }}>
-              <Switch>
-                <Route path="/" exact>
-                  <Home />
-                </Route>
-                <Route path="/search/:keyword">
-                  <Home />
-                </Route>
-                <Route path="/product/:id" exact>
-                  <GameDetail />
-                </Route>
+            <Switch>
+              <Route path="/" exact>
+                <Home />
+              </Route>
+              <Route path="/search/:keyword">
+                <Home />
+              </Route>
+              <Route path="/product/:id" exact>
+                <GameDetail />
+              </Route>
 
-                <Route path="/cart" exact>
-                  <Cart />
-                </Route>
-                <ProtectedRoute path="/checkout" exact component={Checkout} />
-                <ProtectedRoute
-                  path="/success"
-                  exact
-                  component={OrderSuccess}
-                />
+              <Route path="/cart" exact>
+                <Cart />
+              </Route>
+              <ProtectedRoute path="/checkout" exact component={Checkout} />
+              <ProtectedRoute path="/success" exact component={OrderSuccess} />
 
-                <Route path="/login" exact>
-                  <Login />
-                </Route>
-                <Route path="/register" exact>
-                  <Register />
-                </Route>
-                <Route path="/password/forgot" exact>
-                  <ForgotPassword />
-                </Route>
-                <Route path="/password/reset/:token" exact>
-                  <ResetPassword />
-                </Route>
-                <ProtectedRoute path="/me" exact component={Profile} />
-                <ProtectedRoute
-                  path="/me/update"
-                  exact
-                  component={UpdateProfile}
-                />
-                <ProtectedRoute
-                  path="/password/update"
-                  exact
-                  component={UpdatePassword}
-                />
+              <Route path="/login" exact>
+                <Login />
+              </Route>
+              <Route path="/register" exact>
+                <Register />
+              </Route>
+              <Route path="/password/forgot" exact>
+                <ForgotPassword />
+              </Route>
+              <Route path="/password/reset/:token" exact>
+                <ResetPassword />
+              </Route>
+              <ProtectedRoute path="/me" exact component={Profile} />
+              <ProtectedRoute
+                path="/me/update"
+                exact
+                component={UpdateProfile}
+              />
+              <ProtectedRoute
+                path="/password/update"
+                exact
+                component={UpdatePassword}
+              />
 
-                <ProtectedRoute
-                  path="/orders/me"
-                  exact
-                  component={OrdersList}
-                />
-                <ProtectedRoute
-                  path="/order/:id"
-                  exact
-                  component={OrderDetail}
-                />
+              <ProtectedRoute path="/orders/me" exact component={OrdersList} />
+              <ProtectedRoute path="/order/:id" exact component={OrderDetail} />
 
-                <ProtectedRoute
-                  path="/dashboard"
-                  isAdmin={true}
-                  component={Dashboard}
-                />
-              </Switch>
-            </Grid>
-            <Grid item xs={12}>
-              <Footer />
-            </Grid>
+              <ProtectedRoute
+                path="/dashboard"
+                isAdmin={true}
+                component={Dashboard}
+              />
+            </Switch>
           </Grid>
+
+          <Footer />
         </Router>
-        <div>
-          <ToastContainer
-            position="bottom-center"
-            autoClose={5000}
-            hideProgressBar
-            newestOnTop={false}
-            closeOnClick={false}
-            rtl={false}
-            pauseOnFocusLoss
-            draggable={false}
-            pauseOnHover
-          />
-        </div>
+
+        <ToastContainer
+          position="bottom-center"
+          autoClose={5000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable={false}
+          pauseOnHover
+        />
       </ThemeProvider>
     </>
   );

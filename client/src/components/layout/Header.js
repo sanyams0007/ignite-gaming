@@ -6,7 +6,7 @@ import useAlan from "../hooks/useAlan";
 
 import { logout } from "../../actions/userActions";
 import UserMenu from "../custom/UserMenu";
-import logo from "../../images/flame.svg";
+import Logo from "../../icon/Logo";
 
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -23,9 +23,11 @@ import MoreIcon from "@material-ui/icons/MoreVert";
 import ShoppingCart from "@material-ui/icons/ShoppingCart";
 import Button from "@material-ui/core/Button";
 import Hidden from "@material-ui/core/Hidden";
-import Divider from "@material-ui/core/Divider";
 
 const useStyles = makeStyles((theme) => ({
+  appbar: {
+    borderBottom: "1px solid rgba(255,255,255,.12)",
+  },
   toolbar: {
     padding: "15px 7.5%",
     [theme.breakpoints.down("sm")]: {
@@ -35,11 +37,6 @@ const useStyles = makeStyles((theme) => ({
   logoContainer: {
     display: "flex",
     alignItems: "center",
-  },
-  logo: {
-    maxWidth: "100%",
-    width: "60px",
-    objectFit: "contain",
   },
   title: {
     display: "block",
@@ -67,20 +64,20 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   searchIcon: {
-    minWidth: "20%",
+    minWidth: "14%",
     padding: 0,
     borderRadius: "0 25px 25px 0",
     backgroundColor: "rgba(255, 255, 255, 0.33)",
     "& .MuiSvgIcon-root": {
       padding: "3px",
-      fontSize: "34px",
+      fontSize: "32px",
     },
     "&:hover": {
       backgroundColor: "rgba(255, 255, 255, 0.33)",
     },
   },
   inputRoot: {
-    width: "80%",
+    width: "86%",
     backgroundColor: " rgba(255, 255, 255, 0.33)",
     border: "none",
     outline: "none",
@@ -122,7 +119,6 @@ const Header = () => {
   const history = useHistory();
 
   const [keyword, setKeyword] = useState("");
-
   const { user, loading } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.cart);
 
@@ -140,11 +136,45 @@ const Header = () => {
     }
   };
 
+  //const callSearch = debounce();
+
+  //not working due to state update why ?. to be fixed
+  /* function debounce() {
+    //setKeyword(e.target.value);
+    console.log("called Debounce");
+    let reqTimer;
+    return () => {
+      console.log("called reqTimer", reqTimer);
+      clearTimeout(reqTimer);
+      reqTimer = setTimeout(() => {
+        console.log("at last");
+      }, 1000);
+      console.log(reqTimer);
+    };
+  } */
+
+  // working debounce method
+  /* function debounce() {
+    let timer;
+    return () => {
+      if (!timer) {
+        const val = document.getElementById("search").value;
+        //console.log("here", val);
+        history.push(`/search/${val}`);
+      }
+      //console.log(timer);
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        timer = undefined;
+      }, 1000);
+    };
+  } */
+
   const handleChange = (e) => {
     setKeyword(e.target.value);
   };
 
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -185,11 +215,16 @@ const Header = () => {
 
   return (
     <>
-      <AppBar position="static" color="transparent" elevation={0}>
+      <AppBar
+        position="static"
+        color="transparent"
+        elevation={0}
+        className={classes.appbar}
+      >
         <Toolbar className={classes.toolbar}>
           <Link to="/">
             <div className={classes.logoContainer}>
-              <img src={logo} alt="logo" className={classes.logo} />
+              <Logo />
               <Hidden xsDown>
                 <Typography className={classes.title} variant="h4" noWrap>
                   Ignite Gaming
@@ -200,7 +235,10 @@ const Header = () => {
 
           <div className={classes.search}>
             <InputBase
+              id="search"
+              //onKeyUp={handleChange}
               onChange={handleChange}
+              //onChange={callSearch}
               value={keyword}
               placeholder="Search…"
               className={classes.inputRoot}
@@ -212,15 +250,13 @@ const Header = () => {
           </div>
 
           <Hidden smDown>
-            <div>
-              <Link to="/cart">
-                <IconButton aria-label="cart items" color="inherit">
-                  <Badge badgeContent={cartItems.length} color="secondary">
-                    <ShoppingCart />
-                  </Badge>
-                </IconButton>
-              </Link>
-            </div>
+            <Link to="/cart">
+              <IconButton aria-label="cart items" color="inherit">
+                <Badge badgeContent={cartItems.length} color="secondary">
+                  <ShoppingCart />
+                </Badge>
+              </IconButton>
+            </Link>
           </Hidden>
 
           {user ? (
@@ -233,36 +269,31 @@ const Header = () => {
             !loading && (
               <>
                 <Hidden smDown>
-                  <div>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      className={classes.action}
-                    >
-                      <Link to="/login">Sign In</Link>
-                    </Button>
-                  </div>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.action}
+                  >
+                    <Link to="/login">Sign In</Link>
+                  </Button>
                 </Hidden>
                 <Hidden mdUp>
-                  <div>
-                    <IconButton
-                      aria-label="show more"
-                      aria-controls={mobileMenuId}
-                      aria-haspopup="true"
-                      onClick={handleMobileMenuOpen}
-                      color="inherit"
-                      style={{ margin: 0 }}
-                    >
-                      <MoreIcon />
-                    </IconButton>
-                  </div>
+                  <IconButton
+                    aria-label="show more"
+                    aria-controls={mobileMenuId}
+                    aria-haspopup="true"
+                    onClick={handleMobileMenuOpen}
+                    color="inherit"
+                    style={{ margin: 0 }}
+                  >
+                    <MoreIcon />
+                  </IconButton>
                 </Hidden>
               </>
             )
           )}
         </Toolbar>
       </AppBar>
-      <Divider />
       {MobileMenu}
     </>
   );

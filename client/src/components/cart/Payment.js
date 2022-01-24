@@ -9,7 +9,6 @@ import Accordion from "@material-ui/core/Accordion";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
@@ -102,7 +101,6 @@ export default function Payment({ prev }) {
             order={order}
             createOrder={createOrder}
             clearErrors={clearErrors}
-            setDisable={setDisable}
           />
         </Accordion>
 

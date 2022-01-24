@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "material-react-toastify";
+import axios from "axios";
 
 import { getProductDetails, clearErrors } from "../../actions/productActions";
 import { addItemToCart } from "../../actions/cartActions";
@@ -27,7 +28,6 @@ import ImageCarousel from "../custom/ImageCarousel";
 import ReviewModal from "../custom/ReviewModal";
 import ListReviews from "./ListReviews";
 import Game from "./Game";
-import axios from "axios";
 
 const GameDetail = () => {
   const [open, setOpen] = useState(false);
@@ -86,14 +86,6 @@ const GameDetail = () => {
     }
   }, [dispatch, reviewError, error, success, id]);
 
-  /* useEffect(() => {
-    if (product) {
-      dispatch(
-        getProducts("", 1, [1, 500], product?.category, 0)
-      );
-    }
-  }, [dispatch, product]); */
-
   useEffect(() => {
     const getRecommendedProducts = async () => {
       const link = `/api/products?keyword=&page=1&price[lte]=500&price[gte]=1&category=${product?.category}&ratings[gte]=0&resCount=20`;
@@ -132,9 +124,7 @@ const GameDetail = () => {
             style={{ margin: "0 auto" }}
           >
             <Grid item xs={12} lg={5}>
-              {product.images && (
-                <ImageCarousel images={product.images} alt={product.title} />
-              )}
+              {product.images && <ImageCarousel images={product.images} />}
             </Grid>
             <Grid item xs={12} lg={7}>
               <Typography

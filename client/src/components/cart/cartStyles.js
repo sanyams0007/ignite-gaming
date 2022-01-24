@@ -30,6 +30,7 @@ export const cartItemStyle = makeStyles({
     alignItems: "center",
     textAlign: "center",
     backgroundColor: "rgba(255,255,255,.12)",
+    paddingBottom: "7px",
   },
   media: {
     borderRadius: " 4px 0 0 4px",

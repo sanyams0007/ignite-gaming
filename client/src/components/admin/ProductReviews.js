@@ -38,10 +38,10 @@ const ProductReviews = () => {
       dispatch(clearErrors());
     }
 
-    if (productId !== "") {
+    /*  if (productId !== "") {
       dispatch(getProductReviews(productId));
     }
-
+ */
     if (isDeleted) {
       toast.success("Review deleted successfully");
       dispatch({ type: DELETE_REVIEW_RESET });

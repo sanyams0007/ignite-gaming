@@ -33,11 +33,9 @@ export default function Checkout() {
       case 1:
         return <ReviewOrder prev={handleBack} next={handleNext} />;
       case 2:
-        return (
-          <>
-            <Payment prev={handleBack} />
-          </>
-        );
+        return <Payment prev={handleBack} />;
+      default:
+        return <Shipping next={handleNext} />;
     }
   }
 
