@@ -76,9 +76,9 @@ const useStyles = makeStyles((theme) => ({
       width: theme.spacing(9),
     },
   },
-  content: {
+  /* content: {
     flexGrow: 1,
-  },
+  }, */
   cardlink: {
     display: "flex",
     justifyContent: "space-between",
@@ -265,7 +265,6 @@ export default function Dashboard({ match }) {
               <IconButton
                 edge="start"
                 color="inherit"
-                aria-label="open drawer"
                 onClick={handleDrawerOpen}
               >
                 <MenuIcon />
@@ -279,61 +278,61 @@ export default function Dashboard({ match }) {
           </div>
         </Drawer>
 
-        <div className={classes.content}>
-          <ProtectedRoute exact path={`${path}`} component={defaultDashboard} />
+        {/* <div className={classes.content}> */}
+        <ProtectedRoute exact path={`${path}`} component={defaultDashboard} />
 
-          <ProtectedRoute
-            exact
-            path={`${path}/admin/products`}
-            isAdmin={true}
-            component={ProductsList}
-          />
-          <ProtectedRoute
-            exact
-            path={`${path}/admin/product`}
-            isAdmin={true}
-            component={NewProduct}
-          />
-          <ProtectedRoute
-            exact
-            path={`${path}/admin/product/:id`}
-            isAdmin={true}
-            component={UpdateProduct}
-          />
+        <ProtectedRoute
+          exact
+          path={`${path}/admin/products`}
+          isAdmin={true}
+          component={ProductsList}
+        />
+        <ProtectedRoute
+          exact
+          path={`${path}/admin/product`}
+          isAdmin={true}
+          component={NewProduct}
+        />
+        <ProtectedRoute
+          exact
+          path={`${path}/admin/product/:id`}
+          isAdmin={true}
+          component={UpdateProduct}
+        />
 
-          <ProtectedRoute
-            exact
-            path={`${path}/admin/users`}
-            isAdmin={true}
-            component={UsersList}
-          />
-          <ProtectedRoute
-            exact
-            path={`${path}/admin/user/:id`}
-            isAdmin={true}
-            component={UpdateUser}
-          />
+        <ProtectedRoute
+          exact
+          path={`${path}/admin/users`}
+          isAdmin={true}
+          component={UsersList}
+        />
+        <ProtectedRoute
+          exact
+          path={`${path}/admin/user/:id`}
+          isAdmin={true}
+          component={UpdateUser}
+        />
 
-          <ProtectedRoute
-            exact
-            path={`${path}/admin/orders`}
-            isAdmin={true}
-            component={OrdersList}
-          />
-          <ProtectedRoute
-            exact
-            path={`${path}/admin/order/:id`}
-            isAdmin={true}
-            component={ProcessOrder}
-          />
+        <ProtectedRoute
+          exact
+          path={`${path}/admin/orders`}
+          isAdmin={true}
+          component={OrdersList}
+        />
+        <ProtectedRoute
+          exact
+          path={`${path}/admin/order/:id`}
+          isAdmin={true}
+          component={ProcessOrder}
+        />
 
-          <ProtectedRoute
-            exact
-            path={`${path}/admin/reviews`}
-            isAdmin={true}
-            component={ProductReviews}
-          />
-        </div>
+        <ProtectedRoute
+          exact
+          path={`${path}/admin/reviews`}
+          isAdmin={true}
+          component={ProductReviews}
+        />
+        {/* </div> */}
       </Grid>
     </>
   );

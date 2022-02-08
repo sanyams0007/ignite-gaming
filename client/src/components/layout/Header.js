@@ -6,7 +6,7 @@ import useAlan from "../hooks/useAlan";
 
 import { logout } from "../../actions/userActions";
 import UserMenu from "../custom/UserMenu";
-import Logo from "../../icon/Logo";
+import Logo from "../../svgs/Logo";
 
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";

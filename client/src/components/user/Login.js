@@ -17,6 +17,7 @@ import {
   containerStyles,
   signInOutStyles,
 } from "./userStyle";
+import DemoBox from "./DemoBox";
 
 const Login = () => {
   const loginStyle = signInOutStyles();
@@ -56,6 +57,22 @@ const Login = () => {
       history.replace(from);
     }
   };
+
+  const handleDemoUser = () => {
+    dispatch(
+      login(process.env.REACT_APP_DEMO_USER, process.env.REACT_APP_USER_PASS)
+    );
+    history.replace(from);
+  };
+
+  const handleDemoAdmin = () => {
+    dispatch(
+      login(process.env.REACT_APP_DEMO_ADMIN, process.env.REACT_APP_ADMIN_PASS)
+    );
+
+    history.replace(from);
+  };
+
   return (
     <>
       <MetaData title={"Login"} />
@@ -136,11 +153,10 @@ const Login = () => {
                 </Typography>
               </Link>
             </Typography>
-            <div>
-              <Typography> Or Try Demo</Typography>
-              <Typography> User</Typography>
-              <Typography> Admin</Typography>
-            </div>
+            <DemoBox
+              handleDemoAdmin={handleDemoAdmin}
+              handleDemoUser={handleDemoUser}
+            />
           </Grid>
         </Grid>
       )}

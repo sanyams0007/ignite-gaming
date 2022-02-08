@@ -32,6 +32,8 @@ app.use("/api", order);
 
 if (process.env.NODE_ENV === "PRODUCTION") {
   app.use(express.static(path.join(__dirname, "../client/build")));
+
+  // All remaining requests return the React app, so it can handle routing.
   app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "../client/build", "index.html"));
   });

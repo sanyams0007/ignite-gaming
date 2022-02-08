@@ -67,8 +67,7 @@ const ProductsList = ({ history, match }) => {
     {
       id: "Price",
       label: "Price",
-      minWidth: 50,
-      align: "left",
+      minWidth: 80,
       format: (value) => `$ ${value.toLocaleString("en-US")}`,
     },
     {

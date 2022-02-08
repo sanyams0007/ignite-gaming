@@ -41,7 +41,7 @@ export const containerStyles = makeStyles((theme) => ({
   container: {
     backgroundColor: theme.palette.secondary.main,
     borderRadius: 10,
-    padding: "10% 10% 0",
+    padding: "8% 10% 10px",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -51,7 +51,7 @@ export const containerStyles = makeStyles((theme) => ({
     minWidth: "40%",
     fontSize: 18,
     padding: "5px 30px!important",
-    margin: "20px 0",
+    margin: "15px 0",
   },
 }));
 
@@ -70,7 +70,7 @@ export const signInOutStyles = makeStyles((theme) => ({
     },
   },
   demoBox: {
-    borderTop: "1px solid rgba(255,255,255,.5)",
+    display: "flex",
   },
 }));
 

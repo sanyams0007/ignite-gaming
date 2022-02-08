@@ -27,13 +27,6 @@ export default function useAlan() {
   const { cartItems } = useSelector((state) => state.cart);
   const { products } = useSelector((state) => state.products);
 
-  /* const n = "Battlefield 4";
-  const p = products.find((product) =>
-    console.log(product.name, n, product.name.toLowerCase() === n.toLowerCase())
-  );
-
-  console.log(n, p); */
-
   /* Opens cart */
   const openCart = useCallback(() => {
     if (cartItems.length >= 1) {
@@ -49,7 +42,7 @@ export default function useAlan() {
         return product.name.toLowerCase() === name.toLowerCase();
       });
 
-      console.log(name, itemToBeAdded);
+      //console.log(name, itemToBeAdded);
       if (itemToBeAdded == null) {
         alanInstance.playText(`I cannot find item named ${name}.`);
       } else {
