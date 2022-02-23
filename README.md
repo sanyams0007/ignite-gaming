@@ -6,15 +6,13 @@
 
 ## 🎯 About
 
-I have started this project with the purpose of learning how to create and structure a full-stack Web App of a mid-level complexity by integrating multiple technologies such as React, Redux, Redux-Thunk, React Hooks, React Router, MaterialUI, and a lot more technologies.<br/>
-I've tried to follow best practices as much as possible and I've tried to make it scalable and maintainable. I've also added a voice assistant (name Alan AI) from this [website](https://alan.app/) for interacting with the app(althought not a full blown Voice Assistant) but still made it to do some task such as searching product, adding item to cart, removing item from cart, view cart, navigating pages etc.<br/>
+I have started this project with the purpose of learning how to create and structure a full-stack Web App of a mid-level complexity by integrating multiple technologies such as React, Redux, Redux-Thunk, React Hooks, React Router Dom, MaterialUI and more technologies.<br/>
+I've tried to follow best practices as much as possible and I've tried to make it scalable and maintainable. I've also added a voice assistant (name Alan AI) from this [website](https://alan.app/) for interacting with the app(althought not a full blown Voice Assistant) but still made it to do some task such as searching product, adding item to cart, removing item from cart, view cart etc.<br/>
 I put a lot of effort into it and I hope that you could like it.<br/><br/>
 The Web App redirects you to a Homepage which list products, each product tile represents a game: you can click on it's name and you will be redirected to the selected game/product detail component, a page that gives all details about the choosen product including images, review, recommended items and more.
 But in order to get most out of the app you need to sign up or to sign in: you can sign in with your custom account or with Demo account. Once you are logged in, you will be able to successfully make purchase of product, you will be provided all debit/credit details on payment page.<br/>
 
-<!-- You can also search for product in search bar or by interacting with AI voice assistant.<br/> -->
-
-Also added Admin dashboard through which admin can manage inventory, orders,reviews, users and many more.<br/><br/>
+Also added Admin dashboard through which admin can manage inventory, orders,reviews, users and more.<br/><br/>
 Go try it and please let me know if you enjoyed it with a ⭐️, I would appreciate it a lot.
 <br/>
 
@@ -22,7 +20,7 @@ Go try it and please let me know if you enjoyed it with a ⭐️, I would apprec
 
 Here you can find the demo links:
 
-- [Heroku](https://edayreminders.netlify.app/)
+- [Heroku](https://ignite-gaming.herokuapp.com/)
 
 ## Test credentials (for lazy users 😓)
 
@@ -36,7 +34,7 @@ Here you can find the demo links:
 > Email: tony@gmail.com<br/>
 > Password: 123456<br/>
 
-I have also added a button that lets you sign in anonymously(in development).
+I have also added a button that lets you sign in anonymously.
 
 ## :sparkles: Features
 
@@ -53,7 +51,8 @@ I have also added a button that lets you sign in anonymously(in development).
 :heavy_check_mark: &nbsp;&nbsp;Responsive layout<br />
 :heavy_check_mark: &nbsp;&nbsp;Swipeable product image gallery<br />
 :heavy_check_mark: &nbsp;&nbsp;Cool Loading Spinner<br />
-:heavy_check_mark: &nbsp;&nbsp;Support Stripe/PayPal Payment<br />
+:heavy_check_mark: &nbsp;&nbsp;Support Stripe/PayPal Secure Server Side Payment<br />
+:heavy_check_mark: &nbsp;&nbsp;React Lazy loading and Suspense<br />
 
 ## :rocket: Technologies
 

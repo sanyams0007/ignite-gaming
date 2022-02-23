@@ -84,6 +84,7 @@ const Home = () => {
     }
   }, [keyword]);
 
+  //throw Error;
   return (
     <>
       <MetaData title={"Best Gaming Platform"} />

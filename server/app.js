@@ -39,7 +39,7 @@ if (process.env.NODE_ENV === "PRODUCTION") {
   });
 }
 
-// Middle to handle errors
+// Middleware to handle errors
 // Note: MUST COME AT LAST BEFORE EXPORTING APP
 app.use(errorMiddleware);
 

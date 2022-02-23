@@ -97,7 +97,7 @@ export default function PayPal({ order, clearErrors, createOrder }) {
   return (
     <>
       {isPending ? (
-        <h4>Loading</h4>
+        <h4>...Loading</h4>
       ) : (
         <PayPalButtons
           style={{ shape: "pill" }}

@@ -154,7 +154,7 @@ const Header = () => {
   } */
 
   // working debounce method
-  /* function debounce() {
+  function debounce() {
     let timer;
     return () => {
       if (!timer) {
@@ -168,7 +168,7 @@ const Header = () => {
         timer = undefined;
       }, 1000);
     };
-  } */
+  }
 
   const handleChange = (e) => {
     setKeyword(e.target.value);

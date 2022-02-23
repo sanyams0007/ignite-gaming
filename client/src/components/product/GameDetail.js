@@ -129,7 +129,7 @@ const GameDetail = () => {
             <Grid item xs={12} lg={7}>
               <Typography
                 color="secondary"
-                variant="h3"
+                variant="h4"
                 component="h2"
                 gutterBottom
               >

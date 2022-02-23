@@ -16,9 +16,9 @@ import Button from "@material-ui/core/Button";
 import MetaData from "../layout/MetaData";
 import StripeScreen from "./payments/Stripe";
 import PayPalScreen from "./payments/PayPal";
+import COD from "./payments/COD";
 
 import { createOrder, clearErrors } from "../../actions/orderActions";
-import COD from "./payments/COD";
 
 export default function Payment({ prev }) {
   const [expanded, setExpanded] = useState(false);
