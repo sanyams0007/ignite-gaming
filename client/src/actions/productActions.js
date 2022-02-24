@@ -58,7 +58,7 @@ export const getProducts =
     } catch (error) {
       dispatch({
         type: ALL_PRODUCTS_FAIL,
-        payload: error.response.data.errMessage,
+        payload: error?.response?.data?.errMessage,
       });
     }
   };

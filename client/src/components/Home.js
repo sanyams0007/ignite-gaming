@@ -84,7 +84,6 @@ const Home = () => {
     }
   }, [keyword]);
 
-  //throw Error;
   return (
     <>
       <MetaData title={"Best Gaming Platform"} />
@@ -114,6 +113,8 @@ const Home = () => {
                     style={{
                       backgroundColor: "rgba(255,255,255,.10)",
                       padding: "15px",
+                      position: "sticky",
+                      top: "60px",
                     }}
                   >
                     <Box display="flex" justifyContent="space-between">

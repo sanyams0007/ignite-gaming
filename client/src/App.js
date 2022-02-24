@@ -67,7 +67,7 @@ const App = () => {
             xs={12}
             container
             component="main"
-            style={{ minHeight: "80%" }}
+            style={{ flexGrow: "1" }}
           >
             <Switch>
               <ErrorBoundary>

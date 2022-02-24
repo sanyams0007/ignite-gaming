@@ -133,8 +133,8 @@ export default function useAlan() {
 
     setAlanInstance(
       alanBtn({
-        top: "110px",
-        left: "20px",
+        top: "25px",
+        right: "20px",
         key: process.env.REACT_APP_ALAN_KEY,
         onCommand: ({ command, payload }) => {
           // Call the client code that will react to the received command

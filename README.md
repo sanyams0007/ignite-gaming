@@ -1,5 +1,5 @@
 <h1 align="center">Ignite Gaming</h1>
-<h5 align="center">Full-Stack (MERN stack) end to end massive e-commerce application.
+<h5 align="center">An end to end massive Full-Stack (MERN) e-commerce web application.
 </h5><br/>
 
 <br/>

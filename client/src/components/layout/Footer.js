@@ -8,7 +8,6 @@ const useStyles = makeStyles((theme) => ({
     minHeight: "10%",
     padding: "16px 0",
     width: "100%",
-    marginTop: "auto",
   },
 }));
 

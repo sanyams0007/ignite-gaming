@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const app = express();
+const enforce = require("express-sslify");
 
 // Middleware
 const cookieParser = require("cookie-parser");
@@ -30,7 +31,14 @@ app.use("/api", auth);
 app.use("/api", payment);
 app.use("/api", order);
 
+// serviceWorker route
+
+app.get("/service-worker.js", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../client/build", "service-worker.js"));
+});
+
 if (process.env.NODE_ENV === "PRODUCTION") {
+  app.use(enforce.HTTPS({ trustProtoHeader: true }));
   app.use(express.static(path.join(__dirname, "../client/build")));
 
   // All remaining requests return the React app, so it can handle routing.

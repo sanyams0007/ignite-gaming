@@ -27,11 +27,14 @@ body {
 }
 
 #root {
-  height: 100%;
+  min-height: 100%;
   display: flex;
-  flex-wrap: wrap;
   width: 100%;
-  align-content: space-between;
+  flex-direction: column;
+  /* 
+      align-content: space-between; 
+      flex-wrap: wrap;
+  */
 }
 
 h2 > span {
