@@ -111,13 +111,13 @@ I have also added buttons that lets you sign in anonymously.
 1. From root of project Go to the client directory
 
    ```bash
-       cd client
+   cd client
    ```
 
 2. Install dependencies
 
    ```bash
-       npm install
+   npm install
    ```
 
 3. Create an `.env` file in the root of the client based on `.env.sample`.
@@ -125,7 +125,7 @@ I have also added buttons that lets you sign in anonymously.
 4. Run client app
 
    ```bash
-       npm start
+   npm start
    ```
 
 ### Server Setup
@@ -133,13 +133,13 @@ I have also added buttons that lets you sign in anonymously.
 1. Go to the root of project and Install dependencies
 
    ```bash
-       npm install
+   npm install
    ```
 
 2. From root of project Go to the server directory
 
    ```bash
-       cd server
+   cd server
    ```
 
 3. Create a `config.env` in the `/server/config/` directory based on `.env.sample` in the directory.
@@ -147,7 +147,7 @@ I have also added buttons that lets you sign in anonymously.
 4. Run server app
 
    ```bash
-       node server.js
+   node server.js
    ```
 
 ## :white_check_mark: Requirements
