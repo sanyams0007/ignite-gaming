@@ -1,17 +1,18 @@
 const express = require("express");
 const path = require("path");
 const app = express();
-const enforce = require("express-sslify");
+//const enforce = require("express-sslify");
 
 // Middleware
 const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
-const dotenv = require("dotenv");
+//const dotenv = require("dotenv");
 
 const errorMiddleware = require("./middlewares/errors");
 
-//Setting up config file and middlewares
-dotenv.config({ path: "server/config/config.env" });
+//Setting up config file and middlewares --ONLY FOR DEVELOPMENT
+if (process.env.NODE_ENV !== "PRODUCTION")
+  require("dotenv").config({ path: "server/config/config.env" });
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -31,14 +32,8 @@ app.use("/api", auth);
 app.use("/api", payment);
 app.use("/api", order);
 
-// serviceWorker route
-
-app.get("/service-worker.js", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "../client/build", "service-worker.js"));
-});
-
 if (process.env.NODE_ENV === "PRODUCTION") {
-  app.use(enforce.HTTPS({ trustProtoHeader: true }));
+  //app.use(enforce.HTTPS({ trustProtoHeader: false }));
   app.use(express.static(path.join(__dirname, "../client/build")));
 
   // All remaining requests return the React app, so it can handle routing.

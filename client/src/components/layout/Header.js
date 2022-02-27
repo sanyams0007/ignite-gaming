@@ -138,23 +138,8 @@ const Header = () => {
 
   //const callSearch = debounce();
 
-  //not working due to state update why ?. to be fixed
-  /* function debounce() {
-    //setKeyword(e.target.value);
-    console.log("called Debounce");
-    let reqTimer;
-    return () => {
-      console.log("called reqTimer", reqTimer);
-      clearTimeout(reqTimer);
-      reqTimer = setTimeout(() => {
-        console.log("at last");
-      }, 1000);
-      console.log(reqTimer);
-    };
-  } */
-
   // working debounce method
-  function debounce() {
+  /* function debounce() {
     let timer;
     return () => {
       if (!timer) {
@@ -168,7 +153,7 @@ const Header = () => {
         timer = undefined;
       }, 1000);
     };
-  }
+  } */
 
   const handleChange = (e) => {
     setKeyword(e.target.value);
