@@ -16,7 +16,7 @@
     "prod": "concurrently --kill-others-on-fail \"npm run server:prod\" \"npm run client\"",
     "start": "node ./server/server.js",
     "seeder": "node ./server/utils/seeder.js",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false && cd client && npm install && npm install --no-shrinkwrage && npm run build"
+    "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
   },
   "author": "Sanyam Suthar",
   "license": "ISC",
