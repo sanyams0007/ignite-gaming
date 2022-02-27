@@ -11,7 +11,7 @@
     "client": "cd client && npm run start",
     "build": "cd client && npm run build",
     "server:dev": "SET NODE_ENV=DEVELOPMENT& nodemon ./server/server.js",
-    "server:prod": "SET NODE_ENV=PRODUCTION& node ./server/server.js",
+    "server:prod": "SET NODE_ENV=PRODUCTION& nodemon ./server/server.js",
     "dev": "concurrently --kill-others-on-fail \"npm run server:dev\" \"npm run client\"",
     "prod": "concurrently --kill-others-on-fail \"npm run server:prod\" \"npm run client\"",
     "start": "node ./server/server.js",
