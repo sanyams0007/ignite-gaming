@@ -23,7 +23,7 @@ Go try it and please let me know if you enjoyed it with a ⭐️, I would apprec
 
 Here you can find the demo links:
 
-- [Heroku](https://ignite-gaming.herokuapp.com/)
+- [Heroku](https://ignitegaming.herokuapp.com/)
 
 ## Test credentials (for lazy users 😓)
 
