@@ -4,6 +4,7 @@
 /node_modules/
 /client/node_modules/
 
+
 /.pnp
 .pnp.js
 .env
@@ -14,7 +15,9 @@
 # production
 /client/build
 
+
 # misc
+config.env
 /server/config/config.env
 .env
 .env.local
