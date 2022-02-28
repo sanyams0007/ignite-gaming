@@ -59,6 +59,10 @@ const Login = () => {
   };
 
   const handleDemoUser = () => {
+    console.log(
+      process.env.REACT_APP_DEMO_USER,
+      process.env.REACT_APP_USER_PASS
+    );
     dispatch(
       login(process.env.REACT_APP_DEMO_USER, process.env.REACT_APP_USER_PASS)
     );

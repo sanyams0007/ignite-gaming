@@ -129,7 +129,7 @@ export default function useAlan() {
 
   /* effect for creating Alan instance only once app starts */
   useEffect(() => {
-    if (alanInstance != null) return;
+    if (alanInstance !== null) return;
 
     setAlanInstance(
       alanBtn({
