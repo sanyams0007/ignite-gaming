@@ -70,6 +70,11 @@ const Login = () => {
   };
 
   const handleDemoAdmin = () => {
+    console.log(JSON.stringify(process.env));
+    console.log(
+      process.env.REACT_APP_DEMO_USER,
+      process.env.REACT_APP_USER_PASS
+    );
     dispatch(
       login(process.env.REACT_APP_DEMO_ADMIN, process.env.REACT_APP_ADMIN_PASS)
     );

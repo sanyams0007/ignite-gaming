@@ -131,6 +131,8 @@ export default function useAlan() {
   useEffect(() => {
     if (alanInstance !== null) return;
 
+    console.log(process.env.REACT_APP_ALAN_KEY);
+
     setAlanInstance(
       alanBtn({
         top: "25px",
