@@ -129,9 +129,7 @@ export default function useAlan() {
 
   /* effect for creating Alan instance only once app starts */
   useEffect(() => {
-    if (alanInstance !== null) return;
-
-    console.log(process.env.REACT_APP_ALAN_KEY);
+    if (alanInstance != null) return;
 
     setAlanInstance(
       alanBtn({

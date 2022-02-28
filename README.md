@@ -3,6 +3,8 @@
 </h5>
 <br/>
 
+![Image of Ignite Gaming Project](https://ignitegaming.herokuapp.com/ig)
+
 <br/>
 
 ## 🎯 About
