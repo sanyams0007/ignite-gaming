@@ -3,7 +3,7 @@
 </h5>
 <br/>
 
-![Image of Ignite Gaming Project](https://ignitegaming.herokuapp.com/ig)
+![Image of Ignite Gaming Project](https://ignitegaming.herokuapp.com/ig.png)
 
 <br/>
 
