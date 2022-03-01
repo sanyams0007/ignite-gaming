@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     minHeight: "50vh",
     minWidth: "60%",
-    /*    overflowX: "auto", */
+    overflowX: "auto",
   },
   pagination: {
     "& .MuiSelect-root": {

@@ -68,7 +68,7 @@ const UsersList = ({ history, match }) => {
     {
       id: "Actions",
       label: "Actions",
-      minWidth: 100,
+      minWidth: 130,
       align: "right",
       format: (value) => (
         <>
@@ -104,7 +104,7 @@ const UsersList = ({ history, match }) => {
           alignContent="flex-start"
           container
           spacing={2}
-          style={{ margin: "0 auto" }}
+          style={{ margin: "0 auto", overflow: "auto" }}
         >
           <Grid item xs={12}>
             <Typography

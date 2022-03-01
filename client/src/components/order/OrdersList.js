@@ -77,7 +77,7 @@ const OrdersList = () => {
     {
       id: "Detail",
       label: "More Info.",
-      minWidth: 100,
+      minWidth: 130,
       align: "right",
       format: (value) => <Link to={value}>Detail</Link>,
     },

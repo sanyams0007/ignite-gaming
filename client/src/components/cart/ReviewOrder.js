@@ -81,6 +81,7 @@ const ReviewOrder = ({ prev, next }) => {
           style={{
             backgroundColor: "rgba(255,255,255,.12)",
             borderRadius: "10px",
+            overflow: "auto",
           }}
         >
           <Table>

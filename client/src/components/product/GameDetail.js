@@ -121,7 +121,7 @@ const GameDetail = () => {
             sm={10}
             container
             spacing={2}
-            style={{ margin: "0 auto" }}
+            style={{ margin: "0 auto", paddingBottom: "30px" }}
           >
             <Grid item xs={12} lg={5}>
               {product.images && <ImageCarousel images={product.images} />}

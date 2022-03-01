@@ -137,6 +137,7 @@ export default function useAlan() {
         right: "20px",
         key: process.env.REACT_APP_ALAN_KEY,
         onCommand: ({ command, payload }) => {
+          console.log({ command, payload });
           // Call the client code that will react to the received command
           window.dispatchEvent(new CustomEvent(command, { detail: payload }));
         },

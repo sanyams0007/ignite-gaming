@@ -58,7 +58,7 @@ const OrderDetail = () => {
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h4" component="h4">
+            <Typography variant="h5" component="h4">
               Order # {order._id && order._id}
             </Typography>
           </Grid>
