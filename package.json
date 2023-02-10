@@ -19,8 +19,9 @@
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false && npm install --prefix client && npm run build --prefix client",
     "render:server": "nodemon ./server/server.js",
     "render:client": "npm start --prefix client",
-    "render:prod": "concurrently \"npm run render:server\" \"npm run render:client\"",
-    "render-postbuild": "NPM_CONFIG_PRODUCTION=false  npm install --prefix client && npm run build --prefix client"
+    "render:dev": "concurrently \"npm run render:server\" \"npm run render:client\"",
+    "render-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
+    "render:build": "npm install && cd ./client && npm install && npm run build"
   },
   "author": "Sanyam Suthar",
   "license": "ISC",
