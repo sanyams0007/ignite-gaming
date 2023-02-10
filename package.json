@@ -16,7 +16,11 @@
     "prod": "concurrently --kill-others-on-fail \"npm run server:prod\" \"npm run client\"",
     "start": "node ./server/server.js",
     "seeder": "node ./server/utils/seeder.js",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false && npm install --prefix client && npm run build --prefix client"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false && npm install --prefix client && npm run build --prefix client",
+    "render:server": "nodemon ./server/server.js",
+    "render:client": "npm start --prefix client",
+    "render:prod": "concurrently \"npm run render:server\" \"npm run render:client\"",
+    "render-postbuild": "NPM_CONFIG_PRODUCTION=false  npm install --prefix client && npm run build --prefix client"
   },
   "author": "Sanyam Suthar",
   "license": "ISC",
