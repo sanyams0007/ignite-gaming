@@ -1,5 +1,12 @@
-@import url("https://db.onlinewebfonts.com/c/48656eabd3fef6464367d956315c749a?family=Electronic+Arts+Text");
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&display=swap");
+
+/* includes custom font from ./fonts folder at build time */
+@font-face {
+  font-family: 'Electronic Arts Text';
+  src: local('Electronic Arts Text'),
+  url(./fonts/EA.woff2) format('woff2');
+}
+
 *,
 ::before,
 ::after {
